@@ -1,0 +1,32 @@
+@inject Digital_Heritage.Data.SiteLanguageService Languages
+@inject Microsoft.JSInterop.IJSRuntime JS
+@implements IDisposable
+
+<div class="site-language-picker @Variant" role="group" aria-label="Choose site language">
+    <div class="language-buttons-row">
+        <button type="button" class="@(Languages.CurrentLanguage == "ku" ? "selected" : "")" aria-pressed="@(Languages.CurrentLanguage == "ku")" @onclick='() => ChangeLanguageAsync("ku")' title="Kurdish Sorani" aria-label="Kurdish Sorani"><span>CKB</span></button>
+        <button type="button" class="@(Languages.CurrentLanguage == "de" ? "selected" : "")" aria-pressed="@(Languages.CurrentLanguage == "de")" @onclick='() => ChangeLanguageAsync("de")' title="Deutsch" aria-label="Deutsch"><span>DE</span></button>
+        <button type="button" class="@(Languages.CurrentLanguage == "en" ? "selected" : "")" aria-pressed="@(Languages.CurrentLanguage == "en")" @onclick='() => ChangeLanguageAsync("en")' title="English" aria-label="English"><span>EN</span></button>
+    </div>
+
+    @if (Variant == "floating")
+    {
+        <a href="/" class="floating-brand">DIGITAL HERITAGE</a>
+    }
+</div>
+
+@code {
+    [Parameter] public string Variant { get; set; } = "";
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+
+    private async Task ChangeLanguageAsync(string language)
+    {
+        Languages.SetLanguage(language);
+        try { await JS.InvokeVoidAsync("siteLanguage.apply", language); }
+        catch (InvalidOperationException) { }
+    }
+
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+}

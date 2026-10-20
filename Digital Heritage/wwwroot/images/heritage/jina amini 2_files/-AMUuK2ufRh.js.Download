@@ -1,0 +1,3 @@
+;/*FB_PKG_DELIM*/
+
+__d("FBCrossSiteFetch",["cometAsyncFetch"],(function(t,n,r,o,a,i,l){"use strict";async function e(e,t){t===void 0&&(t="GET");var n=await r("cometAsyncFetch")(e,{data:{},getFullPayload:!0,method:t,retryCount:2,skipAsyncParams:!0,skipCustomHeaders:!0,withCredentials:!0});return n}l.fetchCrossSite=e}),98);

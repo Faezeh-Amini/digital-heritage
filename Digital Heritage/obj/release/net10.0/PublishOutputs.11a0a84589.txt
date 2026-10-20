@@ -1,0 +1,7 @@
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\appsettings.Development.json
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\appsettings.json
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\Data\heritage.json
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\Digital_Heritage.dll
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\Digital_Heritage.runtimeconfig.json
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\Digital_Heritage.pdb
+C:\Users\Admin\AppData\Local\Temp\digital-heritage-render-publish\Digital_Heritage.deps.json

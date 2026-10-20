@@ -1,0 +1,140 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Digital_Heritage
+build_property.RootNamespace = Digital_Heritage
+build_property.ProjectDir = C:\Users\Admin\Desktop\13,10\Arbeitstitel\02_Projektdaten\Digital Heritage\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Desktop\13,10\Arbeitstitel\02_Projektdaten\Digital Heritage
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Layout/MapLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFwTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/About.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBYm91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/CloveApple.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDbG92ZUFwcGxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Crafts.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDcmFmdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/CulturalAreas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdWx0dXJhbEFyZWFzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/CultureTopic.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdWx0dXJlVG9waWMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Gallery.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xHYWxsZXJ5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Kobani.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xLb2JhbmkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Küche.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xLw7xjaGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Map.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/MusicImageArchive.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNdXNpY0ltYWdlQXJjaGl2ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/NotFound.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/PirShalyar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQaXJTaGFseWFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/RegionDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpb25EZXRhaWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Regions.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Timeline.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUaW1lbGluZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Traditions.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUcmFkaXRpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-9ape0fzxsy
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-m7zdnritb6
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Layout/ReconnectModal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcUmVjb25uZWN0TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-mrplkmzekj
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Pages/Music.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNdXNpYy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-7pfrs3tjx8
+
+[C:/Users/Admin/Desktop/13\,10/Arbeitstitel/02_Projektdaten/Digital Heritage/Components/Shared/SiteLanguagePicker.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcU2l0ZUxhbmd1YWdlUGlja2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-uq74o30e2z

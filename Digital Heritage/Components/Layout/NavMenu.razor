@@ -1,0 +1,36 @@
+@implements IDisposable
+@inject NavigationManager NavigationManager
+@inject SiteLanguageService Languages
+@inject IJSRuntime JS
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+        Languages.Changed += OnLanguageChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        try
+        {
+            var saved = await JS.InvokeAsync<string?>("siteLanguage.get");
+            if (SiteLanguageService.IsSupported(saved))
+            {
+                Languages.SetLanguage(saved!);
+                await JS.InvokeVoidAsync("siteLanguage.apply", saved);
+            }
+        }
+        catch (InvalidOperationException) { }
+    }
+
+    private void OnLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+        Languages.Changed -= OnLanguageChanged;
+    }
+}

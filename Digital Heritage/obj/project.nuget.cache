@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "UFbCXOF1F5U=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\13,10\\Arbeitstitel\\02_Projektdaten\\Digital Heritage\\Digital Heritage.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}

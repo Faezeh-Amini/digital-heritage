@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A living atlas of Kurdistan</title><desc id="desc">A cinematic collage using the project portrait of a Kurdish woman in a traditional black, white and red scarf, with layered Zagros terrain and a glowing cultural route.</desc>
+<defs>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111713"/><stop offset=".58" stop-color="#17221b"/><stop offset="1" stop-color="#080d0b"/></linearGradient>
+<linearGradient id="photoShade" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#111713" stop-opacity=".1"/><stop offset=".55" stop-color="#101511" stop-opacity=".05"/><stop offset="1" stop-color="#111713" stop-opacity=".38"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4dda5"/><stop offset="1" stop-color="#aa8043"/></linearGradient>
+<linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#4b5948"/><stop offset="1" stop-color="#121b16"/></linearGradient>
+<linearGradient id="ridgeSide" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#28382e"/><stop offset="1" stop-color="#080d0b"/></linearGradient>
+<pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="skewX(-24)"><path d="M44 0H0V44" fill="none" stroke="#d9c28d" stroke-opacity=".13" stroke-width="1"/></pattern>
+<filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="18"/><feOffset dy="22"/><feComponentTransfer><feFuncA type="linear" slope=".52"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="portrait"><path d="M800 28 1545 28 1605 666 1390 864 1124 828 808 602Z"/></clipPath>
+</defs>
+<rect width="1600" height="900" fill="url(#night)"/>
+<path d="M0 690Q255 525 510 664T1030 658 1600 492V900H0Z" fill="#142018" opacity=".78"/>
+<path d="M0 737Q265 582 505 702T1015 698 1600 538" fill="none" stroke="#a7a278" stroke-opacity=".16" stroke-width="2"/>
+<path d="M0 773Q250 625 505 744T1050 733 1600 584" fill="none" stroke="#a7a278" stroke-opacity=".12"/>
+<path d="M0 811Q264 684 538 782T1104 771 1600 630" fill="none" stroke="#a7a278" stroke-opacity=".1"/>
+<g clip-path="url(#portrait)">
+<svg x="760" y="0" width="900" height="900" viewBox="0 0 600 1024" preserveAspectRatio="xMidYMid slice"><image href="/images/heritage/profile%202.jpg" x="0" y="0" width="1024" height="1024" preserveAspectRatio="none"/></svg>
+<rect x="760" y="0" width="900" height="900" fill="url(#photoShade)"/>
+</g>
+<path d="M800 28 1545 28 1605 666 1390 864 1124 828 808 602Z" fill="none" stroke="url(#gold)" stroke-opacity=".76" stroke-width="2"/>
+<path d="M826 46 1523 46" stroke="#fff3d3" stroke-opacity=".35"/>
+<g opacity=".9">
+<path d="M0 664 176 556 265 612 379 497 500 647 628 547 773 688 925 568 1081 711 1250 549 1435 690 1600 599V900H0Z" fill="#101a14"/>
+<path d="M0 699 176 591 265 647 379 532 500 682 628 582 773 723 925 603 1081 746 1250 584 1435 725 1600 634V900H0Z" fill="url(#ridgeSide)"/>
+<path d="M0 664 176 556 265 612 379 497 500 647 628 547 773 688 925 568 1081 711 1250 549 1435 690 1600 599" fill="none" stroke="#758268" stroke-opacity=".74" stroke-width="3"/>
+<path d="M0 664 176 556 265 612 379 497 500 647 628 547 773 688 925 568 1081 711 1250 549 1435 690 1600 599V700L1435 791 1250 649 1081 811 925 668 773 788 628 647 500 747 379 597 265 712 176 656 0 764Z" fill="url(#ridge)" stroke="#d7bd7d" stroke-opacity=".35"/>
+<path d="M0 764 176 656 265 712 379 597 500 747 628 647 773 788 925 668 1081 811 1250 649 1435 791 1600 700V900H0Z" fill="url(#grid)" opacity=".7"/>
+</g>
+<path d="M372 720C579 628 690 754 874 660S1175 647 1456 574" fill="none" stroke="#f1d291" stroke-opacity=".46" stroke-width="1.2" filter="url(#glow)"/>
+<path d="M372 720C579 628 690 754 874 660S1175 647 1456 574" fill="none" stroke="#f1d291" stroke-width="2" stroke-dasharray="2 8"/>
+<g filter="url(#shadow)">
+<path d="M1152 378 1453 335 1530 553 1226 597Z" fill="#0e1511" fill-opacity=".79" stroke="#ddc58e" stroke-opacity=".7"/>
+<path d="M1175 397 1440 359 1504 534 1236 573Z" fill="url(#grid)" stroke="#d8c28e" stroke-opacity=".25"/>
+<path d="M1193 516 1273 464 1321 483 1374 421 1438 497 1491 460" fill="none" stroke="#c8b079" stroke-width="2"/>
+<circle cx="1325" cy="467" r="5" fill="#f1d291" filter="url(#glow)"/><circle cx="1325" cy="467" r="2.5" fill="#fff1cd"/>
+<text x="1190" y="423" fill="#eadbb9" font-family="Arial,sans-serif" font-size="11" letter-spacing="3">ZAGROS | CULTURAL ROUTE</text>
+<text x="1206" y="557" fill="#d8c28e" font-family="Arial,sans-serif" font-size="9" letter-spacing="2">AMED</text><text x="1403" y="512" fill="#d8c28e" font-family="Arial,sans-serif" font-size="9" letter-spacing="2">SINE</text>
+</g>
+<path d="M114 828H560" stroke="#d5b574" stroke-opacity=".5"/><circle cx="114" cy="828" r="3" fill="#e8d39e"/>
+<text x="115" y="853" fill="#d9c28d" font-family="Arial,sans-serif" font-size="10" letter-spacing="4">A LANDSCAPE OF MEMORY</text>
+<text x="1505" y="100" fill="#f0dfbc" opacity=".7" font-family="Arial,sans-serif" font-size="10" letter-spacing="3" transform="rotate(90 1505 100)">KURDISTAN | 36 N / 45 E</text>
+<rect width="1600" height="900" fill="url(#night)" opacity=".12"/>
+</svg>

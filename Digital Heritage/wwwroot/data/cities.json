@@ -1,0 +1,905 @@
+[
+  {
+    "id": "hawler",
+    "name": "Hawlêr / Erbil",
+    "longitude": 44.009,
+    "latitude": 36.191,
+    "region": "Bashûr",
+    "theme": "Citadel and layered urban history",
+    "summary": "The Erbil Citadel is a fortified settlement built on a long-inhabited mound. Its street pattern and layers of settlement make it a strong starting point for exploring the city's history.",
+    "sourceName": "UNESCO World Heritage Centre",
+    "sourceUrl": "https://whc.unesco.org/en/list/1437/",
+    "sourceStatus": "Institutional source",
+    "image": "/images/heritage/Hawler_Castle.jpg",
+    "mediaSearch": "Erbil Citadel",
+    "gallery": [
+      {
+        "src": "/images/heritage/Ancient_architecture_in_erbil_citadel.jpg",
+        "creator": "Project image",
+        "caption": "Ancient architecture in erbil citadel",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Erbil%203.jpg",
+        "creator": "Project image",
+        "caption": "Erbil 3",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Erbil_Citadel_gate_2026.jpg",
+        "creator": "Project image",
+        "caption": "Erbil Citadel gate 2026",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Erbil_Citadel.jpg",
+        "creator": "Project image",
+        "caption": "Erbil Citadel",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Erbil.jpg",
+        "creator": "Project image",
+        "caption": "Erbil",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Erbil2.jpg",
+        "creator": "Project image",
+        "caption": "Erbil2",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Hawler_Castle.jpg",
+        "creator": "Project image",
+        "caption": "Hawler Castle",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Main_square_erbil_citadel.jpg",
+        "creator": "Project image",
+        "caption": "Main square erbil citadel",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/hawler.carpet.jfif",
+        "creator": "Project image",
+        "caption": "hawler.carpet",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Erbil"
+  },
+  {
+    "id": "duhok",
+    "name": "Duhok",
+    "longitude": 42.988,
+    "latitude": 36.867,
+    "region": "Bashûr",
+    "theme": "Landscape and community memory",
+    "summary": "These project photos show Duhok city and surrounding mountain, water, and built landscapes. Some depict places in the wider governorate rather than the city centre; exact site names should be checked before presenting them as city landmarks.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "/images/heritage/Dohok%202.jpg",
+    "mediaSearch": "Duhok city Kurdistan",
+    "gallery": [
+      {
+        "src": "/images/heritage/Dohok%202.jpg",
+        "creator": "Project image",
+        "caption": "Dohok 2",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok%203.webp",
+        "creator": "Project image",
+        "caption": "Dohok 3",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok%204.webp",
+        "creator": "Project image",
+        "caption": "Dohok 4",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok%205.webp",
+        "creator": "Project image",
+        "caption": "Dohok 5",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok%206%23.jpeg",
+        "creator": "Project image",
+        "caption": "Dohok 6",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok%207.jpg",
+        "creator": "Project image",
+        "caption": "Dohok 7",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Dohok.webp",
+        "creator": "Project image",
+        "caption": "Dohok",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Duhok"
+  },
+  {
+    "id": "akre",
+    "name": "Akrê / Akre",
+    "longitude": 43.88049,
+    "latitude": 36.734,
+    "region": "Bashûr",
+    "theme": "Newroz torch procession and mountain-town traditions",
+    "summary": "Akre is known for its Newroz celebration, when people carry torches along the surrounding mountain slopes. This gallery brings together nine photos of the local celebration. The event is a cultural gathering with fire, music, and community participation.",
+    "sourceName": "Kurdistan24",
+    "sourceUrl": "https://www.kurdistan24.net/en/story/394319/Akre-prepares-for-Newroz-celebrations",
+    "sourceStatus": "Local Newroz reporting · photo credits shown per image",
+    "image": "/images/heritage/Akre/akre-newroz-06.webp",
+    "mediaSearch": "Akre Newroz celebration torch procession",
+    "gallery": [
+      {
+        "creator": "Project image",
+        "caption": "Newroz in Akre · local project photo",
+        "src": "/images/heritage/Akre/akre-newroz-01.webp",
+        "license": "Source and reuse terms to confirm",
+        "sourceFile": "Akre Newruz 1+.jpg"
+      },
+      {
+        "creator": "Project image",
+        "caption": "Akre Newroz celebration · local project photo",
+        "src": "/images/heritage/Akre/akre-newroz-02.webp",
+        "license": "Source and reuse terms to confirm",
+        "sourceFile": "Akre Newruz 3.avif"
+      },
+      {
+        "creator": "Project image",
+        "caption": "Newroz celebration in Akre · local project photo",
+        "src": "/images/heritage/Akre/akre-newroz-03.webp",
+        "license": "Source and reuse terms to confirm",
+        "sourceFile": "Akre Newruz.avif"
+      },
+      {
+        "creator": "Project image",
+        "caption": "Newroz celebration in Akre · local project photo",
+        "src": "/images/heritage/Akre/akre-newroz-04.webp",
+        "license": "Source and reuse terms to confirm",
+        "sourceFile": "Akre Newruz2.avif"
+      },
+      {
+        "caption": "Kurdish Newroz celebration, Akre",
+        "src": "/images/heritage/Akre/akre-newroz-05.webp",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kurdish_Newroz_celebration,_Akre.jpg",
+        "creator": "Historyofmiddleeast",
+        "sourceFile": "Kurdish_Newroz_celebration,_Akre.jpg",
+        "license": "CC0"
+      },
+      {
+        "caption": "Newroz festival in Akre, Kurdistan Region of Iraq",
+        "src": "/images/heritage/Akre/akre-newroz-06.webp",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nawroz_festival_in_Akre,_Kurdistan_Region_of_Iraq_14.jpg",
+        "creator": "Levi Clancy",
+        "sourceFile": "Nawroz_festival_in_Akre,_Kurdistan_Region_of_Iraq_14.jpg",
+        "license": "CC BY-SA 4.0"
+      },
+      {
+        "caption": "Newroz festival in Akre, Kurdistan Region of Iraq",
+        "src": "/images/heritage/Akre/akre-newroz-07.webp",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nawroz_festival_in_Akre,_Kurdistan_Region_of_Iraq_27.jpg",
+        "creator": "Levi Clancy",
+        "sourceFile": "Nawroz_festival_in_Akre,_Kurdistan_Region_of_Iraq_27.jpg",
+        "license": "CC BY-SA 4.0"
+      },
+      {
+        "creator": "Project image",
+        "caption": "Newroz celebration in Akre · local project photo",
+        "src": "/images/heritage/Akre/akre-newroz-08.webp",
+        "license": "Source and reuse terms to confirm",
+        "sourceFile": "NewrozAkreKurdistan2.jpg"
+      },
+      {
+        "caption": "Newroz fire walk in Akre, 2018",
+        "src": "/images/heritage/Akre/akre-newroz-09.webp",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Views_of_the_fire_walk_for_the_Newroz_festival_in_Akre_in_2018_01.jpg",
+        "creator": "Levi Clancy",
+        "sourceFile": "Views_of_the_fire_walk_for_the_Newroz_festival_in_Akre_in_2018_01.jpg",
+        "license": "CC0"
+      }
+    ],
+    "mapName": "Akre"
+  },
+  {
+    "id": "slemani",
+    "name": "Slemani / Sulaymaniyah",
+    "longitude": 45.435,
+    "latitude": 35.557,
+    "region": "Bashûr",
+    "theme": "Literature and Kurdish language",
+    "summary": "Slemani is a UNESCO City of Literature. UNESCO describes the city's literary heritage and the role of Sorani Kurdish in its literary life.",
+    "sourceName": "UNESCO Creative Cities Network",
+    "sourceUrl": "https://www.unesco.org/en/creative-cities/slemani",
+    "sourceStatus": "Institutional source",
+    "image": "/images/heritage/Slemaniya.webp",
+    "mediaSearch": "Sulaymaniyah city Kurdish literature",
+    "gallery": [
+      {
+        "src": "/images/heritage/Slemaniya.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%202.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 2",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%203.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 3",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%204.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 4",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%205.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 5",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%206.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 6",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%207.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 7",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%208.webp",
+        "creator": "Project image",
+        "caption": "Slemaniya 8",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Slemaniya%209.jpeg",
+        "creator": "Project image",
+        "caption": "Slemaniya 9",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Qizqapan_%28Seriserd%29_archaeological_cave_tomb_in_Sulaymaniyah%2C_Kurdistan_Region_of_Iraq_05.jpg",
+        "creator": "Project image",
+        "caption": "Qizqapan cave tomb, Sulaymaniyah Governorate (outside Slemani city)",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Qizqapan_Tomb_Interior.jpg",
+        "creator": "Project image",
+        "caption": "Qizqapan tomb interior, Sulaymaniyah Governorate",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Traditional_Kurdish_women%27s_attire._Made_in_the_early_20th_century._Kurd%27s_Heritage_Museum%2C_Sulaymaniyah%2C_Iraq.jpg",
+        "creator": "Project image",
+        "caption": "Traditional Kurdish women's attire. Made in the early 20th century. Kurd's Heritage Museum, Sulaymaniyah, Iraq",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Traditional_Kurdish_women%27s_attire._Made_in_the_early_20th_century._Kurd%27s_Heritage_Museum%2C_Sulaymaniyah%2C_Iraqi_Kurdistan.jpg",
+        "creator": "Project image",
+        "caption": "Traditional Kurdish women's attire. Made in the early 20th century. Kurd's Heritage Museum, Sulaymaniyah, Iraqi Kurdistan",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Sulaymaniyah"
+  },
+  {
+    "id": "amed",
+    "name": "Amed / Diyarbakır",
+    "longitude": 40.23,
+    "latitude": 37.914,
+    "region": "Bakûr",
+    "theme": "City walls and Hevsel Gardens",
+    "summary": "The Diyarbakır Fortress and Hevsel Gardens form a UNESCO-listed cultural landscape, linking the city's walls, gardens, and setting by the Tigris River.",
+    "sourceName": "UNESCO World Heritage Centre",
+    "sourceUrl": "https://whc.unesco.org/en/list/1488/",
+    "sourceStatus": "Institutional source",
+    "image": "/images/heritage/Diyarbakir_Great_Mosque_DSCF8171.jpg",
+    "mediaSearch": "Diyarbakir city walls Hevsel Gardens",
+    "gallery": [
+      {
+        "src": "/images/heritage/Diyarbakir_Great_Mosque_DSCF8171.jpg",
+        "creator": "Project image",
+        "caption": "Diyarbakir Great Mosque DSCF8171",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Diyarbakir_Surlari.jpg",
+        "creator": "Project image",
+        "caption": "Diyarbakir Surlari",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Diyarbakır"
+  },
+  {
+    "id": "sine",
+    "name": "Sine / Sanandaj",
+    "longitude": 46.998,
+    "latitude": 35.309,
+    "region": "Rojhilat",
+    "theme": "Music and Daf traditions",
+    "summary": "Sanandaj is a UNESCO Creative City of Music, with a profile highlighting Kurdish musicians and the International Daf Festival. The gallery also includes Palangan, a separate village in Kurdistan Province, clearly labelled as a nearby regional heritage image.",
+    "sourceName": "UNESCO Creative Cities Network",
+    "sourceUrl": "https://www.unesco.org/en/creative-cities/sanandaj",
+    "sourceStatus": "Institutional source",
+    "image": "/images/heritage/kurdish-carpet.jpg",
+    "mediaSearch": "Sanandaj Kurdish music Daf",
+    "gallery": [
+      {
+        "src": "/images/heritage/Sanandaj_from_Abidar.jpg",
+        "creator": "Project image",
+        "caption": "Sanandaj from Abidar",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Sanandaj.Emarat%20Khosroabad.jpg",
+        "creator": "Project image",
+        "caption": "Sanandaj.Emarat Khosroabad",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Sanandaj.palangan-village.webp",
+        "creator": "Project image",
+        "caption": "Palangan village, Kurdistan Province (outside Sanandaj city)",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Palangan_village.jpg",
+        "creator": "Project image",
+        "caption": "Palangan village, Kurdistan Province",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Palangan_village%20%282%29.jpg",
+        "creator": "Project image",
+        "caption": "Palangan village, Kurdistan Province",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Sanandaj"
+  },
+  {
+    "id": "kermanshah",
+    "name": "Kermanshah",
+    "longitude": 47.07,
+    "latitude": 34.31,
+    "region": "Rojhilat",
+    "theme": "Bisotun and the Zagros landscape",
+    "summary": "Bisotun, outside Kermanshah city in the province, preserves the monumental inscription and relief commissioned by Darius I around 521 BCE. Its three cuneiform versions—Old Persian, Elamite, and Babylonian—record the political events of his accession; the site also contains remains from several earlier and later periods.",
+    "sourceName": "UNESCO World Heritage Centre",
+    "sourceUrl": "https://whc.unesco.org/en/list/1222/",
+    "sourceStatus": "Institutional source · nearby site",
+    "image": "/images/heritage/bisotun-site.jpg",
+    "mediaSearch": "Bisotun inscription",
+    "gallery": [
+      {
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bisotun_World_Heritage_Site.jpg",
+        "license": "CC BY-SA 4.0",
+        "src": "/images/heritage/bisotun-site.jpg",
+        "caption": "Bisotun World Heritage Site",
+        "creator": "Hamzeh Einy Nezhad (H.einy)",
+        "layout": "wide"
+      },
+      {
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bisotoun_Inscription.jpg",
+        "license": "CC BY-SA 4.0",
+        "src": "/images/heritage/bisotun-inscription.jpg",
+        "caption": "Inscription of Darius at Bisotun",
+        "creator": "Sima Farshid (Simashid)"
+      },
+      {
+        "src": "/images/heritage/Zagros_Mountains_from_above.jpg",
+        "creator": "Project image",
+        "caption": "Zagros mountain landscape (regional image)",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Zagros_mountains%2C_1999_in_Iran_VB_%281%29.jpg",
+        "creator": "Project image",
+        "caption": "Zagros mountain landscape (regional image)",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Kermanshah"
+  },
+  {
+    "id": "sarpol-e-zahab",
+    "name": "Sarpol-e Zahab / Serpêl",
+    "longitude": 45.868606,
+    "latitude": 34.46524,
+    "region": "Rojhilat",
+    "theme": "The Anubanini rock relief and Lullubi history",
+    "summary": "Above Sarpol-e Zahab, the Anubanini relief shows a ruler before the goddess Ishtar and defeated captives, with an Akkadian inscription identifying the Lullubi king. Scholars place it around the late Ur III or early Old Babylonian period; the exact dating is debated. The nearby reliefs make the Alvand valley an important landscape for studying the ancient western Zagros.",
+    "sourceName": "Encyclopaedia Iranica",
+    "sourceUrl": "https://www.iranicaonline.org/articles/lulubi/",
+    "sourceStatus": "Scholarly reference",
+    "image": "/images/heritage/anubanini-relief.jpg",
+    "mediaSearch": "Anubanini rock relief Sarpol-e Zahab",
+    "gallery": [
+      {
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Anubanini_(3936968576).jpg",
+        "license": "CC BY-SA 2.0",
+        "src": "/images/heritage/anubanini-relief.jpg",
+        "caption": "Anubanini rock relief at Sarpol-e Zahab",
+        "creator": "dynamosquito"
+      },
+      {
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sar-e_Pol-e_Zahab,_Anubanini_Relief,_drawing.jpg",
+        "license": "CC0 1.0",
+        "src": "/images/heritage/anubanini-drawing.jpg",
+        "caption": "Drawing of the Anubanini relief",
+        "creator": "Jona Lendering"
+      }
+    ],
+    "mapName": "Sarpol-e Zahab"
+  },
+  {
+    "id": "mahabad",
+    "name": "Mahabad",
+    "longitude": 45.72,
+    "latitude": 36.76,
+    "region": "Rojhilat",
+    "theme": "Mahabad Republic and Kurdish political history",
+    "summary": "Mahabad was the centre of the short-lived Republic of Mahabad, proclaimed in 1946. The episode is an important chapter in modern Kurdish political and cultural history.",
+    "sourceName": "Cambridge University Press",
+    "sourceUrl": "https://www.cambridge.org/core/books/abs/kurds/from-rebellion-to-political-manifestos-kurdish-nationalism-in-twentiethcentury-iran-and-iraq/F75A900BB2D44EE088AEB5D956183FC6",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Mahabad city Iran",
+    "mapName": "Mahabad"
+  },
+  {
+    "id": "mardin",
+    "name": "Mêrdîn / Mardin",
+    "longitude": 40.735,
+    "latitude": 37.313,
+    "region": "Bakûr",
+    "theme": "Historic stone cityscape",
+    "summary": "UNESCO's Tentative List describes Mardin's historic setting on a rocky hillside and its traditional stone, religious, and vernacular architecture. Tentative List status is not the same as World Heritage inscription.",
+    "sourceName": "UNESCO World Heritage Centre · Tentative List",
+    "sourceUrl": "https://whc.unesco.org/en/tentativelists/1406/",
+    "sourceStatus": "Institutional source · Tentative List",
+    "image": "/images/heritage/Mardin_-_View_of_town_and_nearby_country_2401.jpg",
+    "mediaSearch": "Mardin old city stone architecture",
+    "gallery": [
+      {
+        "src": "/images/heritage/Mardin_-_View_of_town_and_nearby_country_2401.jpg",
+        "creator": "Project image",
+        "caption": "Mardin - View of town and nearby country 2401",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Mardin"
+  },
+  {
+    "id": "qamishlo",
+    "name": "Qamişlo",
+    "longitude": 41.23,
+    "latitude": 37.05,
+    "region": "Rojava",
+    "theme": "Voices and local cultural life",
+    "summary": "Suggested story angle: document music, language, and everyday cultural life through local voices. Add named contributors and a reliable local source before presenting specific historical claims.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Qamishli city Syria",
+    "mapName": "Qamishli"
+  },
+  {
+    "id": "zakho",
+    "name": "Zakho",
+    "longitude": 42.69,
+    "latitude": 37.15,
+    "region": "Bashûr",
+    "theme": "Delal Bridge and the Little Khabur",
+    "summary": "The Delal Bridge crosses the Little Khabur River in central Zakho. It offers a clear place-based story connecting architecture, river, and town life.",
+    "sourceName": "Kurdistan Regional Government Tourism",
+    "sourceUrl": "https://tourism.krd/places/delal-bridge-zakho",
+    "sourceStatus": "Institutional tourism source",
+    "image": "",
+    "mediaSearch": "Zakho Delal Bridge",
+    "mapName": "Zakho"
+  },
+  {
+    "id": "wan",
+    "name": "Wan / Van",
+    "longitude": 43.38,
+    "latitude": 38.5,
+    "region": "Bakûr",
+    "theme": "Tushpa and the historic city layers",
+    "summary": "UNESCO's Tentative List entry for Tushpa/Van Fortress and the Old City records material remains from multiple historical periods. This is a layered regional history, not a single-community narrative.",
+    "sourceName": "UNESCO World Heritage Centre · Tentative List",
+    "sourceUrl": "https://whc.unesco.org/en/tentativelists/6114/",
+    "sourceStatus": "Institutional source · Tentative List",
+    "image": "",
+    "mediaSearch": "Van Fortress Lake Van",
+    "mapName": "Van"
+  },
+  {
+    "id": "hakkari",
+    "name": "Colemerg / Hakkari",
+    "longitude": 43.74,
+    "latitude": 37.57,
+    "region": "Bakûr",
+    "theme": "The Hakkari stelae",
+    "summary": "Thirteen carved stone stelae were found near Hakkari Castle in 1998. The human figures make them a distinctive archaeological record of the region.",
+    "sourceName": "Hakkari Provincial Directorate of Culture and Tourism",
+    "sourceUrl": "https://hakkari.ktb.gov.tr/TR-349430/hakkari-stelleri.html",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Hakkari mountains",
+    "mapName": "Hakkari"
+  },
+  {
+    "id": "kirkuk",
+    "name": "Kirkuk",
+    "longitude": 44.39,
+    "latitude": 35.47,
+    "region": "Bashûr",
+    "theme": "Kirkuk Citadel and a layered city",
+    "summary": "Kirkuk Citadel is one of the major historic landmarks in the city. UNESCO lists it on its Tentative List; the Qishla and Citadel are also recognised as places that reflect Kirkuk multicultural history.",
+    "sourceName": "UNESCO Tentative List",
+    "sourceUrl": "https://whc.unesco.org/en/tentativelists/6522",
+    "sourceStatus": "Suggested focus · local sources needed",
+    "image": "",
+    "mediaSearch": "Kirkuk citadel city",
+    "mapName": "Kirkuk"
+  },
+  {
+    "id": "koya",
+    "name": "Koya / Koysinjaq",
+    "longitude": 44.63,
+    "latitude": 36.08,
+    "region": "Bashûr",
+    "theme": "Local stories and learning",
+    "summary": "Suggested story angle: collect place names, oral histories, and cultural practices from residents and local institutions. Add a cited local source before publication.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Koysinjaq Koya Iraq",
+    "mapName": "Koya"
+  },
+  {
+    "id": "soran",
+    "name": "Soran",
+    "longitude": 44.55,
+    "latitude": 36.65,
+    "region": "Bashûr",
+    "theme": "Mountain landscape and community knowledge",
+    "summary": "Suggested story angle: connect the surrounding landscape with local knowledge and lived experience. A short interview or community-authored account would make this entry distinctive.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Rawanduz canyon Soran",
+    "mapName": "Soran"
+  },
+  {
+    "id": "halabja",
+    "name": "Halabja",
+    "longitude": 46.0,
+    "latitude": 35.18,
+    "region": "Bashûr",
+    "theme": "Memory, remembrance, and resilience",
+    "summary": "Suggested story angle: approach local memory with care and let community members guide what should be included. Use first-hand or institutional sources and obtain consent for interviews.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · sensitive topic · local sources needed",
+    "image": "",
+    "mediaSearch": "Halabja memorial",
+    "mapName": "Halabja"
+  },
+  {
+    "id": "saqqez",
+    "name": "Seqiz / Saqqez",
+    "longitude": 46.27,
+    "latitude": 36.25,
+    "region": "Rojhilat",
+    "theme": "Jina Amini and Jin, Jiyan, Azadî",
+    "summary": "Saqqez is the hometown of Jina Amini. This image connects the city to the women-led Jin, Jiyan, Azadî movement and the Kurdish phrase “Woman, Life, Freedom.”",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "/images/heritage/jina%20amini.jfif",
+    "mediaSearch": "Saqqez Kurdistan Iran",
+    "gallery": [
+      {
+        "src": "/images/heritage/jina%20amini.jfif",
+        "license": "Local project image · source and reuse terms to confirm",
+        "creator": "Project image",
+        "caption": "Jina Amini · Jin, Jiyan, Azadî"
+      }
+    ],
+    "mapName": "Saqqez"
+  },
+  {
+    "id": "baneh",
+    "name": "Baneh",
+    "longitude": 45.89,
+    "latitude": 35.99,
+    "region": "Rojhilat",
+    "theme": "Halparke and Baneh dance tradition",
+    "summary": "Baneh annual Halparke gathering brings Kurdish dance groups together. The project photos document the festival as a contemporary cultural event.",
+    "sourceName": "Wikimedia Commons · festival photo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:3rd_Edition_of_Halparke_Festival_in_Baneh_2019-04-16_01.jpg",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Baneh Kurdistan Iran",
+    "mapName": "Baneh"
+  },
+  {
+    "id": "urmia",
+    "name": "Urmia / Wurmi",
+    "longitude": 45.08,
+    "latitude": 37.55,
+    "region": "Rojhilat",
+    "theme": "Languages and city life",
+    "summary": "Suggested story angle: represent the city's diverse languages and cultural life through several attributed local perspectives. Verify each account and avoid presenting one voice as the whole city.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local sources needed",
+    "image": "",
+    "mediaSearch": "Urmia city lake",
+    "mapName": "Urmia"
+  },
+  {
+    "id": "batman",
+    "name": "Êlih / Batman",
+    "longitude": 41.135,
+    "latitude": 37.881,
+    "region": "Bakûr",
+    "theme": "Neighbourhood stories and living culture",
+    "summary": "The images include Hasankeyf, an archaeological town in Batman Province, southeast of Batman city. Labelled views here are regional context, not photographs of Batman city itself; Hasankeyf is known for its historic riverside settlement and monuments.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "/images/heritage/Hasankeyf_Overview.jpg",
+    "mediaSearch": "Batman Turkey city",
+    "gallery": [
+      {
+        "src": "/images/heritage/Hasankeyf_Overview.jpg",
+        "creator": "Project image",
+        "caption": "Hasankeyf, Batman Province (outside Batman city)",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Hasankeyf_Ulu_Camii_1888.jpg",
+        "creator": "Project image",
+        "caption": "Historic mosque at Hasankeyf, Batman Province",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Hasankeyf%2C_Turkey.jpg",
+        "creator": "Project image",
+        "caption": "Hasankeyf landscape, Batman Province",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Batman"
+  },
+  {
+    "id": "cizre",
+    "name": "Cizîr / Cizre",
+    "longitude": 42.19,
+    "latitude": 37.328,
+    "region": "Bakûr",
+    "theme": "River landscape and historical memory",
+    "summary": "Suggested story angle: document local place names and memories along the Tigris corridor. Add a cited local history source and identify the period each story describes.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Cizre Tigris historical",
+    "mapName": "Cizre"
+  },
+  {
+    "id": "sirnak",
+    "name": "Şirnex / Şırnak",
+    "longitude": 42.461,
+    "latitude": 37.516,
+    "region": "Bakûr",
+    "theme": "Mountain routes and local knowledge",
+    "summary": "Suggested story angle: record how residents describe the surrounding landscape, routes, and traditions. Treat interview material as first-hand testimony and credit the speaker.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Sirnak Turkey mountains",
+    "mapName": "Şırnak"
+  },
+  {
+    "id": "nusaybin",
+    "name": "Nisêbîn / Nusaybin",
+    "longitude": 41.218,
+    "latitude": 37.078,
+    "region": "Bakûr",
+    "theme": "Ancient Nisibis",
+    "summary": "Nusaybin is the site of ancient Nisibis, a long-standing settlement on historic routes through Upper Mesopotamia. Its archaeological and religious heritage reflects many periods and communities.",
+    "sourceName": "Mardin Provincial Directorate of Culture and Tourism",
+    "sourceUrl": "https://mardin.ktb.gov.tr/TR-56488/nusaybin-tarihcesi.html",
+    "sourceStatus": "Suggested focus · local sources needed",
+    "image": "",
+    "mediaSearch": "Nusaybin ancient Nisibis",
+    "mapName": "Nusaybin"
+  },
+  {
+    "id": "kobane",
+    "name": "Kobanê / Kobanî",
+    "longitude": 38.355,
+    "latitude": 36.891,
+    "region": "Rojava",
+    "theme": "Community memory and contemporary culture",
+    "summary": "Suggested story angle: let local contributors define the story and context. This is a sensitive contemporary history; use first-hand or institutional sources and obtain interview consent.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · sensitive topic · local sources needed",
+    "image": "",
+    "mediaSearch": "Kobani city Syria",
+    "mapName": "Kobanê"
+  },
+  {
+    "id": "afrin",
+    "name": "Efrîn / Afrin",
+    "longitude": 36.869,
+    "latitude": 36.511,
+    "region": "Rojava",
+    "theme": "Landscape, agriculture, and local memory",
+    "summary": "Suggested story angle: document local landscape and community knowledge through attributed sources. Verify dates and place-specific claims, especially for recent events.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local sources needed",
+    "image": "",
+    "mediaSearch": "Afrin olive groves Syria",
+    "mapName": "Afrin"
+  },
+  {
+    "id": "amuda",
+    "name": "Amûdê / Amuda",
+    "longitude": 40.93,
+    "latitude": 37.104,
+    "region": "Rojava",
+    "theme": "Language and community stories",
+    "summary": "Suggested story angle: collect local accounts of language, reading, music, and everyday cultural life. Add a named local source before presenting a specific tradition as city-wide.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Amuda Syria town",
+    "mapName": "Amuda"
+  },
+  {
+    "id": "derik",
+    "name": "Dêrik / Al-Malikiyah",
+    "longitude": 42.142,
+    "latitude": 36.507,
+    "region": "Rojava",
+    "theme": "Borderland landscape and local knowledge",
+    "summary": "Suggested story angle: record local place names and community knowledge across the surrounding landscape. Verify spelling and cultural context with local contributors.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Al-Malikiyah Syria town",
+    "mapName": "Al-Malikiyah"
+  },
+  {
+    "id": "tirbespiye",
+    "name": "Tirbespiyê / Al-Qahtaniyah",
+    "longitude": 41.227,
+    "latitude": 37.183,
+    "region": "Rojava",
+    "theme": "Village networks and living heritage",
+    "summary": "Suggested story angle: highlight a locally documented craft, song, or oral history from the town and surrounding villages. Credit the source community and recording date.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Al-Qahtaniyah Syria town",
+    "mapName": "Al-Qahtaniyah"
+  },
+  {
+    "id": "hasakah",
+    "name": "Hesekê / Al-Hasakah",
+    "longitude": 40.747,
+    "latitude": 36.502,
+    "region": "Rojava",
+    "theme": "Many communities, shared urban history",
+    "summary": "Suggested story angle: represent the city through multiple attributed voices and languages. Avoid treating one community’s perspective as a complete account of the city.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local sources needed",
+    "image": "",
+    "mediaSearch": "Al-Hasakah city Syria",
+    "mapName": "Al-Hasakah"
+  },
+  {
+    "id": "marivan",
+    "name": "Mêrîwan / Marivan",
+    "longitude": 46.177,
+    "latitude": 35.526,
+    "region": "Rojhilat",
+    "theme": "Lake Zarivar and local landscape knowledge",
+    "summary": "The local photo set documents the Hawraman/Uraman mountain landscape and village architecture in the wider region around Marivan. These are regional views, not all within Marivan city; the setting connects settlement patterns, mountain routes, and local environmental knowledge.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "/images/heritage/Hawraman_2019-08-30_06.jpg",
+    "mediaSearch": "Zarivar Lake Marivan",
+    "gallery": [
+      {
+        "src": "/images/heritage/Hawraman_2019-08-30_06.jpg",
+        "creator": "Project image",
+        "caption": "Hawraman cultural landscape, near Marivan",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Hawraman_2019-08-30_10.jpg",
+        "creator": "Project image",
+        "caption": "Hawraman cultural landscape, near Marivan",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Hawraman.jpg",
+        "creator": "Project image",
+        "caption": "Hawraman cultural landscape, near Marivan",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/hawraman.jpg.jpg",
+        "creator": "Project image",
+        "caption": "Hawraman mountain village, regional view",
+        "license": "Source and reuse terms to confirm"
+      },
+      {
+        "src": "/images/heritage/Uraman_3566764.jpg",
+        "creator": "Project image",
+        "caption": "Uraman/Hawraman mountain landscape",
+        "license": "Source and reuse terms to confirm"
+      }
+    ],
+    "mapName": "Marivan"
+  },
+  {
+    "id": "bukan",
+    "name": "Bukan",
+    "longitude": 46.208,
+    "latitude": 36.521,
+    "region": "Rojhilat",
+    "theme": "Language, music, and local memory",
+    "summary": "Suggested story angle: gather local accounts of music, literature, and everyday cultural life. Use named contributors and a local institutional source for historical details.",
+    "sourceName": "",
+    "sourceUrl": "",
+    "sourceStatus": "Suggested focus · local source needed",
+    "image": "",
+    "mediaSearch": "Bukan city Iran",
+    "mapName": "Bukan"
+  }
+]

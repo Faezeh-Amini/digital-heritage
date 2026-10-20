@@ -1,0 +1,137 @@
+@page "/culture/clove-apple"
+@inject Digital_Heritage.Data.SiteLanguageService Languages
+@implements IDisposable
+
+<PageTitle>@T("title") · Digital Heritage</PageTitle>
+
+<main class="clove-page">
+    <a class="clove-back" href="/">⌂ @T("back")</a>
+    <section class="clove-hero">
+        <div class="clove-hero-image"><img src="/images/sib%20mikhakkub1.jfif" alt="@T("heroAlt")" /></div>
+        <div class="clove-hero-copy"><span>@T("kicker")</span><h1>@T("title")</h1><p>@T("intro")</p></div>
+    </section>
+
+    <article class="clove-story">
+        <p>@T("paragraph1")</p>
+        <p>@T("paragraph2")</p>
+        <p>@T("paragraph3")</p>
+        <p>@T("paragraph4")</p>
+        <p>@T("paragraph5")</p>
+        <p class="clove-context">@T("context")</p>
+    </article>
+
+    <section class="clove-gallery">
+        <div class="gallery-heading"><span>@T("kicker")</span><h2>@T("gallery")</h2><p>@T("galleryHint")</p></div>
+        <div class="gallery-grid">
+            @foreach (var photo in Photos)
+            {
+                <figure><a href="@photo.Path" target="_blank" rel="noopener noreferrer" aria-label="@T(photo.Alt) — @T("open")"><img src="@photo.Path" alt="@T(photo.Alt)" loading="lazy" /></a><figcaption>@T(photo.Caption)</figcaption></figure>
+            }
+        </div>
+    </section>
+</main>
+
+<style>
+    .clove-page{max-width:1320px;margin:auto;padding:1rem clamp(1rem,4vw,3.5rem) 4rem;color:#f0ece2}.clove-back{display:inline-flex;gap:.5rem;align-items:center;margin:0 0 1rem;padding:.65rem .9rem;color:#efd89c;border:1px solid #d5b57455;background:#151914;text-decoration:none;font:12px Arial,sans-serif}.clove-back:hover{background:#d5b574;color:#151914}.clove-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);min-height:350px;background:#151914;border:1px solid #d5b57433}.clove-hero-image{min-height:350px;overflow:hidden}.clove-hero-image img{width:100%;height:100%;min-height:350px;object-fit:cover;display:block}.clove-hero-copy{align-self:center;padding:clamp(1.5rem,4vw,3.5rem)}.clove-hero-copy>span,.gallery-heading>span{font:9px Arial,sans-serif;letter-spacing:.2em;color:#d5b574;text-transform:uppercase}.clove-hero h1{font:400 clamp(2rem,4.2vw,3.7rem)/1.08 Georgia,serif;color:#f4e8c5;margin:1rem 0}.clove-hero p,.clove-story p{font:15px/1.95 Arial,sans-serif;color:#d4d0c5}.clove-story{max-width:900px;margin:2.2rem auto}.clove-story p{margin:0 0 1.1rem}.clove-story .clove-context{padding:1rem 1.2rem;border-left:2px solid #d5b574;background:#ffffff08;color:#efdfb8}.gallery-heading{text-align:center;margin:2.8rem 0 1.3rem}.gallery-heading h2{font:400 clamp(1.7rem,3vw,2.5rem) Georgia,serif;color:#f3e5c2;margin:.5rem}.gallery-heading p{font:12px/1.6 Arial,sans-serif;color:#aaa99f}.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.gallery-grid figure{margin:0;border:1px solid #d5b57433;background:#151914;overflow:hidden}.gallery-grid a{display:block;height:260px}.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}.gallery-grid a:hover img{transform:scale(1.04)}.gallery-grid figcaption{min-height:55px;padding:12px;color:#e8d9b5;font:12px/1.6 Arial,sans-serif}@@media(max-width:760px){.clove-hero{grid-template-columns:1fr}.clove-hero-image,.clove-hero-image img{min-height:270px;height:270px}.clove-hero-copy{padding:1.5rem}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-grid a{height:200px}}@@media(max-width:480px){.gallery-grid{grid-template-columns:1fr}.gallery-grid a{height:240px}}
+</style>
+
+@code {
+    private string Lang => Languages.CurrentLanguage;
+    private string T(string key) => (Lang, key) switch
+    {
+        ("de", "title") => "Sêva Mêxekrêj · der Nelkenapfel",
+        ("de", "kicker") => "KURDISCHES IMMATERIELLES KULTURERBE",
+        ("de", "back") => "Zur Startseite",
+        ("de", "heroAlt") => "Eine Frau verziert einen Apfel mit Nelken",
+        ("de", "intro") => "Sêva Mêxekrêj, der mit Nelken besteckte Apfel, ist ein handgefertigtes Erinnerungsstück, das in einigen kurdischen Gemeinschaften mit Liebe, Sehnsucht, Treue und Erinnerung verbunden wird.",
+        ("de", "paragraph1") => "Der Nelkenapfel ist ein schönes Beispiel materieller Kultur und emotionaler Symbolik in einigen kurdischen Gemeinschaften. Ein einfacher Gegenstand aus einem Apfel und Gewürznelken kann Geschichten von Liebe, Sehnsucht, Verbundenheit und Erinnerung tragen.",
+        ("de", "paragraph2") => "Für die Herstellung wird ein unversehrter Apfel ausgewählt und sorgfältig mit Nelken besteckt. Die Zeit und Aufmerksamkeit, die in die Gestaltung fließen, gehören zum Wert des Geschenks: Entscheidend ist nicht nur sein Aussehen, sondern auch das Gefühl, das mit seiner Herstellung verbunden ist.",
+        ("de", "paragraph3") => "In mündlichen Erzählungen wurde der Nelkenapfel mitunter zwischen Liebenden verschenkt und konnte Zuneigung, Sehnsucht, Warten oder auch Versöhnung ausdrücken. So wird er als eine stille Sprache der Gefühle verstanden.",
+        ("de", "paragraph4") => "Auch die Bewahrung des Apfels trägt zur Bedeutung bei. Nelken können den Trocknungsprozess beeinflussen und den Duft lange erhalten; wie lange ein Apfel als Erinnerungsstück hält, hängt jedoch von Herstellung und Aufbewahrung ab.",
+        ("de", "paragraph5") => "Heute erscheint der Nelkenapfel neben seiner romantischen Bedeutung auch in kulturellen und künstlerischen Aktivitäten als Zeichen des Erinnerns, des Friedens und der Weitergabe von Erinnerung. Er verbindet Natur, Handarbeit, menschliche Gefühle und kulturelles Gedächtnis.",
+        ("de", "context") => "Die Bedeutungen beruhen auf mündlichen Überlieferungen und können sich je nach Region und Familie unterscheiden.",
+        ("de", "gallery") => "Der Nelkenapfel in Bildern",
+        ("de", "galleryHint") => "Wähle ein Bild, um es in voller Größe zu öffnen.",
+        ("de", "open") => "Bild in voller Größe öffnen",
+        ("de", "alt1") => "Ein vollständig mit Nelken verzierter Apfel",
+        ("de", "alt2") => "Eine Frau steckt Nelken in einen Apfel",
+        ("de", "alt3") => "Mehrere Personen verzieren Äpfel mit Nelken",
+        ("de", "alt4") => "Zwei Nelkenäpfel als handgefertigte Erinnerungsstücke",
+        ("de", "alt5") => "Ein Nelkenapfel als Geschenk arrangiert",
+        ("de", "cap1") => "Ein fertiger Nelkenapfel mit einer Schleife",
+        ("de", "cap2") => "Die sorgfältige Handarbeit beim Verzieren",
+        ("de", "cap3") => "Gemeinsames Anfertigen der Nelkenäpfel",
+        ("de", "cap4") => "Nelkenäpfel in unterschiedlichen Formen",
+        ("de", "cap5") => "Eine Geschenkpräsentation mit Nelkenapfel",
+
+        ("ku", "title") => "سێوی مێخەک‌ڕێژ",
+        ("ku", "kicker") => "میراتی کولتووریی کوردی",
+        ("ku", "back") => "بگەڕێوە بۆ پەڕەی سەرەکی",
+        ("ku", "heroAlt") => "ژنێک مێخەک لە سێوێکدا دەچێنێت",
+        ("ku", "intro") => "سێوی مێخەک‌ڕێژ یادگارێکی دەستکردە کە لە هەندێک کۆمەڵگەی کوردیدا بە خۆشەویستی، دڵتەنگی، دڵسۆزی و بیرەوەرییەوە پەیوەست دەکرێت.",
+        ("ku", "paragraph1") => "سێوی مێخەک‌ڕێژ نموونەیەکی جوانە لە کولتووری ماددی و هێمای هەستی لە هەندێک کۆمەڵگەی کوردیدا. شتێکی سادەیە لە سێو و مێخەک پێکهاتووە، بەڵام دەتوانێت چیرۆکی خۆشەویستی، دڵتەنگی، دڵسۆزی و بیرەوەری لەخۆ بگرێت.",
+        ("ku", "paragraph2") => "بۆ دروستکردنی، سێوێکی سالم و جوان هەڵدەبژێردرێت و مێخەک بە وردی لە پوستەکەیدا دەچێنرێت. کات و گرنگیدانێک کە بۆ ڕازاندنەوەی دەخرێتەگەڕ بەشێکە لە بەهای دیارییەکە؛ تەنها دەرکەوتنی نییە، بەڵکو هەستی پشت دروستکردنەکەشی گرنگە.",
+        ("ku", "paragraph3") => "لە هەندێک گێڕانەوەی زارەکیدا سێوی مێخەک‌ڕێژ دیاریی نێوان دڵداران بووە و دەتوانی نیشانەی خۆشەویستی، دڵتەنگی، چاوەڕوانی یان ئاشتی‌کردنەوە بێت. لەبەر ئەوە وەک زمانێکی بێدەنگی هەستەکان دەبینرێت.",
+        ("ku", "paragraph4") => "پاراستن و ماندوویی ئەم شتەش بەشێکە لە واتاکەی. مێخەک دەتوانێت کاریگەری لەسەر وشکبوونەوەی سێو و ماوەی مانەوەی بۆنەکەی هەبێت؛ بەڵام ماوەی پاراستنی وەک یادگار بە شێوازی دروستکردن و هەڵگرتنەوە پەیوەستە.",
+        ("ku", "paragraph5") => "ئەمڕۆ جگە لە واتای خۆشەویستی، سێوی مێخەک‌ڕێژ لە هەندێک چالاکیی کولتووری و هونەریدا وەک هێمای یادکردنەوە، ئاشتی و پاراستنی بیرەوەری بەکاردێت. ئەم نەریتە سروشت، کاری دەستی، هەستی مرۆیی و بیرەوەریی کولتووری پێکەوە دەبەستێتەوە.",
+        ("ku", "context") => "واتاکان لە گێڕانەوە زارەکییەکانەوە هاتوون و دەتوانن بەپێی ناوچە و خێزان جیاواز بن.",
+        ("ku", "gallery") => "سێوی مێخەک‌ڕێژ بە وێنە",
+        ("ku", "galleryHint") => "کلیک لە وێنە بکە بۆ کردنەوەی بە قەبارەی تەواو.",
+        ("ku", "open") => "وێنەکە بە قەبارەی تەواو بکەرەوە",
+        ("ku", "alt1") => "سێوێک کە بە تەواوی بە مێخەک ڕازێنراوەتەوە",
+        ("ku", "alt2") => "ژنێک مێخەک لە سێوێکدا دەچێنێت",
+        ("ku", "alt3") => "چەند کەسێک سێو بە مێخەک ڕادەهێنن",
+        ("ku", "alt4") => "دوو سێوی مێخەک‌ڕێژ وەک یادگاریی دەستکرد",
+        ("ku", "alt5") => "سێوی مێخەک‌ڕێژێک کە وەک دیاری ڕازێندراوەتەوە",
+        ("ku", "cap1") => "سێوی مێخەک‌ڕێژی تەواوکراو بە پەتەیەک",
+        ("ku", "cap2") => "کاری وردی دەستی لە ڕازاندنەوەدا",
+        ("ku", "cap3") => "دروستکردنی سێوی مێخەک بە شێوەی هاوبەش",
+        ("ku", "cap4") => "سێوی مێخەک‌ڕێژ بە شێوەی جیاواز",
+        ("ku", "cap5") => "پێشکەشکردنی دیاریی سێوی مێخەک‌ڕێژ",
+
+        ("en", "title") => "Sêva Mîxekrêj · the Kurdish clove apple",
+        ("en", "kicker") => "KURDISH CULTURAL HERITAGE",
+        ("en", "back") => "Back to home",
+        ("en", "heroAlt") => "A woman decorating an apple with cloves",
+        ("en", "intro") => "Sêva Mîxekrêj, the clove-studded apple, is a handmade keepsake associated in some Kurdish communities with love, longing, devotion and memory.",
+        ("en", "paragraph1") => "The clove apple is a striking example of material culture and emotional symbolism in some Kurdish communities. Made from a simple apple and whole cloves, it can carry stories of love, longing, affection and remembrance.",
+        ("en", "paragraph2") => "A firm, attractive apple is chosen and carefully studded with cloves. The time and attention devoted to making it are part of the gift's meaning: its value lies not only in its appearance, but also in the feeling behind its making.",
+        ("en", "paragraph3") => "In some oral accounts, the clove apple was exchanged between people in love and could express affection, longing, waiting or reconciliation. It can be understood as a quiet language of feeling.",
+        ("en", "paragraph4") => "Its keeping qualities also contribute to its meaning. Cloves can affect how an apple dries and help retain its scent, but how long it lasts as a keepsake depends on how it is made and stored.",
+        ("en", "paragraph5") => "Today, alongside romantic meanings, the clove apple appears in some cultural and artistic activities as a symbol of remembrance, peace and keeping memory alive. It brings together nature, handcraft, human feeling and cultural memory.",
+        ("en", "context") => "Meanings come from oral accounts and can vary between regions and families.",
+        ("en", "gallery") => "The clove apple in photographs",
+        ("en", "galleryHint") => "Select a photograph to open it at full size.",
+        ("en", "open") => "Open photograph full size",
+        ("en", "alt1") => "An apple fully decorated with cloves",
+        ("en", "alt2") => "A woman inserting cloves into an apple",
+        ("en", "alt3") => "People decorating apples with cloves",
+        ("en", "alt4") => "Two clove apples as handmade keepsakes",
+        ("en", "alt5") => "A clove apple arranged as a gift",
+        ("en", "cap1") => "A finished clove apple with a ribbon",
+        ("en", "cap2") => "Careful handwork decorating an apple",
+        ("en", "cap3") => "Making clove apples together",
+        ("en", "cap4") => "Clove apples in different forms",
+        ("en", "cap5") => "A gift presentation featuring a clove apple",
+        _ => key switch
+        {
+            "title" => "سێوی مێخەک‌ڕێژ",
+            "back" => "بگەڕێوە بۆ پەڕەی سەرەکی",
+            "kicker" => "میراتی کولتووریی کوردی",
+            "heroAlt" => "سێوی مێخەک‌ڕێژ",
+            _ => key
+        }
+    };
+    private IReadOnlyList<Photo> Photos => new[]
+    {
+        new Photo("/images/sib%20mikhakkub.jfif", "alt1", "cap1"),
+        new Photo("/images/sib%20mikhakkub1.jfif", "alt2", "cap2"),
+        new Photo("/images/sib%20mikhakkub2.jfif", "alt3", "cap3"),
+        new Photo("/images/sibe%20mikhakkub4.jfif", "alt4", "cap4"),
+        new Photo("/images/sibe%20mikhakkub5.jfif", "alt5", "cap5")
+    };
+    private void OnLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    protected override void OnInitialized() => Languages.Changed += OnLanguageChanged;
+    public void Dispose() => Languages.Changed -= OnLanguageChanged;
+    private sealed record Photo(string Path, string Alt, string Caption);
+}

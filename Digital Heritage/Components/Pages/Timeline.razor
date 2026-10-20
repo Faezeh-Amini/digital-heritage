@@ -1,0 +1,101 @@
+@page "/timeline"
+
+@using System.Collections.Generic
+@using Digital_Heritage.Models
+@using Digital_Heritage.Data
+
+@inject TimelineService TimelineService
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <span class="text-warning">
+            @Languages.Text("timeline.kicker")
+        </span>
+
+        <h1 class="display-5 fw-bold text-warning mt-3">
+            @Languages.Text("timeline.title")
+        </h1>
+
+        <p class="text-muted">
+            @Languages.Text("timeline.description")
+        </p>
+
+    </div>
+
+
+    @if (timelineEvents == null || timelineEvents.Count == 0)
+    {
+        <p class="text-muted text-center">
+            @Languages.Text("timeline.loading")
+        </p>
+    }
+    else
+    {
+
+        <div class="timeline-container">
+
+            @foreach (var item in timelineEvents)
+            {
+
+                <div class="card bg-dark text-light border-secondary mb-4 shadow">
+
+                    <div class="card-body">
+
+                        <span class="badge bg-warning text-dark">
+                            @Languages.Text("timeline." + item.Id + ".era")
+                        </span>
+
+
+                        <h3 class="text-warning mt-3">
+                            @Languages.Text("timeline." + item.Id + ".title")
+                        </h3>
+
+
+                        <p class="text-muted">
+                            @Languages.Text("timeline." + item.Id + ".description")
+                        </p>
+
+
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@Digital_Heritage.Utilities.ImagePathHelper.NormalizePath(item.ImageUrl)"
+                                 class="img-fluid rounded"
+                                 alt="@Languages.Text("timeline." + item.Id + ".title")"
+                                 style="height:300px;width:100%;object-fit:cover;" />
+                        }
+
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    }
+
+</div>
+
+
+@code {
+
+    private List<TimelineEvent> timelineEvents = new();
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        timelineEvents = await TimelineService.GetTimelineEventsAsync();
+    }
+
+}
+

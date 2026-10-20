@@ -1,0 +1,121 @@
+@page "/regions"
+
+@using Digital_Heritage.Models
+@using Digital_Heritage.Data
+
+@inject RegionService RegionService
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+
+<PageTitle>Digital Archive</PageTitle>
+
+
+<div class="container py-5">
+
+
+    <div class="text-center mb-5">
+
+        <span class="text-warning">
+            @Languages.Text("regions.kicker")
+        </span>
+
+
+        <h1 class="display-5 text-warning mt-3">
+            @Languages.Text("regions.title")
+        </h1>
+
+
+        <p class="text-muted">
+            @Languages.Text("regions.description")
+        </p>
+
+
+    </div>
+
+
+
+    <div class="row g-4">
+
+
+        @foreach(var region in regions)
+        {
+
+            <div class="col-md-4">
+
+
+                <div class="card bg-dark text-light border-secondary h-100 shadow">
+
+
+                    @if(!string.IsNullOrEmpty(region.ImageUrl))
+                    {
+                        <img src="@Digital_Heritage.Utilities.ImagePathHelper.NormalizePath(region.ImageUrl)"
+                             class="card-img-top"
+                             style="height:220px;object-fit:cover;"
+                             alt="@Languages.Text("region." + region.Id + ".name")" />
+                    }
+
+
+
+                    <div class="card-body">
+
+
+                        <h3 class="text-warning">
+                            @Languages.Text("region." + region.Id + ".name")
+                        </h3>
+
+
+                        <p class="text-muted">
+                            @Languages.Text("region." + region.Id + ".description")
+                        </p>
+
+
+
+                        <a href="/map"
+                           class="btn btn-outline-warning">
+                            @Languages.Text("regions.explore")
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        }
+
+
+    </div>
+
+
+    <CulturalAreas />
+
+    </div>
+
+
+
+@code {
+
+    private List<Region> regions = new();
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        regions =
+            await RegionService.GetRegionsAsync();
+
+    }
+
+}
+
+
+

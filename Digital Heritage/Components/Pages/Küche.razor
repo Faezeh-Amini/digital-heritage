@@ -1,0 +1,802 @@
+﻿@page "/Küche"
+@page "/food"
+
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@using Digital_Heritage.Data
+
+@inject SiteLanguageService Languages
+@inject IJSRuntime JS
+
+@implements IAsyncDisposable
+
+<PageTitle>@L("Kurdische Küche", "Kurdish cuisine") · Digital Heritage</PageTitle>
+
+<div class="food-page">
+
+    <section class="food-hero" id="food-top">
+        <div class="food-hero-image" aria-hidden="true"></div>
+        <div class="food-hero-shade"></div>
+
+        <div class="food-hero-content">
+            <span class="food-eyebrow">DIGITAL HERITAGE · KURDISTAN</span>
+
+            <h1>@L("Kurdische Küche", "Kurdish cuisine")</h1>
+
+            <p>
+                @L(
+                    "Eine kulinarische Reise durch Tradition, Geschmack und Gastfreundschaft.",
+                    "A culinary journey through tradition, flavour and hospitality.")
+            </p>
+
+            <div class="food-button">
+                @L("Kulinarische Reise starten", "Start the culinary journey")
+                <span aria-hidden="true">↘</span>
+            </div>
+
+            <div class="food-hero-caption">
+                <span>01 / 04</span>
+                <span>
+                    @L("Vier Regionen · Eine kulinarische Vielfalt",
+                           "Four regions · One culinary heritage")
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <main class="food-main">
+
+        <section class="food-intro food-reveal">
+            <div>
+                <span class="food-eyebrow food-eyebrow-dark">
+                    @L("KULINARISCHES ERBE", "CULINARY HERITAGE")
+                </span>
+
+                <h2>@L("Mehr als ein Gericht.", "More than a dish.")</h2>
+            </div>
+
+            <p>
+                @L(
+                    "Die kurdische Küche ist von Bergen, Viehzucht und Landwirtschaft geprägt. Bulgur, Reis, Lamm, Joghurt und frische Kräuter gehören ebenso dazu wie das gemeinsame Essen und frisch gebackenes Brot.",
+                    "Kurdish cuisine is shaped by mountains, herding and farming. Bulgur, rice, lamb, yogurt and fresh herbs are central, alongside shared meals and freshly baked bread.")
+            </p>
+        </section>
+
+        <section id="food-regions" class="food-section">
+            <div class="food-section-heading food-reveal">
+                <span class="food-eyebrow food-eyebrow-dark">
+                    01 — @L("DIE REGIONEN", "THE REGIONS")
+                </span>
+
+                <h2>@L("Vier Küchenlandschaften", "Four culinary regions")</h2>
+
+                <p>
+                    @L("Entdecke die regionalen Zutaten und Spezialitäten.",
+                       "Discover regional ingredients and specialities.")
+                </p>
+            </div>
+
+            <figure class="food-map food-reveal">
+                <img src="@Img("kurdische food.jfif")"
+                     alt="@L("Übersichtskarte der kurdischen Küche",
+                                                                             "Overview map of Kurdish cuisine")"
+                     loading="lazy" />
+            </figure>
+
+            <div class="food-region-grid">
+                @foreach (var r in Regions)
+                {
+                    <article class="food-region-card food-reveal" @key="r.Tag">
+                        <div class="food-region-photo">
+                            <img src="@Img(r.File)"
+                                 alt="@L(r.NameDe, r.NameEn)"
+                                 loading="lazy" />
+
+                            <span class="food-region-number">
+                                @Array.IndexOf(Regions, r).ToString("D2")
+                            </span>
+                        </div>
+
+                        <div class="food-region-content">
+                            <span class="food-eyebrow food-eyebrow-dark">
+                                @r.Tag
+                            </span>
+
+                            <h3>@L(r.NameDe, r.NameEn)</h3>
+
+                            <p class="food-staples">
+                                @L(r.StaplesDe, r.StaplesEn)
+                            </p>
+
+                            <div class="food-region-dishes">
+                                @foreach (var d in r.Dishes)
+                                {
+                                    <div class="food-region-dish" @key="d.Name">
+                                        <div>
+                                            <strong>@d.Name</strong>
+                                            <p>@L(d.De, d.En)</p>
+                                        </div>
+
+                                        <a href="@d.Link"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           aria-label="@($"More about {d.Name}")">
+                                            ↗
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+
+        <section id="food-dishes" class="food-section">
+            <div class="food-section-heading food-reveal">
+                <span class="food-eyebrow food-eyebrow-dark">
+                    02 — @L("HERZHAFTE SPEISEN", "SAVOURY DISHES")
+                </span>
+
+                <h2>@L("Gerichte & Brot", "Dishes & bread")</h2>
+
+                <p>
+                    @L("Von festlichen Tafeln bis zum täglich frisch gebackenen Brot.",
+                       "From festive tables to freshly baked everyday bread.")
+                </p>
+            </div>
+
+            <div class="food-toolbar food-reveal">
+                <label class="food-search">
+                    <span aria-hidden="true">⌕</span>
+
+                    <input type="search"
+                           @bind="SearchText"
+                           @bind:event="oninput"
+                           placeholder="@L("Gericht suchen …", "Search dishes …")"
+                           aria-label="@L("Gerichte suchen", "Search dishes")" />
+                </label>
+
+                <div class="food-filter">
+                    <button type="button"
+                            class="@FilterClass("all")"
+                            @onclick='() => SetFilter("all")'>
+                        @L("Alle", "All")
+                    </button>
+
+                    <button type="button"
+                            class="@FilterClass("main")"
+                            @onclick='() => SetFilter("main")'>
+                        @L("Gerichte", "Dishes")
+                    </button>
+
+                    <button type="button"
+                            class="@FilterClass("bread")"
+                            @onclick='() => SetFilter("bread")'>
+                        @L("Brot", "Bread")
+                    </button>
+                </div>
+            </div>
+
+            <div class="food-card-grid">
+                @foreach (var d in FilteredDishes)
+                {
+                    <article class="food-card food-reveal" @key="d.File">
+                        <button type="button"
+                                class="food-card-open"
+                                @onclick="() => OpenItem(d)">
+
+                            <div class="food-card-image">
+                                <img src="@Img(d.File)"
+                                     alt="@L(d.TitleDe, d.TitleEn)"
+                                     loading="lazy" />
+
+                                <span class="food-card-arrow">↗</span>
+                            </div>
+
+                            <div class="food-card-body">
+                                <span class="food-card-kicker">
+                                    @CategoryLabel(d)
+                                </span>
+
+                                <h3>@L(d.TitleDe, d.TitleEn, d.TitleKu)</h3>
+                                <p>@L(d.TextDe, d.TextEn, d.TextKu)</p>
+                               
+
+                                <span class="food-card-more">
+                                    @L("Geschichte entdecken", "Discover the story") ↗
+                                </span>
+                            </div>
+                        </button>
+                    </article>
+                }
+            </div>
+
+            @if (!FilteredDishes.Any())
+            {
+                <p class="food-empty">
+                    @L("Keine passenden Gerichte gefunden.",
+                       "No matching dishes found.")
+                </p>
+            }
+        </section>
+
+        <section id="food-sweets" class="food-section food-sweets-section">
+            <div class="food-section-heading food-reveal">
+                <span class="food-eyebrow food-eyebrow-dark">
+                    03 — @L("SÜSSE TRADITIONEN", "SWEET TRADITIONS")
+                </span>
+
+                <h2>
+                    @L("Süßes, Gebäck & Trockenfrüchte",
+                       "Sweets, pastries & dried fruit")
+                </h2>
+
+                <p>
+                    @L(
+                        "Zu Tee gehören Gebäck, Nüsse und Trockenfrüchte. Gastfreundschaft zeigt sich oft in einer gemeinsam geteilten Auswahl.",
+                        "Tea is often served with pastries, nuts and dried fruit. Hospitality is expressed through a shared selection.")
+                </p>
+            </div>
+
+            <div class="food-card-grid food-sweets-grid">
+                @foreach (var d in Sweets)
+                {
+                    <article class="food-card food-reveal" @key="d.File">
+                        <button type="button"
+                                class="food-card-open"
+                                @onclick="() => OpenItem(d)">
+
+                            <div class="food-card-image">
+                                <img src="@Img(d.File)"
+                                     alt="@L(d.TitleDe, d.TitleEn)"
+                                     loading="lazy" />
+
+                                <span class="food-card-arrow">↗</span>
+                            </div>
+
+                            <div class="food-card-body">
+                                <span class="food-card-kicker">
+                                    @L("SÜSSES & GASTFREUNDSCHAFT",
+                                       "SWEETS & HOSPITALITY")
+                                </span>
+
+                                <h3>@L(d.TitleDe, d.TitleEn)</h3>
+
+                                <p>@L(d.TextDe, d.TextEn)</p>
+
+                                <span class="food-card-more">
+                                    @L("Mehr entdecken", "Discover more") ↗
+                                </span>
+                            </div>
+                        </button>
+                    </article>
+                }
+            </div>
+        </section>
+
+        <section class="food-closing food-reveal">
+            <span class="food-eyebrow">DIGITAL HERITAGE · KURDISTAN</span>
+
+            <h2>
+                @L("Gemeinsam genießen. Tradition bewahren.",
+                   "Sharing food. Preserving tradition.")
+            </h2>
+
+            <a href="/food#food-top" class="food-button food-button-light">
+                @L("Zurück nach oben", "Back to top") ↑
+            </a>
+        </section>
+
+    </main>
+</div>
+
+@if (SelectedItem is not null)
+{
+    <div class="food-modal-backdrop"
+         @onclick="CloseItem"
+         @onkeydown="HandleModalKey"
+         tabindex="0"
+         role="presentation">
+
+        <section class="food-modal"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-label="@L(SelectedItem.TitleDe, SelectedItem.TitleEn)"
+                 @onclick:stopPropagation="true">
+
+            <button type="button"
+                    class="food-modal-close"
+                    aria-label="@L("Schließen", "Close")"
+                    @onclick="CloseItem">
+                ×
+            </button>
+
+            <img class="food-modal-image"
+                 src="@Img(SelectedItem.File)"
+                 alt="@L(SelectedItem.TitleDe, SelectedItem.TitleEn)" />
+
+            <div class="food-modal-content">
+                <span class="food-eyebrow food-eyebrow-dark">
+                    @L("KULINARISCHES ERBE", "CULINARY HERITAGE")
+                </span>
+
+                <h2>@L(SelectedItem.TitleDe, SelectedItem.TitleEn)</h2>
+
+                <p>@L(SelectedItem.TextDe, SelectedItem.TextEn)</p>
+
+                @if (!string.IsNullOrWhiteSpace(SelectedItem.Link))
+                {
+                    <a class="food-modal-link"
+                       href="@SelectedItem.Link"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        @(string.IsNullOrWhiteSpace(SelectedItem.LinkLabel)
+                            ? L("Mehr erfahren", "Learn more")
+                            : SelectedItem.LinkLabel) ↗
+                    </a>
+                }
+            </div>
+        </section>
+    </div>
+}
+
+<style>
+    /* Die vier Regionenfotos vollständig anzeigen (kein Zuschneiden). */
+    .food-region-photo {
+        aspect-ratio: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        background: #10140f;
+    }
+
+        .food-region-photo img {
+            position: static !important;
+            display: block;
+            width: 100%;
+            height: auto !important;
+            max-height: none !important;
+            object-fit: contain !important;
+        }
+</style>
+
+@code {
+    private static readonly Dictionary<string, string> KurdishTranslations =
+    new()
+    {
+        ["Kurdische Küche"] = "خواردنی کوردی",
+        ["Kurdish cuisine"] = "خواردنی کوردی",
+
+        ["Entdecke die kurdische Küche"] = "خواردنگەی کوردی بناسە",
+        ["Regionen"] = "ناوچەکان",
+        ["Gerichte"] = "خواردنەکان",
+        ["Süßspeisen"] = "شیرینییەکان",
+        ["Alle"] = "هەموویان",
+        ["Suchen"] = "گەڕان",
+        ["Suche nach Gerichten"] = "گەڕان بەدوای خواردنەکاندا",
+        ["Mehr erfahren"] = "زیاتر بزانە",
+        ["Zutaten"] = "پێکهاتەکان",
+        ["Zubereitung"] = "شێوازی ئامادەکردن",
+        ["Hauptgerichte"] = "خواردنی سەرەکی",
+        ["Desserts"] = "شیرینییەکان",
+        ["Frühstück"] = "نانی بەیانی",
+        ["Getränke"] = "خواردنەوەکان",
+        ["Keine Ergebnisse gefunden"] = "هیچ ئەنجامێک نەدۆزرایەوە",
+        ["Schließen"] = "داخستن",
+        ["Zurück"] = "گەڕانەوە",
+        ["Weiter"] = "دواتر"
+    };
+
+    private record RegionDish(
+    string Name,
+    string De,
+    string En,
+    string Link,
+    string Ku = ""
+);
+
+    private record Region(
+        string File,
+        string Tag,
+        string NameDe,
+        string NameEn,
+        string StaplesDe,
+        string StaplesEn,
+        RegionDish[] Dishes,
+        string NameKu = "",
+        string StaplesKu = ""
+    );
+
+    private record Item(
+        string File,
+        string TitleDe,
+        string TitleEn,
+        string TextDe,
+        string TextEn,
+        string Link,
+        string LinkLabel,
+        string Category = "main",
+        string TitleKu = "",
+        string TextKu = ""
+   
+    );
+
+    private static string Img(string file)
+        => "/images/heritage/Food/" + Uri.EscapeDataString(file);
+
+    private string L(string de, string en, string ku = "")
+    {
+        return Languages.CurrentLanguage switch
+        {
+            "de" => de,
+            "en" => en,
+            "ku" => !string.IsNullOrWhiteSpace(ku)
+                ? ku
+                : KurdishTranslations.GetValueOrDefault(de, de),
+            _ => de
+        };
+    }
+
+    // ---- Links: Wikipedia-Seiten, die es wirklich gibt ----
+    private const string WikiBase = "https://en.wikipedia.org/wiki/";
+    private const string CuisineUrl = WikiBase + "Kurdish_cuisine";
+
+    // Labels: Gericht hat eine eigene Seite = "Wikipedia"; sonst Übersichtsseite.
+    private const string LabelWiki = "Wikipedia";
+    private const string LabelCuisine = "Kurdish cuisine (Wikipedia)";
+
+    private string SearchText = "";
+    private string ActiveFilter = "all";
+    private Item? SelectedItem;
+    private IJSObjectReference? _foodModule;
+
+    private IEnumerable<Item> FilteredDishes =>
+     Dishes
+         .Where(d =>
+             (ActiveFilter == "all" || d.Category == ActiveFilter) &&
+             (string.IsNullOrWhiteSpace(SearchText) ||
+              $"{d.TitleDe} {d.TitleEn} {d.TextDe} {d.TextEn}"
+                 .Contains(SearchText.Trim(),
+                     StringComparison.OrdinalIgnoreCase)))
+         .OrderBy(d => d.Category == "bread" ? 1 : 0);
+
+    private string FilterClass(string filter)
+        => ActiveFilter == filter
+            ? "food-filter-button active"
+            : "food-filter-button";
+
+    private void SetFilter(string filter) => ActiveFilter = filter;
+
+    private void OpenItem(Item item) => SelectedItem = item;
+
+    private void CloseItem() => SelectedItem = null;
+
+    private void HandleModalKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+            CloseItem();
+    }
+
+    private string CategoryLabel(Item item)
+        => item.Category == "bread"
+            ? L("BROT & TRADITION", "BREAD & TRADITION")
+            : L("KURDISCHE KÜCHE", "KURDISH CUISINE");
+
+    private static readonly Region[] Regions =
+    {
+        new(
+            "bakur food.jfif",
+            "BAKUR",
+            "Nordkurdistan",
+            "Northern Kurdistan",
+            "Brot, Bulgur, Kräuter und herzhafte Hausmannskost.",
+            "Bread, bulgur, herbs and hearty home cooking.",
+            new[]
+            {
+                new RegionDish("Ser û Pê", "Traditionelles Gericht aus Innereien und Gewürzen.",
+                    "A traditional dish prepared with offal and spices.", CuisineUrl),
+                new RegionDish("Keşk", "Ein regionales Milchprodukt, das in Speisen verwendet wird.",
+                    "A regional dairy product used in traditional dishes.", WikiBase + "Kashk")
+            }
+        ),
+        new(
+            "bashur food.jfif",
+            "BASHUR",
+            "Südkurdistan",
+            "Southern Kurdistan",
+            "Reisgerichte, Dolma, Fleisch und gefülltes Gemüse.",
+            "Rice dishes, dolma, meat and stuffed vegetables.",
+            new[]
+            {
+                new RegionDish("Dolma", "Gefülltes Gemüse oder Weinblätter.",
+                    "Stuffed vegetables or vine leaves.", WikiBase + "Dolma"),
+                new RegionDish("Biryani", "Würziges Reisgericht mit Gemüse und Gewürzen.",
+                    "A spiced rice dish with vegetables and seasoning.", WikiBase + "Biryani")
+            }
+        ),
+        new(
+            "rojava food.jfif",
+            "ROJAVA",
+            "Westkurdistan",
+            "Western Kurdistan",
+            "Bulgur, frische Kräuter, Gemüse und hausgemachtes Brot.",
+            "Bulgur, fresh herbs, vegetables and homemade bread.",
+            new[]
+            {
+                new RegionDish("Kibbeh", "Eine Speise aus Getreide und gewürzter Füllung.",
+                    "A dish made with grain and a seasoned filling.", WikiBase + "Kibbeh"),
+                new RegionDish("Bulgur", "Ein vielseitiges Grundnahrungsmittel aus Weizen.",
+                    "A versatile staple made from wheat.", WikiBase + "Bulgur")
+            }
+        ),
+        new(
+            "rojhalat food.jfif",
+            "ROJHILAT",
+            "Ostkurdistan",
+            "Eastern Kurdistan",
+            "Regionale Kräuter, traditionelle Suppen und gefüllte Teigwaren.",
+            "Regional herbs, traditional soups and filled dough dishes.",
+            new[]
+            {
+                new RegionDish("Kələne", "Dünnes gefülltes Fladenbrot mit Kräutern.",
+                    "Thin flatbread filled with herbs.", CuisineUrl),
+                new RegionDish("Ash", "Eine kräftige Suppe mit Kräutern und Hülsenfrüchten.",
+                    "A hearty soup with herbs and legumes.", WikiBase + "Aush")
+            }
+        )
+    };
+
+    private static readonly Item[] Dishes =
+    {
+
+        new("food2.jfif", "Kebab", "Kebab",
+            "Gegrilltes Fleisch, das in vielen regionalen Varianten serviert wird.",
+            "Grilled meat served in many regional variations.",
+            WikiBase + "Kebab", LabelWiki),
+
+        new("food3.jfif", "Kutilk", "Kutilk",
+            "Eine traditionelle Speise aus Getreide mit würziger Füllung.",
+            "A traditional grain-based dish with a savoury filling.",
+            WikiBase + "Kibbeh", LabelWiki),
+
+        new("nan-hawrami.jpg", "Nanê Hewramî", "Hawrami bread",
+    "Traditionelles Brot aus der Hawraman-Region, dessen Zubereitung von lokalen Backtraditionen geprägt ist.",
+    "Traditional bread associated with the Hawraman region and its local baking traditions.",
+    CuisineUrl, LabelCuisine, "bread"),
+
+        new("food5.jfif", "Kurdî Nân", "Kurdish bread",
+            "Hausgemachtes Brot mit regional unterschiedlichen Rezepten.",
+            "Homemade bread with recipes that vary by region.",
+            CuisineUrl, LabelCuisine, "bread"),
+
+        new("food6.jfif", "Bulgur", "Bulgur",
+            "Weizengrütze als Grundlage für zahlreiche traditionelle Speisen.",
+            "Cracked wheat used as the base for many traditional dishes.",
+            WikiBase + "Bulgur", LabelWiki),
+
+        new("kalana.jfif", "Kalanê", "Kalane",
+            "Dünnes Fladenbrot mit Kräutern, besonders mit regionalen Wildkräutern.",
+            "Thin flatbread with herbs, often including local wild greens.",
+            CuisineUrl, LabelCuisine, "bread"),
+
+        new("doina(tarkhine).jpg", "Tarkhine", "Tarkhineh",
+            "Ein traditionelles fermentiertes Getreideprodukt, das oft für Suppen verwendet wird.",
+            "A traditional fermented grain preparation often used in soups.",
+            WikiBase + "Tarhana", LabelWiki),
+
+        new("food8.jfif", "Kofta", "Kofta",
+            "Gewürzte Fleischbällchen oder eine regionale Variante mit Getreide.",
+            "Seasoned meatballs or a regional grain-based variation.",
+            WikiBase + "Kofta", LabelWiki),
+
+        new("food9.jfif", "Yaprax", "Yaprak",
+            "Gefüllte Blätter, die mit Kräutern und Reis zubereitet werden.",
+            "Stuffed leaves prepared with herbs and rice.",
+            WikiBase + "Sarma_(food)", LabelWiki),
+
+        new("food10.jfif", "Biryanî", "Biryani",
+            "Ein aromatisches Reisgericht mit Gewürzen und Gemüse oder Fleisch.",
+            "An aromatic rice dish with spices and vegetables or meat.",
+            WikiBase + "Biryani", LabelWiki),
+
+        new("food11.jfif", "Çorbe", "Soup",
+            "Wärmende Suppen mit Hülsenfrüchten, Getreide und Kräutern.",
+            "Comforting soups made with legumes, grains and herbs.",
+            CuisineUrl, LabelCuisine),
+
+        new("food12.jfif", "Pîvaz", "Onion dish",
+            "Traditionelle Zubereitungen mit Zwiebeln und regionalen Zutaten.",
+            "Traditional preparations using onions and regional ingredients.",
+            CuisineUrl, LabelCuisine),
+
+        new("food13.jfif", "Rice & Meat", "Rice and meat",
+            "Reis mit Fleisch und Gewürzen, serviert bei alltäglichen und festlichen Mahlzeiten.",
+            "Rice with meat and spices, served at everyday meals and celebrations.",
+            CuisineUrl, LabelCuisine),
+            new(
+    "rhubarb-stew.jpg",
+    "Rhabarber-Eintopf",
+    "Rhubarb Stew",
+    "Ein traditionelles Gericht mit Rhabarber.",
+    "A traditional dish made with rhubarb.",
+    "",
+    "",
+    "main"
+),
+new(
+    "qime-kurg.jpg",
+    "Qime û Kurg",
+    "Qime û Kurg",
+    "Ein traditionelles kurdisches Gericht.",
+    "A traditional Kurdish dish.",
+    "",
+    "",
+    "main"
+),
+new(
+    "firojav.jpg",
+    "Firojav",
+    "Firojav",
+    "Ein regionales Gericht, das mit Sanandaj in Verbindung gebracht wird. Die Zutaten sollten anhand des verlinkten Originalrezepts geprüft werden.",
+    "A regional dish associated with Sanandaj. Its ingredients should be checked against the linked original recipe.",
+    "https://cookpad.com/ir/جستجو/فروجـاو",
+    "Rezeptquelle",
+    "main"
+),
+new(
+    "doxawa.jpg",
+    "Doxawa",
+    "Doxawa",
+    "Ein traditionelles Gericht aus der kurdischen Küche.",
+    "A traditional dish from Kurdish cuisine.",
+    "",
+    "",
+    "main"
+),
+new(
+    "ash-torsh.jpg",
+    "Āsch-e Torsh",
+    "Ash-e Torsh",
+    "Eine säuerliche Suppe. Die verlinkte Quelle beschreibt eine Rezeptvariante; die genaue regionale Zuordnung sollte separat bestätigt werden.",
+    "A sour soup. The linked source describes one recipe variation; its exact regional association should be confirmed separately.",
+    "https://www.digikala.com/mag/ash-torsh-recipe/",
+    "Rezeptquelle",
+    "main"
+),
+new(
+    "kutilk-daw.jpg",
+    "Kutilk Daw",
+    "Kutilk Daw",
+    "Kurdische Teigklöße aus Bulgur oder Grieß, serviert in einer Joghurtsuppe mit Knoblauch.",
+    "Kurdish dumplings made with bulgur or semolina, cooked in a yogurt soup with garlic.",
+    "",
+    "",
+    "main"
+),
+new(
+    "berbesel.jpg",
+    "Berbesel",
+    "Berbesel",
+    "Ein traditionelles kurdisches Gericht. Die genaue Zubereitung wird noch überprüft.",
+    "A traditional Kurdish dish. The exact preparation is still being verified.",
+    "",
+    "",
+    "main"
+),
+
+    };
+
+    
+    private static readonly Item[] Sweets =
+    {
+    new("food14.jfif", "Baklava", "Baklava",
+        "Süßes Gebäck aus dünnen Teigschichten mit Nüssen und Sirup.",
+        "Sweet pastry made with thin layers of dough, nuts and syrup.",
+        WikiBase + "Baklava", LabelWiki, "sweet"),
+
+    new("food15.jfif", "Kleicha", "Kleicha",
+        "Traditionelles Gebäck, häufig mit Datteln oder Nüssen gefüllt.",
+        "Traditional pastries often filled with dates or nuts.",
+        WikiBase + "Kleicha", LabelWiki, "sweet"),
+
+    new("bzhi.jfif", "Bzhi", "Bzhi",
+        "Eine regionale Spezialität, deren Zubereitung je nach lokaler Tradition variiert.",
+        "A regional speciality prepared in different ways according to local tradition.",
+        CuisineUrl, LabelCuisine, "sweet"),
+
+    new("food16.jfif", "Nanê Şîrîn", "Sweet bread",
+        "Süßes Brot, das zu Tee oder bei besonderen Anlässen serviert wird.",
+        "Sweet bread served with tea or on special occasions.",
+        CuisineUrl, LabelCuisine, "sweet"),
+
+    new("nan-berenji.jpg", "Nan-e Berenji", "Nan-e Berenji",
+        "Traditionelle Reismehlkekse aus der Region Kermanshah, oft mit Rosenwasser aromatisiert.",
+        "Traditional rice-flour cookies associated with Kermanshah, often flavoured with rose water.",
+        CuisineUrl, LabelCuisine, "sweet"),
+
+    new("bersaq.jpg", "Bersaq", "Bersaq",
+        "Traditionelles regionales Gebäck, dessen Rezept und Zubereitung von Gegend zu Gegend variieren.",
+        "Traditional regional pastry whose recipe and preparation vary from place to place.",
+        CuisineUrl, LabelCuisine, "sweet"),
+
+    new("kak.jpg", "Kak", "Kak",
+        "Feines, knuspriges Schichtgebäck, das besonders mit Kermanshah verbunden ist.",
+        "Delicate, crisp layered pastry especially associated with Kermanshah.",
+        CuisineUrl, LabelCuisine, "sweet"),
+
+    new("food17.jfif", "Datteln & Nüsse", "Dates and nuts",
+        "Datteln und Nüsse als Teil einer traditionellen Auswahl zu Tee.",
+        "Dates and nuts served as part of a traditional tea selection.",
+        WikiBase + "Date_palm", LabelWiki, "sweet"),
+
+    new(
+    "shirini-konj-gazu.jpg",
+    "Konji Gazo – Sesamsüßigkeit aus Sanandaj",
+    "Konji Gazo – Sesame Sweet from Sanandaj",
+    "Eine traditionelle Sesamsüßigkeit, die mit Sanandaj verbunden wird. Sie wird mit geröstetem Sesam und Gazangabin oder – je nach Variante – mit Zucker zubereitet.",
+    "A traditional sesame sweet associated with Sanandaj. It is made with roasted sesame and gazangabin or, depending on the variation, sugar.",
+    "https://fa.wikipedia.org/wiki/شیرینی_گزانگبین",
+    "Quelle: Gazangabin-Süßigkeit",
+    "sweet"),
+};
+
+
+    protected override void OnInitialized()
+    {
+        Languages.Changed += HandleLanguageChanged;
+    }
+
+    private void HandleLanguageChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        try
+        {
+            // Absoluter Pfad: wwwroot/js/food-page.js
+            _foodModule = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "/js/food-page.js");
+
+            await _foodModule.InvokeVoidAsync("initializeFoodPage");
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException ex)
+        {
+            // Fehlende oder fehlerhafte JS-Datei darf die Seite nicht abstürzen lassen.
+            Console.WriteLine($"food-page.js konnte nicht geladen werden: {ex.Message}");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        Languages.Changed -= HandleLanguageChanged;
+
+        if (_foodModule is not null)
+        {
+            try
+            {
+                await _foodModule.InvokeVoidAsync("disposeFoodPage");
+                await _foodModule.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+            catch (JSException)
+            {
+            }
+        }
+    }
+}

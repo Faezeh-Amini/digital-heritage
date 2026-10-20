@@ -1,0 +1,37 @@
+Digital Heritage – local image credits
+
+All image files are resized Commons previews for display in this project.
+
+1. bisotun-site.jpg
+   Image: “Bisotun World Heritage Site.jpg”
+   Creator: Hamzeh Einy Nezhad (H.einy)
+   License: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+   Source: https://commons.wikimedia.org/wiki/File:Bisotun_World_Heritage_Site.jpg
+   Changes: resized for web display.
+
+2. bisotun-inscription.jpg
+   Image: “Bisotoun Inscription.jpg”
+   Creator: Sima Farshid (Simashid)
+   License: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+   Source: https://commons.wikimedia.org/wiki/File:Bisotoun_Inscription.jpg
+   Changes: resized for web display.
+
+3. anubanini-relief.jpg
+   Image: “Anubanini (3936968576).jpg”
+   Creator: dynamosquito (Flickr)
+   License: CC BY-SA 2.0 — https://creativecommons.org/licenses/by-sa/2.0/
+   Source: https://commons.wikimedia.org/wiki/File:Anubanini_(3936968576).jpg
+   Changes: resized for web display.
+
+4. anubanini-drawing.jpg
+   Image: “Sar-e Pol-e Zahab, Anubanini Relief, drawing.jpg”
+   Creator: Jona Lendering
+   License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+   Source: https://commons.wikimedia.org/wiki/File:Sar-e_Pol-e_Zahab,_Anubanini_Relief,_drawing.jpg
+   Changes: resized for web display.
+
+5. Shanidar Cave gallery (three resized Wikimedia Commons images, stored locally).
+   - Shanidar Cave0.jpg — Khoshhat — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Shanidar_Cave0.jpg
+   - Shanidar Cave - overview.jpg — Hardscarf — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Shanidar_Cave_-_overview.jpg
+   - Shanidar Cave - excavations.jpg — Hardscarf — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Shanidar_Cave_-_excavations.jpg
+   Local files: shanidar-cave-main.jpg, shanidar-cave-overview.jpg, shanidar-cave-excavations.jpg. All resized for web display; source links above.

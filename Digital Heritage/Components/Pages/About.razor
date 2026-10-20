@@ -1,0 +1,111 @@
+@page "/about"
+@using Digital_Heritage.Data
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+<div class="container py-5">
+    <div class="text-center">
+        <span class="text-warning">@Languages.Text("about.kicker")</span>
+        <h1 class="display-4 text-warning fw-bold mt-3">@Languages.Text("about.title")</h1>
+        <p class="lead text-muted mt-4">@Languages.Text("about.intro")</p>
+    </div>
+
+    <div class="card bg-dark border-secondary text-light p-4 mt-5">
+        <h3 class="text-warning">@Languages.Text("about.technology")</h3>
+        <ul class="text-muted">
+            <li>@Languages.Text("about.tech1")</li>
+            <li>@Languages.Text("about.tech2")</li>
+            <li>@Languages.Text("about.tech3")</li>
+            <li>@Languages.Text("about.tech4")</li>
+        </ul>
+    </div>
+
+    <div class="card bg-dark border-secondary text-light p-4 mt-4">
+        <h3 class="text-warning">@Languages.Text("about.objective")</h3>
+        <p class="text-muted">@Languages.Text("about.objectiveText")</p>
+    </div>
+
+    <section id="bildnachweis" class="card bg-dark border-secondary text-light p-4 mt-4"
+             aria-labelledby="credits-title">
+        <h3 id="credits-title" class="text-warning">
+            @Label("Image credits", "Bildnachweis", "سەرچاوەی وێنەکان")
+        </h3>
+        <p class="text-muted">
+            @Label("Photographs and illustrations used on this site, with author, licence and source. All rights remain with the named authors.",
+                   "Fotos und Abbildungen dieser Website mit Urheber, Lizenz und Quelle. Alle Rechte verbleiben bei den genannten Urheberinnen und Urhebern.",
+                   "وێنە و ئامرازە بینراوەکانی ئەم ماڵپەڕە لەگەڵ خاوەن، مۆڵەت و سەرچاوە. هەموو مافەکان بۆ خاوەنە ناوبراوەکانە.")
+        </p>
+
+        <p class="text-muted small">
+            @Label("All images were resized for web display; no other changes were made.",
+                   "Alle Bilder wurden für die Webanzeige verkleinert; weitere Änderungen wurden nicht vorgenommen.",
+                   "هەموو وێنەکان بۆ پیشاندان لە وێب بچووککراونەتەوە؛ هیچ گۆڕانکارییەکی تر نەکراوە.")
+        </p>
+
+        @if (Groups.Count == 0)
+        {
+            <p class="text-muted mb-0">@Label("No entries yet.", "Noch keine Einträge.", "هێشتا تۆمار نییە.")</p>
+        }
+
+        @foreach (var group in Groups)
+        {
+            <details class="mt-3" open>
+                <summary class="text-warning h5 mb-3">
+                    @GroupTitle(group.Key) <span class="text-muted fs-6">(@group.Count())</span>
+                </summary>
+
+                <div class="table-responsive">
+                    <table class="table table-dark table-borderless align-middle mb-0">
+                        <thead>
+                            <tr class="text-muted small">
+                                <th scope="col">@Label("Image", "Bild", "وێنە")</th>
+                                <th scope="col">@Label("Author", "Urheber", "خاوەن")</th>
+                                <th scope="col">@Label("Licence", "Lizenz", "مۆڵەت")</th>
+                                <th scope="col">@Label("Source", "Quelle", "سەرچاوە")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var credit in group)
+                            {
+                                <tr>
+                                    <td>@credit.Title</td>
+                                    <td class="text-muted">@credit.Author</td>
+                                    <td>
+                                        <a href="@credit.LicenseUrl" class="text-muted"
+                                           target="_blank" rel="noopener noreferrer">@credit.License</a>
+                                    </td>
+                                    <td>
+                                        <a href="@credit.SourceUrl" class="text-warning"
+                                           target="_blank" rel="noopener noreferrer">
+                                            @Label("Open", "Öffnen", "کردنەوە")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        }
+    </section>
+</div>
+
+@code {
+    private List<IGrouping<string, ImageCredit>> Groups =>
+        ImageCredits.All.GroupBy(c => c.GroupId).ToList();
+
+    private string Label(string en, string de, string ku) =>
+        Languages.CurrentLanguage switch { "de" => de, "ku" => ku, _ => en };
+
+    private string GroupTitle(string groupId) => groupId switch
+    {
+        "sites" => Label("Historical and archaeological sites",
+                         "Historische und archäologische Stätten",
+                         "شوێنە مێژوویی و شوێنەوارییەکان"),
+        _ => groupId
+    };
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+}

@@ -1,0 +1,654 @@
+@page "/crafts"
+
+@using Microsoft.AspNetCore.Components.Web
+@using Digital_Heritage.Data
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+<PageTitle>@Languages.Text("crafts.title") · Digital Heritage</PageTitle>
+
+<div class="crafts-page">
+
+    @* ============ HERO ============ *@
+    <header class="cr-hero">
+        <img class="cr-hero-img" src="/images/heritage/Handkraft/handkraft14.jfif" alt="" />
+        <div class="cr-hero-shade" aria-hidden="true"></div>
+        <a class="cr-back" href="/">⌂ <span>@HomeLinkText</span></a>
+        <div class="cr-hero-copy">
+            <span class="cr-kicker">@Languages.Text("crafts.kicker")</span>
+            <h1>@Languages.Text("crafts.title")</h1>
+            <p>@Languages.Text("crafts.description")</p>
+            <span class="cr-count">@CountLine</span>
+        </div>
+    </header>
+
+    @* ============ KATEGORIE-NAVIGATION ============ *@
+    <nav class="cr-chips" aria-label="@Languages.Text("crafts.title")">
+        @for (var i = 0; i < CraftTraditions.Count; i++)
+        {
+            <a href="/crafts#craft-@i" onclick="var t=document.getElementById('craft-@i'); if(t){t.scrollIntoView({behavior:'smooth',block:'start'}); return false;}"><b>@((i + 1).ToString("00"))</b> @CraftTraditions[i].Title</a>
+        }
+    </nav>
+
+    <p class="cr-intro">@CraftOverviewIntro</p>
+
+    @* ============ 8 HANDWERKS-TRADITIONEN ============ *@
+    @for (var index = 0; index < CraftTraditions.Count; index++)
+    {
+        var tradition = CraftTraditions[index];
+        var photos = PhotosFor(index);
+        <section id="craft-@index" class="cr-section @(index % 2 == 1 ? "rev" : "")">
+            <div class="cr-copy">
+                <span class="cr-num">@((index + 1).ToString("00"))</span>
+                <span class="cr-label">@tradition.Label</span>
+                <h2>@tradition.Title</h2>
+                <p>@tradition.Description</p>
+            </div>
+            <div class="cr-mosaic @(photos.Count % 2 == 1 ? "odd" : "even")">
+                @foreach (var photo in photos)
+                {
+                    <button type="button" class="cr-photo" @onclick="() => Open(photo.Path)" aria-label="@Caption(photo) — @CraftOpenImage">
+                        <img src="@photo.Path" alt="@Caption(photo)" loading="lazy" class="@(photo.Contain ? "contain" : "")" />
+                        <span class="cr-cap">@Caption(photo)</span>
+                    </button>
+                }
+            </div>
+        </section>
+    }
+
+    @* ============ WEITERE EINDRÜCKE ============ *@
+    <section class="cr-gallery" aria-label="@CraftGalleryTitle">
+        <div class="cr-gallery-head">
+            <span class="cr-kicker">@CraftGalleryKicker</span>
+            <h2>@CraftGalleryTitle</h2>
+            <p>@CraftGalleryHint</p>
+        </div>
+        <div class="cr-gallery-grid">
+            @foreach (var photo in PhotosFor(-1))
+            {
+                <button type="button" class="cr-photo sq" @onclick="() => Open(photo.Path)" aria-label="@Caption(photo) — @CraftOpenImage">
+                    <img src="@photo.Path" alt="@Caption(photo)" loading="lazy" />
+                    <span class="cr-cap">@Caption(photo)</span>
+                </button>
+            }
+        </div>
+    </section>
+
+    <blockquote class="cr-outro">@CraftOverviewOutro</blockquote>
+</div>
+
+@* ============ LIGHTBOX ============ *@
+@if (lightbox is int li)
+{
+    var p = AllPhotos[li];
+    <div class="cr-lightbox" role="dialog" aria-modal="true" aria-label="@Caption(p)" tabindex="0"
+         @ref="lightboxRef" @onclick="Close" @onkeydown="OnKey">
+        <button type="button" class="cr-lb-close" @onclick="Close" @onclick:stopPropagation="true" aria-label="@Pick("Schließen", "Close", "داخستن")">×</button>
+        <button type="button" class="cr-lb-nav prev" @onclick="Prev" @onclick:stopPropagation="true" aria-label="@Pick("Zurück", "Previous", "پێشوو")">‹</button>
+        <figure @onclick:stopPropagation="true">
+            <img src="@p.Path" alt="@Caption(p)" />
+            <figcaption><strong>@Caption(p)</strong><span>@(li + 1) / @AllPhotos.Count</span></figcaption>
+        </figure>
+        <button type="button" class="cr-lb-nav next" @onclick="Next" @onclick:stopPropagation="true" aria-label="@Pick("Weiter", "Next", "دواتر")">›</button>
+    </div>
+}
+
+<style>
+    .crafts-page {
+        --gold: #d5b574;
+        --bright: #f3d995;
+        --ink: #0b0e0b;
+        --paper: #ece7da;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 4rem;
+        color: var(--paper)
+    }
+
+    /* Hero */
+    .cr-hero {
+        position: relative;
+        min-height: clamp(320px,46vh,460px);
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        border: 1px solid rgba(213,181,116,.3);
+        border-radius: 6px;
+        background: #0c100c
+    }
+
+    .cr-hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 40%
+    }
+
+    .cr-hero-shade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top,rgba(8,10,8,.94) 8%,rgba(8,10,8,.45) 55%,rgba(8,10,8,.2)),linear-gradient(to right,rgba(8,10,8,.55),transparent 60%)
+    }
+
+    .cr-back {
+        position: absolute;
+        top: 16px;
+        left: 18px;
+        z-index: 2;
+        padding: 7px 12px;
+        color: #eee7d7;
+        text-decoration: none;
+        font: 11px Arial,sans-serif;
+        letter-spacing: .06em;
+        border: 1px solid rgba(213,181,116,.4);
+        background: rgba(10,13,11,.6);
+        backdrop-filter: blur(8px)
+    }
+
+        .cr-back:hover {
+            color: #fff0c8;
+            border-color: var(--gold)
+        }
+
+    .cr-hero-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 660px;
+        padding: 2rem 2.2rem 2.2rem
+    }
+
+    .cr-kicker {
+        color: var(--gold);
+        font: 10px Arial,sans-serif;
+        letter-spacing: .2em;
+        text-transform: uppercase
+    }
+
+    .cr-hero h1 {
+        margin: .5rem 0 .7rem;
+        color: var(--bright);
+        font: 400 clamp(2rem,4.6vw,3.4rem)/1.05 Georgia,serif;
+        text-shadow: 0 3px 18px #000
+    }
+
+    .cr-hero p {
+        margin: 0 0 1rem;
+        color: #e2dccb;
+        font: 15px/1.8 Arial,sans-serif
+    }
+
+    .cr-count {
+        display: inline-block;
+        padding: 5px 11px;
+        color: var(--bright);
+        font: 10px Arial,sans-serif;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        border: 1px solid rgba(213,181,116,.5);
+        background: rgba(10,13,11,.55)
+    }
+
+    /* Chips */
+    .cr-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 1.3rem 0 0;
+        padding: 0
+    }
+
+        .cr-chips a {
+            padding: 8px 13px;
+            color: #e8e1d0;
+            text-decoration: none;
+            font: 12px Arial,sans-serif;
+            border: 1px solid rgba(213,181,116,.35);
+            background: linear-gradient(145deg,rgba(213,181,116,.12),rgba(12,14,12,.92));
+            transition: .18s
+        }
+
+            .cr-chips a b {
+                margin-right: 6px;
+                color: var(--gold);
+                font-weight: 400;
+                font-size: 10px;
+                letter-spacing: .1em
+            }
+
+            .cr-chips a:hover {
+                color: #fff0c8;
+                border-color: var(--gold);
+                background: linear-gradient(145deg,rgba(213,181,116,.3),rgba(24,23,18,.95))
+            }
+
+    .cr-intro {
+        max-width: 860px;
+        margin: 2.2rem auto 1rem;
+        text-align: center;
+        color: #d9d4c6;
+        font: 16px/1.95 Georgia,serif
+    }
+
+    /* Sektionen */
+    .cr-section {
+        display: grid;
+        grid-template-columns: minmax(260px,.8fr) 1.4fr;
+        gap: 2.2rem;
+        align-items: center;
+        margin-top: 3.2rem;
+        padding-top: 2.2rem;
+        border-top: 1px solid rgba(213,181,116,.2);
+        scroll-margin-top: 14px
+    }
+
+        .cr-section.rev .cr-copy {
+            order: 2
+        }
+
+    .cr-num {
+        display: block;
+        color: rgba(213,181,116,.35);
+        font: 400 3.6rem/1 Georgia,serif
+    }
+
+    .cr-label {
+        display: block;
+        margin-top: .4rem;
+        color: var(--gold);
+        font: 10px Arial,sans-serif;
+        letter-spacing: .2em
+    }
+
+    .cr-copy h2 {
+        margin: .5rem 0 .8rem;
+        color: var(--bright);
+        font: 400 clamp(1.5rem,2.6vw,2rem)/1.2 Georgia,serif
+    }
+
+    .cr-copy p {
+        margin: 0;
+        color: #cfcabd;
+        font: 14px/1.9 Arial,sans-serif
+    }
+
+    /* Foto-Mosaik */
+    .cr-mosaic {
+        display: grid;
+        grid-template-columns: repeat(6,minmax(0,1fr));
+        gap: 8px
+    }
+
+        .cr-mosaic .cr-photo {
+            grid-column: span 3;
+            aspect-ratio: 4/3
+        }
+
+        .cr-mosaic.odd .cr-photo:first-child {
+            grid-column: span 6;
+            aspect-ratio: 16/10
+        }
+
+    .cr-photo {
+        position: relative;
+        display: block;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid rgba(213,181,116,.25);
+        border-radius: 4px;
+        background: #0c100c;
+        cursor: zoom-in
+    }
+
+        .cr-photo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s,filter .3s
+        }
+
+            .cr-photo img.contain {
+                object-fit: contain;
+                background: #14120d
+            }
+
+        .cr-photo:hover img {
+            transform: scale(1.045);
+            filter: brightness(1.08)
+        }
+
+        .cr-photo:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px
+        }
+
+    .cr-cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 22px 11px 9px;
+        color: #f3ead4;
+        text-align: left;
+        font: 11px/1.35 Arial,sans-serif;
+        background: linear-gradient(to top,rgba(6,8,6,.9),transparent);
+        opacity: 0;
+        transform: translateY(5px);
+        transition: .25s
+    }
+
+    .cr-photo:hover .cr-cap, .cr-photo:focus-visible .cr-cap {
+        opacity: 1;
+        transform: none
+    }
+
+    /* Galerie */
+    .cr-gallery {
+        margin-top: 4rem;
+        padding-top: 2.4rem;
+        border-top: 1px solid rgba(213,181,116,.2)
+    }
+
+    .cr-gallery-head {
+        text-align: center;
+        margin-bottom: 1.6rem
+    }
+
+        .cr-gallery-head h2 {
+            margin: .5rem 0;
+            color: var(--bright);
+            font: 400 clamp(1.6rem,3vw,2.2rem) Georgia,serif
+        }
+
+        .cr-gallery-head p {
+            margin: 0;
+            color: #aaa69a;
+            font: 12px Arial,sans-serif
+        }
+
+    .cr-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(210px,1fr));
+        gap: 10px
+    }
+
+    .cr-photo.sq {
+        aspect-ratio: 4/3
+    }
+
+    .cr-outro {
+        max-width: 820px;
+        margin: 4rem auto 0;
+        padding: 1.6rem 0 0;
+        border-top: 1px solid rgba(213,181,116,.25);
+        text-align: center;
+        color: #d4cfc0;
+        font: italic 17px/1.9 Georgia,serif
+    }
+
+    /* Lightbox */
+    .cr-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 20px;
+        background: rgba(0,0,0,.93);
+        cursor: zoom-out;
+        outline: none
+    }
+
+        .cr-lightbox figure {
+            margin: 0;
+            max-width: min(92vw,1300px);
+            text-align: center;
+            cursor: default
+        }
+
+        .cr-lightbox img {
+            display: block;
+            max-width: 100%;
+            max-height: 80vh;
+            margin: 0 auto;
+            border-radius: 4px;
+            box-shadow: 0 0 40px #000
+        }
+
+        .cr-lightbox figcaption {
+            margin-top: 12px;
+            color: #f3ead4;
+            font: 14px/1.5 Arial,sans-serif
+        }
+
+            .cr-lightbox figcaption span {
+                display: block;
+                margin-top: 3px;
+                color: #9c988c;
+                font-size: 11px;
+                letter-spacing: .12em
+            }
+
+    .cr-lb-close, .cr-lb-nav {
+        border: 1px solid rgba(255,255,255,.4);
+        background: rgba(0,0,0,.45);
+        color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        line-height: 1
+    }
+
+    .cr-lb-close {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 30px
+    }
+
+    .cr-lb-nav {
+        flex: none;
+        width: 48px;
+        height: 48px;
+        font-size: 34px;
+        padding-bottom: 5px
+    }
+
+        .cr-lb-close:hover, .cr-lb-nav:hover {
+            border-color: var(--gold,#d5b574);
+            color: #f3d995
+        }
+
+    @@media(max-width:860px) {
+        .cr-section {
+            grid-template-columns: 1fr;
+            gap: 1.2rem
+        }
+
+            .cr-section.rev .cr-copy {
+                order: 0
+            }
+
+        .cr-num {
+            font-size: 2.6rem
+        }
+
+        .cr-hero-copy {
+            padding: 1.4rem 1.2rem
+        }
+
+        .cr-cap {
+            opacity: 1;
+            transform: none;
+            font-size: 10px
+        }
+
+        .cr-lb-nav {
+            position: absolute;
+            bottom: 18px;
+            width: 42px;
+            height: 42px
+        }
+
+            .cr-lb-nav.prev {
+                left: 16px
+            }
+
+            .cr-lb-nav.next {
+                right: 16px
+            }
+    }
+</style>
+
+@code {
+    private sealed record CraftPhoto(string Path, int Cat, string De, string En, bool Contain = false);
+    private sealed record CraftTradition(string Label, string Title, string Description);
+
+    private int? lightbox;
+    private bool focusPending;
+    private ElementReference lightboxRef;
+
+    private string Pick(string de, string en, string ku) =>
+        Languages.CurrentLanguage == "de" ? de : Languages.CurrentLanguage == "ku" ? ku : en;
+
+    // Cat: Index der Tradition (0-7), -1 = Galerie „Weitere Eindrücke“
+    private const string H = "/images/heritage/Handkraft/";
+    private static readonly CraftPhoto[] CraftPhotos =
+    {
+        new(H + "handkraft 3.jfif", 0, "Kelim mit Rautenmustern", "Kilim with diamond patterns"),
+        new("/images/heritage/kurdish-carpet.jpg", 0, "Kurdischer Teppich", "Kurdish carpet", true),
+        new(H + "handkraft 5.jfif", 0, "Gestreifter Kelim", "Striped kilim"),
+
+        new(H + "handkraft0.webp", 1, "Weben von Hand", "Weaving by hand"),
+        new(H + "handkraft14.jfif", 1, "Webstuhl mit Karostoff", "Loom with checked cloth"),
+        new(H + "handkraft 4.jfif", 1, "Weberin am Webstuhl", "Weaver at the loom"),
+        new(H + "handkraft.webp", 1, "Weberin im Freien", "Weaver outdoors"),
+        new(H + "handkraft12.jfif", 1, "Besticktes Textil", "Embroidered textile"),
+
+        new(H + "handkraft11.jpg", 2, "Klash: Sohle und Schuh", "Klash sole and shoe"),
+        new(H + "handkraft14.jpeg", 2, "Schuhmacher bei der Arbeit", "Shoemaker at work"),
+        new(H + "handkraft 6.jfif", 2, "Klash-Schuhe in Reihen", "Klash shoes in rows"),
+
+        new(H + "handkraft17.jpg", 3, "Holzwerkstatt", "Woodworking workshop"),
+        new(H + "handkraft2.jpg", 3, "Holzdose mit Intarsien", "Wooden box with inlay"),
+        new(H + "handkraft4.jpg", 3, "Tablett mit Intarsien", "Inlaid tray"),
+        new(H + "handkraft5.jpg", 3, "Spielbrett mit Schublade", "Game board with drawer"),
+        new(H + "handkraft6.jpg", 3, "Geschnitzte Schatulle", "Carved box"),
+
+        new(H + "handkraft3.jpg", 4, "Saiteninstrument", "String instrument"),
+
+        new(H + "handkraft10.jpg", 5, "Korbflechter bei der Arbeit", "Basket weaver at work"),
+
+        new(H + "handkraft8.webp", 6, "Filzherstellung", "Felt making"),
+        new(H + "Tashi.jpg", 6, "Wolle spinnen", "Spinning wool"),
+
+        new(H + "handkraft15.webp", 7, "Anhänger mit Münzen", "Pendant with coins"),
+        new(H + "handkraft16.jfif", 7, "Perlen- und Schmuckketten", "Strings of beads and jewellery"),
+        new(H + "handkraft.jfif", 7, "Schmuck aus Goldmünzen", "Gold coin jewellery"),
+
+        new(H + "handkraft.jpg", -1, "Marktstand mit Klash-Schuhen und Kappen", "Market stall with klash shoes and caps"),
+        new(H + "handkraft7.webp", -1, "Frau in Tracht vor Teppichen", "Woman in traditional dress in front of carpets"),
+        new(H + "handkraft74.jfif", -1, "Besticktes Gilet", "Embroidered vest"),
+        new(H + "handkraft9.jpg", -1, "Keramik und Kunsthandwerk im Laden", "Ceramics and crafts in a shop"),
+        new(H + "handkraft1.jfif", -1, "Perlenkette mit Quaste", "Beaded string with tassel")
+    };
+
+    private IReadOnlyList<CraftPhoto> PhotosFor(int cat) => CraftPhotos.Where(p => p.Cat == cat).ToArray();
+    // Reihenfolge wie auf der Seite: erst alle Traditionen, dann die Galerie
+    private IReadOnlyList<CraftPhoto> AllPhotos => CraftPhotos.Where(p => p.Cat >= 0).Concat(CraftPhotos.Where(p => p.Cat < 0)).ToArray();
+
+    private string Caption(CraftPhoto p) => Languages.CurrentLanguage == "de" ? p.De : p.En;
+
+    private string CountLine => Pick(
+        $"{CraftTraditions.Count} Handwerkstraditionen · {CraftPhotos.Length} Fotos",
+        $"{CraftTraditions.Count} craft traditions · {CraftPhotos.Length} photos",
+        $"{CraftTraditions.Count} نەریتی دەستکاری · {CraftPhotos.Length} وێنە");
+
+    // ---- Lightbox ----
+    private void Open(string path)
+    {
+        var i = AllPhotos.ToList().FindIndex(p => p.Path == path);
+        if (i >= 0) { lightbox = i; focusPending = true; }
+    }
+    private void Close() => lightbox = null;
+    private void Next() { if (lightbox is int i) lightbox = (i + 1) % AllPhotos.Count; }
+    private void Prev() { if (lightbox is int i) lightbox = (i - 1 + AllPhotos.Count) % AllPhotos.Count; }
+    private void OnKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape") Close();
+        else if (e.Key == "ArrowRight") Next();
+        else if (e.Key == "ArrowLeft") Prev();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (focusPending && lightbox is not null)
+        {
+            focusPending = false;
+            try { await lightboxRef.FocusAsync(); } catch { }
+        }
+    }
+
+    // ---- Texte ----
+    private string HomeLinkText => Languages.CurrentLanguage == "de" ? "Zur Startseite" : Languages.CurrentLanguage == "ku" ? "بگەڕێوە بۆ پەڕەی سەرەکی" : "Back to home";
+    private string CraftGalleryTitle => Languages.CurrentLanguage == "de" ? "Einblicke ins Kunsthandwerk" : Languages.CurrentLanguage == "ku" ? "وێنەکانی دەستکاری" : "Craft traditions in pictures";
+    private string CraftGalleryKicker => Languages.CurrentLanguage == "de" ? "MATERIAL / TECHNIK / ALLTAG" : Languages.CurrentLanguage == "ku" ? "ماددە / تەکنیک / ژیانی ڕۆژانە" : "MATERIAL / TECHNIQUE / EVERYDAY LIFE";
+    private string CraftGalleryHint => Languages.CurrentLanguage == "de" ? "Ein Bild anklicken, um es in voller Größe zu öffnen." : Languages.CurrentLanguage == "ku" ? "کلیک لەسەر وێنە بکە بۆ کردنەوەی بە قەبارەی تەواو." : "Select an image to open it at full size.";
+    private string CraftOpenImage => Languages.CurrentLanguage == "de" ? "Bild in voller Größe öffnen" : Languages.CurrentLanguage == "ku" ? "وێنەکە بە قەبارەی تەواو بکەرەوە" : "Open image full size";
+    private string CraftOverviewIntro => Languages.CurrentLanguage switch
+    {
+        "de" => "Das Kunsthandwerk Kurdistans spiegelt Lebensweisen, Berglandschaften und das Können vieler Generationen wider. Trotz lokaler Unterschiede teilen zahlreiche Traditionen regionale Wurzeln und prägen das kulturelle Leben.",
+        "ku" => "دەستکاریی کوردستان شێوازی ژیان، سروشتی شاخاویی و شارەزایی چەندین نەوەی هونەرمەندانی کورد ڕەنگدەداتەوە. لەگەڵ جیاوازیی ناوخۆیی، زۆرێک لەم نەریتانە ڕەگ‌وڕیشەی هاوبەشیان هەیە و بەشێکن لە کولتووری زیندوو.",
+        _ => "Kurdistan's crafts reflect ways of life, mountain environments and the skill of generations of Kurdish makers. Despite local differences, many traditions share regional roots and remain part of living culture."
+    };
+    private string CraftOverviewOutro => Languages.CurrentLanguage switch
+    {
+        "de" => "Heute bleiben diese Künste Teil des lebendigen Kulturerbes. Sie tragen zur Bewahrung von Wissen bei, können lokale Lebensgrundlagen stärken und kurdische Gestaltung weltweit sichtbar machen.",
+        "ku" => "ئەمڕۆش ئەم هونەرانە بەشێکن لە میراتی زیندووی کوردستان. یارمەتی پاراستنی زانیاریی نەریتی دەدەن و دەتوانن پشتگیریی ژیانی ئابووریی ناوخۆ بکەن و هونەری کوردی بناسێنن.",
+        _ => "Today these arts remain part of Kurdistan's living heritage. They help preserve knowledge, can support local livelihoods and introduce Kurdish creativity to wider audiences."
+    };
+    private IReadOnlyList<CraftTradition> CraftTraditions => Languages.CurrentLanguage switch
+    {
+        "de" => new[]
+        {
+            new CraftTradition("TEXTILIEN", "Teppiche und Kelims", "Kurdische Teppiche und Kelims sind für geometrische Muster, kräftige Farben und Motive bekannt, die von Landschaft und Alltag inspiriert sein können."),
+            new CraftTradition("WEBEREI", "Jajim, Mawj und Schals", "Jajim-, Mawj- und Schalweberei gehören zu den Textiltraditionen. Gewebte Stoffe dienten regional als Kleidung, Decken und Gebrauchsgegenstände."),
+            new CraftTradition("SCHUHHANDWERK", "Klash / Klash-Schuh", "Der handgefertigte Klash-Schuh wird aus textilen und natürlichen Materialien hergestellt. In einigen Bergregionen wird das Handwerk bis heute ausgeübt."),
+            new CraftTradition("HOLZ", "Holzarbeiten", "Feine Holzarbeit, Schnitzerei, Intarsien und Drechseln bringen unter anderem Spielbretter, Kästen, Gefäße, Musikinstrumente und Alltagsobjekte hervor."),
+            new CraftTradition("MUSIK", "Traditioneller Instrumentenbau", "Instrumente wie Daf, Tanbur, Şimşal, Zurna und Balaban werden von spezialisierten Handwerkern gefertigt und prägen regionale Musiktraditionen."),
+            new CraftTradition("PFLANZENFASERN", "Korb- und Mattenflechten", "Weidenruten, Schilf und andere lokale Pflanzen werden je nach Region zu Körben, Matten und weiteren Gebrauchsgegenständen verarbeitet."),
+            new CraftTradition("WOLLE", "Filzen", "Durch das Verdichten von Wolle entstehen je nach lokalem Gebrauch Unterlagen, Kopfbedeckungen, Kleidung und weitere Gegenstände."),
+            new CraftTradition("METALL", "Schmieden und Silberschmuck", "Schmieden, Messerherstellung, Werkzeugbau, Metallgravur und Silberschmuck verbinden praktische Nutzung mit handwerklicher Gestaltung.")
+        },
+        "ku" => new[]
+        {
+            new CraftTradition("پارچە", "قالی و گلیم", "قالی و گلیمی کوردی بە نەخشە ئەندازەییەکان و ڕەنگە بەهێزەکان ناسراون؛ زۆرجار سروشت و ژیانی ڕۆژانە سەرچاوەی نەخشەکانن."),
+            new CraftTradition("چنینی پارچە", "جاجیم، مەوج و شال", "جاجیم‌بافی، مەوج‌بافی و شال‌بافی لە نەریتە کۆنەکانی چنینی پارچەن. لە هەندێک ناوچەدا بۆ جل‌وبەرگ، پەرداخ و کەرەستەی ماڵ بەکاردەهاتن."),
+            new CraftTradition("پێڵاو", "کلاش / پێڵاوی کوردی", "کلاش پێڵاوێکی دەستکردە کە بە ماددەی پارچەیی و سروشتی دروست دەکرێت. لە هەندێک ناوچەی شاخاوی ئەم پیشەیە هێشتا بەردەوامە."),
+            new CraftTradition("دار", "نازک‌کاری و هونەری دار", "نازک‌کاری، منبت‌کاری، مۆزاییک و خڕکردنی دار بۆ دروستکردنی تەختەی نەرد، سندوق، قاپ، ساز و کەرەستەی بەکارهێنان بەکاردێت."),
+            new CraftTradition("مۆسیقا", "دروستکردنی ساز", "سازگەریی نەریتی سازەکانی وەک دەف، تەمبوور، شمشاڵ، زوڕنا و بالابان دروست دەکات و بەشێکی گرنگی نەریتە مۆسیقایییە ناوخۆییەکانە."),
+            new CraftTradition("ڕووەک", "سەبەتە و بوریا", "لقی دار، قامیش و ڕووەکە ناوخۆییەکان بەپێی ناوچە بۆ دروستکردنی سەبەتە، بوریا و کەرەستەی تر بەکاردێن."),
+            new CraftTradition("خوری", "نمدمالی", "بە پاڵفتەکردنی خوری، لە هەندێک ناوچەدا جۆرە جیاوازەکانی ژێرفرش، کڵاو، جل‌وبەرگ و کەرەستە دروست دەکرێت."),
+            new CraftTradition("کانزا", "ئاسنگەری و زیوی", "ئاسنگەری، چاقوسازی، ئامرازسازی، نەخشاندنی کانزا و دروستکردنی زیو، بەکارهێنان و جوانکاری پێکەوە دەبەستنەوە.")
+        },
+        _ => new[]
+        {
+            new CraftTradition("TEXTILES", "Carpets and kilims", "Kurdish carpets and kilims are known for geometric designs and vivid colors, with patterns often inspired by landscapes and everyday life."),
+            new CraftTradition("WEAVING", "Jajim, mawju and shawls", "Jajim, mawju and shawl weaving are textile traditions. Depending on the region, woven cloth has been used for clothing, covers and household items."),
+            new CraftTradition("FOOTWEAR", "Klash / Kurdish shoes", "Klash is a handmade shoe produced with textile and natural materials. The craft continues in some mountainous areas."),
+            new CraftTradition("WOOD", "Woodworking", "Fine woodwork, carving, inlay and turning produce items such as backgammon boards, boxes, vessels, musical instruments and useful objects."),
+            new CraftTradition("MUSIC", "Traditional instrument making", "Specialist makers craft instruments such as the daf, tanbur, shimshal, zurna and balaban, supporting regional musical traditions."),
+            new CraftTradition("PLANT FIBRES", "Basketry and mats", "Willow, reeds and other local plants are used in different areas to make baskets, mats and everyday goods."),
+            new CraftTradition("WOOL", "Felt making", "By pressing wool fibres together, makers produce floor coverings, hats, clothing and other objects suited to local needs."),
+            new CraftTradition("METAL", "Blacksmithing and silverwork", "Blacksmithing, knife and tool making, metal engraving and silver jewellery combine practical use with artistic skill.")
+        }
+    };
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+}

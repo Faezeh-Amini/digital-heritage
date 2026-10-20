@@ -1,0 +1,167 @@
+﻿{
+  "type": "FeatureCollection",
+
+  "features": [
+
+    {
+      "type": "Feature",
+
+      "properties": {
+        "name": "BAKUR - Northern Kurdistan",
+        "color": "#8B4513"
+      },
+
+      "geometry": {
+        "type": "Polygon",
+
+        "coordinates": [
+          [
+            [
+              39.0,
+              39.5
+            ],
+            [
+              44.0,
+              39.5
+            ],
+            [
+              44.5,
+              37.0
+            ],
+            [
+              39.5,
+              36.5
+            ],
+            [
+              39.0,
+              39.5
+            ]
+          ]
+        ]
+      }
+
+    },
+
+
+    {
+      "type": "Feature",
+
+      "properties": {
+        "name": "ROJAVA - Western Kurdistan",
+        "color": "#228B22"
+      },
+
+      "geometry": {
+        "type": "Polygon",
+
+        "coordinates": [
+          [
+            [
+              37.5,
+              37.5
+            ],
+            [
+              42.5,
+              37.5
+            ],
+            [
+              42.5,
+              35.5
+            ],
+            [
+              37.5,
+              35.5
+            ],
+            [
+              37.5,
+              37.5
+            ]
+          ]
+        ]
+      }
+
+    },
+
+
+    {
+      "type": "Feature",
+
+      "properties": {
+        "name": "BAŞÛR - Southern Kurdistan",
+        "color": "#DAA520"
+      },
+
+      "geometry": {
+        "type": "Polygon",
+
+        "coordinates": [
+          [
+            [
+              42.0,
+              37.5
+            ],
+            [
+              46.5,
+              37.5
+            ],
+            [
+              46.5,
+              34.0
+            ],
+            [
+              42.0,
+              34.0
+            ],
+            [
+              42.0,
+              37.5
+            ]
+          ]
+        ]
+      }
+
+    },
+
+
+    {
+      "type": "Feature",
+
+      "properties": {
+        "name": "ROJHILAT - Eastern Kurdistan",
+        "color": "#B22222"
+      },
+
+      "geometry": {
+        "type": "Polygon",
+
+        "coordinates": [
+          [
+            [
+              46.0,
+              36.5
+            ],
+            [
+              49.0,
+              36.5
+            ],
+            [
+              49.0,
+              33.5
+            ],
+            [
+              46.0,
+              33.5
+            ],
+            [
+              46.0,
+              36.5
+            ]
+          ]
+        ]
+      }
+
+    }
+
+  ]
+
+}

@@ -1,0 +1,69 @@
+@using Digital_Heritage.Data
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+<section class="music-archive mt-5" aria-labelledby="music-archive-title">
+    <div class="archive-heading">
+        <span>@Label("CULTURAL IMAGE ARCHIVE", "KULTURELLES BILDERARCHIV", "ئەرشیفی وێنەیی کولتووری")</span>
+        <h2 id="music-archive-title">@Label("Music, instruments and dance", "Musik, Instrumente und Tanz", "مۆسیقا، ساز و هەڵپەڕکێ")</h2>
+        <p>@Label("The photographs you placed in the project are collected here by subject. Select any image to open it at full size.", "Die Fotos aus dem Projekt sind hier nach Themen geordnet. Ein Klick öffnet jedes Bild in voller Größe.", "وێنەکانی ناو پڕۆژەکەت لێرەدا بەپێی بابەت ڕیزکراون. کلیک لەسەر هەر وێنەیەک بکە بۆ بینینی بە قەبارەی تەواو.")</p>
+    </div>
+
+    @foreach (var group in Groups)
+    {
+        <section class="archive-group" aria-label="@group.Title">
+            <div class="archive-group-heading">
+                <h3>@group.Title</h3>
+                <p>@group.Description</p>
+            </div>
+            <div class="archive-grid">
+                @foreach (var image in group.Images)
+                {
+                    <a class="archive-image" href="@image.Url" target="_blank" rel="noopener noreferrer" aria-label="@image.Caption">
+                        <img src="@image.Url" alt="@image.Caption" loading="lazy" />
+                        <span>@image.Caption</span>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+
+    <div class="archive-note">
+        <h3>@Label("Listening and watching", "Hören und ansehen", "گوێگرتن و بینین")</h3>
+        <p>@Label("The Heyran recording and Halparke performance are available in the music cards above. Use their built-in players to listen or watch.", "Die Heyran-Aufnahme und die Halparke-Aufführung findest du in den Musikkarten oben. Nutze die integrierten Player zum Anhören und Ansehen.", "تۆماری حەیران و نمایشی هەڵپەڕکێ لە کارتەکانی سەرەوەی مۆسیقا بەردەستن؛ لە پلەیەرە ناوخۆییەکانەوە گوێیان لێ بگرە یان بیانبینە.")</p>
+    </div>
+</section>
+
+<style>
+    .music-archive{max-width:1200px;margin-inline:auto;color:#e9e4d8}.archive-heading{text-align:center;max-width:850px;margin:0 auto 2.5rem}.archive-heading>span{color:#d5b574;font:10px Arial,sans-serif;letter-spacing:.16em}.archive-heading h2{font:400 clamp(1.7rem,3vw,2.5rem) Georgia,serif;color:#f1d18b;margin:.6rem 0}.archive-heading p,.archive-group-heading p,.archive-note p{color:#c9c6bc;font:14px/1.8 Arial,sans-serif}.archive-group{margin:2rem 0 2.5rem}.archive-group-heading{border-bottom:1px solid rgba(213,181,116,.3);margin-bottom:1rem;padding-bottom:.6rem}.archive-group-heading h3,.archive-note h3{font:400 1.45rem Georgia,serif;color:#efd28e}.archive-group-heading p{margin-bottom:0}.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}.archive-image{display:block;position:relative;overflow:hidden;border:1px solid rgba(213,181,116,.25);border-radius:8px;background:#101615;min-height:160px;color:#fff;text-decoration:none}.archive-image img{display:block;width:100%;height:190px;object-fit:cover;transition:transform .3s ease}.archive-image:hover img,.archive-image:focus img{transform:scale(1.045)}.archive-image span{display:block;padding:.65rem .75rem;font:12px/1.5 Arial,sans-serif;color:#e9e4d8}.archive-note{padding:1.25rem 1.4rem;border-left:3px solid #d5b574;background:rgba(213,181,116,.07);margin-top:2rem}.archive-note h3{margin-bottom:.55rem}.archive-note p{margin:0}@@media(max-width:576px){.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.archive-image img{height:145px}}
+</style>
+
+@code {
+    private string Label(string en, string de, string ku) => Languages.CurrentLanguage switch { "de" => de, "ku" => ku, _ => en };
+    private IReadOnlyList<GalleryGroup> Groups => Languages.CurrentLanguage switch
+    {
+        "de" => BuildGroups("Dengbêj – mündliche Erzählung", "Daf – Rhythmus und Ritual", "Musik und Instrumente", "Halparke – Gemeinschaftstanz",
+            "Dengbêj bewahren Erzählungen durch Stimme und Erinnerung. Die Fotos zeigen unterschiedliche Situationen dieser Gesangstradition.", "Die Daf begleitet in verschiedenen Gemeinschaften sowohl spirituelle Zusammenkünfte als auch Musik und Tanz.", "Eine Auswahl musikalischer Szenen und Instrumente. Die genaue Zuordnung einzelner Instrumente kann je nach Aufnahme variieren.", "Halparke ist ein gemeinschaftlicher kurdischer Tanz; Schrittfolgen und Musik unterscheiden sich regional."),
+        "ku" => BuildGroups("دەنگبێژ – گێڕانەوەی زارەکی", "دەف – ڕیتم و ئایین", "مۆسیقا و ساز", "هەڵپەڕکێ – سەما و کۆمەڵ",
+            "دەنگبێژ چیرۆک و بیرەوەری بە دەنگ و لەبیرەوە دەپارێزێت. وێنەکان دۆخە جیاوازەکانی ئەم نەریتی گۆرانییە پیشان دەدەن.", "دەف لە کۆمەڵگە جیاوازەکاندا لە کۆبوونەوەی ئایینی و مۆسیقا و سەما بەکاردێت.", "کۆمەڵێک وێنەی مۆسیقا و سازە. دیاریکردنی وردی هەندێک ساز بە پێی وێنەکە دەگۆڕێت.", "هەڵپەڕکێ سەمایەکی کۆمەڵیی کوردییە؛ هەنگاو و مۆسیقای لە ناوچەیەکەوە بۆ ناوچەیەکی تر جیاوازە."),
+        _ => BuildGroups("Dengbêj – oral storytelling", "Daf – rhythm and ritual", "Music and instruments", "Halparke – communal dance",
+            "Dengbêj preserve stories and memory through voice. These photographs show different settings of this sung storytelling tradition.", "The daf accompanies spiritual gatherings as well as music and dance in different communities.", "A selection of musical scenes and instruments. The exact instrument identification may vary by photograph.", "Halparke is a communal Kurdish dance; steps and musical styles vary across regions.")
+    };
+
+    private static IReadOnlyList<GalleryGroup> BuildGroups(string a, string b, string c, string d, string ad, string bd, string cd, string dd) => new[]
+    {
+        new GalleryGroup(a, ad, new[] { Img("/images/heritage/Dengbej/dengbej.jfif", "Dengbêj gathering"), Img("/images/heritage/Dengbej/Dengbej.jpg", "Dengbêj performance"), Img("/images/heritage/Dengbej/dengbej1.jfif", "Dengbêj tradition"), Img("/images/heritage/Dengbej/dengbej2.jfif", "Dengbêj portrait"), Img("/images/heritage/Dengbej/dengbej3.jfif", "Dengbêj storytelling") }),
+        new GalleryGroup(b, bd, new[] { Img("/images/heritage/hzar%20daf/Hezar%20daf.webp", "Daf performance"), Img("/images/heritage/hzar%20daf/hezar%20daf%202.webp", "Daf and musicians"), Img("/images/heritage/hzar%20daf/hezar%20daf%203.jpg", "Daf gathering"), Img("/images/heritage/hzar%20daf/hezar%20daf.png", "Daf"), Img("/images/heritage/hzar%20daf/hzar%20daf.jpg", "Daf musicians") }),
+        new GalleryGroup(c, cd, new[] { Img("/images/heritage/musik/krmashan%20musik.jpg", "Music in Kermanshah"), Img("/images/heritage/musik/musik%201.jfif", "Kurdish music"), Img("/images/heritage/musik/musik%202.jpg", "Musicians"), Img("/images/heritage/musik/musik%203.jpg", "Musical performance"), Img("/images/heritage/musik/musik%20und%20tanz.jpg", "Music and dance"), Img("/images/heritage/musik/musik.jfif", "Kurdish music tradition"), Img("/images/heritage/musik/musik.jpg", "Music gathering"), Img("/images/heritage/musik/musik2.jfif", "Musicians together"), Img("/images/heritage/musik/musik3.jfif", "Traditional music"), Img("/images/heritage/musik/musik4.jfif", "Kurdish musical heritage"), Img("/images/heritage/musik/musik5.jfif", "Music performance"), Img("/images/heritage/musik/musik6.jfif", "Music and community"), Img("/images/heritage/musik/saz.jfif", "Saz instrument"), Img("/images/heritage/musik/saz1.jfif", "String instrument"), Img("/images/heritage/musik/saz2.jfif", "Saz and music"), Img("/images/heritage/musik/saz3.jfif", "Traditional instrument"), Img("/images/heritage/musik/saz4.jfif", "Instrument and performance") }),
+        new GalleryGroup(d, dd, new[] { Img("/images/heritage/halparke/3rd_Edition_of_Halparke_Festival_in_Baneh_2019-04-16_07.jpg", "Halparke festival in Baneh"), Img("/images/heritage/halparke/3rd_Edition_of_Halparke_Festival_in_Baneh_2019-04-16_08.jpg", "Halparke dance") })
+    };
+
+    private static GalleryImage Img(string url, string caption) => new(url, caption);
+    private sealed record GalleryImage(string Url, string Caption);
+    private sealed record GalleryGroup(string Title, string Description, IReadOnlyList<GalleryImage> Images);
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+}
+
+

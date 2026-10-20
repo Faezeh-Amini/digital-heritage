@@ -1,0 +1,134 @@
+@page "/region/{Id}"
+
+@using Digital_Heritage.Models
+@using Digital_Heritage.Data
+
+
+@inject RegionService RegionService
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+
+
+<div class="container py-5">
+
+
+    @if (region != null)
+    {
+
+
+        <div class="card bg-dark text-light border-secondary shadow-lg">
+
+
+            <img src="@Digital_Heritage.Utilities.ImagePathHelper.NormalizePath(region.ImageUrl)"
+                 class="card-img-top"
+                 style="height:400px;object-fit:cover;" />
+
+
+
+            <div class="card-body p-5">
+
+
+                <h1 class="text-warning">
+
+                    @Languages.Text("region." + region.Id + ".name")
+
+                </h1>
+
+
+
+                <p class="lead text-muted">
+
+                    @Languages.Text("region." + region.Id + ".description")
+
+                </p>
+
+
+
+
+                @if (!string.IsNullOrEmpty(region.VideoUrl))
+                {
+                    @if (region.VideoUrl.Contains("youtube.com/embed", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="embed-responsive mt-4">
+                            <iframe src="@region.VideoUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    }
+                    else
+                    {
+                        <video controls class="w-100 mt-4">
+                            <source src="@region.VideoUrl" />
+                        </video>
+                    }
+                }
+
+
+
+
+                @if (!string.IsNullOrEmpty(region.AudioUrl))
+                {
+
+                    <audio controls
+                           class="w-100 mt-4">
+
+                        <source src="@region.AudioUrl" />
+
+                    </audio>
+
+                }
+
+
+
+            </div>
+
+
+        </div>
+
+
+    }
+    else
+    {
+
+        <div class="alert alert-warning">
+
+            @Languages.Text("detail.notFound")
+
+        </div>
+
+
+    }
+
+
+</div>
+
+
+
+
+@code {
+
+
+    [Parameter]
+
+    public string Id { get; set; } = string.Empty;
+
+
+
+    private Region? region;
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        region =
+        await RegionService.GetRegionByIdAsync(Id);
+
+    }
+
+
+
+}

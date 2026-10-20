@@ -1,0 +1,82 @@
+@page "/gallery"
+
+@using Digital_Heritage.Models
+@using Digital_Heritage.Data
+@using Microsoft.AspNetCore.Components
+
+@inject GalleryService GalleryService
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <span class="text-warning">@Languages.Text("gallery.kicker")</span>
+        <h1 class="display-5 text-warning fw-bold mt-3">@Languages.Text("gallery.title")</h1>
+        <p class="text-muted">@Languages.Text("gallery.description")</p>
+    </div>
+
+    <div class="gallery-filter mb-4">
+        <label for="gallery-category" class="form-label text-light">@Languages.Text("gallery.filter")</label>
+        <select id="gallery-category" class="form-select bg-dark text-light border-secondary" @bind="selectedCategory">
+            <option value="">@Languages.Text("gallery.all") (@galleryItems.Count)</option>
+            @foreach (var category in categories)
+            {
+                <option value="@category">@category (@galleryItems.Count(item => item.Category == category))</option>
+            }
+        </select>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in filteredItems)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <article class="card bg-dark text-light border-secondary h-100 shadow">
+                    <img src="@Digital_Heritage.Utilities.ImagePathHelper.NormalizePath(item.ImageUrl)" class="card-img-top" style="height:230px;object-fit:cover;" alt="@item.Title" loading="lazy" />
+                    <div class="card-body">
+                        <span class="badge bg-warning text-dark">@item.Category</span>
+                        <h2 class="h5 text-warning mt-3">@item.Title</h2>
+                        <p class="text-muted small">@item.Description</p>
+                        @if (!string.IsNullOrWhiteSpace(item.SourceUrl))
+                        {
+                            <a class="gallery-source" href="@item.SourceUrl" target="_blank" rel="noopener noreferrer">@Languages.Text("gallery.source") ↗</a>
+                        }
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .gallery-filter { max-width:360px; margin-inline:auto; }
+    .gallery-source { color:#d5b574; font-size:.8rem; text-decoration:none; }
+    .gallery-source:hover { color:#fff0cc; }
+</style>
+
+@code {
+    private List<GalleryItem> galleryItems = new();
+    private string selectedCategory = string.Empty;
+    private IEnumerable<string> categories => galleryItems.Select(item => item.Category).Distinct().OrderBy(category => category);
+    private IEnumerable<GalleryItem> filteredItems => string.IsNullOrWhiteSpace(selectedCategory)
+        ? galleryItems
+        : galleryItems.Where(item => item.Category == selectedCategory);
+
+    [SupplyParameterFromQuery(Name = "category")]
+    public string? CategoryFilter { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        var requested = Uri.UnescapeDataString(CategoryFilter ?? string.Empty);
+        selectedCategory = categories.FirstOrDefault(category => category.Equals(requested, StringComparison.OrdinalIgnoreCase)) ?? string.Empty;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        galleryItems = await GalleryService.GetGalleryItemsAsync();
+    }
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+}
+

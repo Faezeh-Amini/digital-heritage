@@ -1,0 +1,116 @@
+﻿html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+
+#app {
+    height: 100%;
+}
+
+
+
+
+.heritage-container {
+    height: 100vh;
+    width: 100vw;
+    background: #050505;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+
+.title-box {
+    height: 90px;
+    text-align: center;
+    color: #e5c158;
+}
+
+
+
+    .title-box span {
+        letter-spacing: 5px;
+        font-size: 13px;
+    }
+
+
+
+    .title-box h1 {
+        margin: 5px;
+        font-family: Georgia,serif;
+        font-size: 32px;
+    }
+
+
+
+    .title-box p {
+        margin: 0;
+        color: #aaa;
+    }
+
+
+
+
+
+.map-wrapper {
+    height: calc(100vh - 120px);
+    width: 100%;
+    position: relative;
+}
+
+
+
+
+#cesium-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #e5c158;
+    box-shadow: 0 0 40px rgba(229,193,88,.35);
+}
+
+
+
+
+
+
+#heritage-panel {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 360px;
+    max-height: 600px;
+    overflow: auto;
+    background: rgba(255,255,255,.95);
+    border-radius: 18px;
+    padding: 20px;
+    display: none;
+    z-index: 100;
+}
+
+
+
+
+
+
+@keyframes fade {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

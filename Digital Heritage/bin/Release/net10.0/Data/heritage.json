@@ -1,0 +1,64 @@
+{
+  "places": [
+    {
+      "id": "hawraman",
+      "name": "Hawraman Cultural Landscape",
+      "category": "Architecture",
+      "description": "Ancient mountain villages, stone architecture and Kurdish cultural traditions.",
+      "image": "/images/heritage/Hawraman.jpg",
+      "longitude": 46.15,
+      "latitude": 35.45,
+      "height": 1500,
+      "names": {
+        "en": "Hawraman Cultural Landscape",
+        "ku": "دیمەنی کولتووریی هەورامان",
+        "de": "Kulturlandschaft Hawraman"
+      }
+    },
+    {
+      "id": "erbil-citadel",
+      "name": "Erbil Citadel",
+      "category": "Historical Site",
+      "description": "One of the oldest continuously inhabited settlements in the world.",
+      "image": "/images/heritage/Erbil_Citadel.jpg",
+      "longitude": 44.01,
+      "latitude": 36.19,
+      "height": 400,
+      "names": {
+        "en": "Erbil Citadel",
+        "ku": "قەڵای هەولێر",
+        "de": "Zitadelle von Erbil"
+      }
+    },
+    {
+      "id": "sine-carpet",
+      "name": "Sanandaj",
+      "category": "Craft",
+      "description": "Sanandaj is known for Kurdish carpet weaving as well as its urban heritage. This map marker uses a city view; carpet traditions remain part of the cultural story.",
+      "image": "/images/heritage/Sanandaj_from_Abidar.jpg",
+      "longitude": 46.99,
+      "latitude": 35.31,
+      "height": 1500,
+      "names": {
+        "en": "Sanandaj",
+        "ku": "سنە",
+        "de": "Sanandaj"
+      }
+    },
+    {
+      "id": "dengbej",
+      "name": "Dengbêj Music Tradition",
+      "category": "Music",
+      "description": "The oral storytelling tradition of Kurdish singers.",
+      "image": "/images/heritage/Dengbej/Dengbej.jpg",
+      "longitude": 42.98,
+      "latitude": 37.0,
+      "height": 800,
+      "names": {
+        "en": "Dengbêj Tradition",
+        "ku": "نەریتی دەنگبێژی",
+        "de": "Dengbêj-Tradition"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1000 @@
+@layout MapLayout
+@page "/map"
+
+@using Microsoft.AspNetCore.Components.Web
+
+@using Microsoft.JSInterop
+
+@inject IJSRuntime JS
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+
+<PageTitle>
+    @Languages.Text("map.title")
+</PageTitle>
+
+
+
+<div class="map-page">
+
+
+    <div id="cesium-container"></div>
+
+
+
+    <div class="map-title">
+
+
+        <h1>
+            @Languages.Text("map.title")
+        </h1>
+
+
+        <p>
+            @Languages.Text("map.subtitle")
+        </p>
+        <div class="region-legend" aria-label="Approximate cultural regions">
+            <span class="legend-title">@Languages.Text("map.legend")</span>
+            <span><i class="legend-bakur"></i>Bakûr</span><span><i class="legend-rojava"></i>Rojava</span>
+            <span><i class="legend-bashur"></i>Bashûr</span><span><i class="legend-rojhilat"></i>Rojhilat</span>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="map-culture-tools">
+        <nav class="map-story-links" aria-label="Main navigation">
+            <a href="/">@Languages.Text("nav.home")</a><a href="/map">@Languages.Text("nav.map")</a><a href="/gallery">@Languages.Text("nav.gallery")</a><a href="/culture/newroz">@Languages.Text("nav.newroz")</a><a href="/culture/dengbej">@Languages.Text("nav.dengbej")</a><a href="/culture/jin-jiyan-azadi">@Languages.Text("nav.jin")</a><a href="/culture/dance">@Languages.Text("nav.dance")</a><a href="/culture/deq">@Languages.Text("nav.deq")</a>
+        </nav>
+        <SiteLanguagePicker Variant="map" />
+    </div>
+    <aside class="city-picker" aria-label="Cities on the cultural map">
+        <div class="city-picker-heading"><div><span class="city-picker-kicker">KURDISTAN · CULTURAL ATLAS</span><h2 id="city-list-title">Cities</h2></div><span class="city-count" id="city-count">32</span></div>
+        <label class="city-search-label" for="city-search">Find a city</label>
+        <input id="city-search" class="city-search" type="search" placeholder="Search cities…" autocomplete="off" />
+        <div class="city-list" id="city-list"></div>
+    </aside>    <div id="heritage-panel">
+</div>
+
+
+</div>
+
+
+
+
+
+
+<style>
+
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+
+
+    .map-page {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+
+
+    #cesium-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+
+    .map-title {
+        position: absolute;
+        top: 25px;
+        left: 35px;
+        z-index: 10;
+        color: #e5c158;
+        font-family: Georgia,serif;
+        text-shadow: 0 3px 15px black;
+    }
+
+
+
+        .map-title h1 {
+            margin: 0;
+            font-size: 42px;
+        }
+
+
+
+        .map-title p {
+            color: white;
+            font-size: 18px;
+        }
+
+
+
+
+
+    .region-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 15px;
+        max-width: 520px;
+        margin-top: 22px;
+        padding: 13px 15px;
+        color: #eee7d7;
+        background: rgba(10,13,11,.72);
+        border: 1px solid rgba(213,181,116,.28);
+        backdrop-filter: blur(10px);
+        font: 10px Arial,sans-serif;
+        letter-spacing: .06em;
+    }
+
+        .region-legend span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .region-legend .legend-title {
+            flex-basis: 100%;
+            margin-bottom: 2px;
+            color: #d5b574;
+            font-size: 8px;
+            letter-spacing: .16em;
+        }
+
+        .region-legend i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 9px currentColor;
+        }
+
+    .legend-bakur {
+        color: #d5b574;
+        background: #d5b574;
+    }
+
+    .legend-rojava {
+        color: #82a891;
+        background: #82a891;
+    }
+
+    .legend-bashur {
+        color: #d68c55;
+        background: #d68c55;
+    }
+
+    .legend-rojhilat {
+        color: #9f8abd;
+        background: #9f8abd;
+    }
+
+    @@media(max-width:600px) {
+        .map-title {
+            top: 14px !important;
+            left: 14px !important
+        }
+
+            .map-title h1 {
+                font-size: 25px !important
+            }
+
+        .region-legend {
+            max-width: calc(100vw - 35px);
+            gap: 7px 11px;
+            margin-top: 12px;
+            padding: 10px;
+            font-size: 9px
+        }
+    }
+
+    #heritage-panel {
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(213,181,116,.3);
+    }
+
+    .panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        color: #d5b574;
+        font: 8px Arial,sans-serif;
+        letter-spacing: .18em;
+    }
+
+        .panel-heading button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 50%;
+            background: transparent;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+    .panel-gallery {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 9px;
+        margin: 10px 0 14px;
+    }
+
+        .panel-gallery figure {
+            margin: 0;
+            min-width: 0;
+        }
+
+            .panel-gallery figure.wide {
+                grid-column: 1/-1;
+            }
+
+                .panel-gallery figure.wide .panel-image {
+                    height: 120px;
+                }
+
+    .panel-image {
+        display: block;
+        width: 100%;
+        height: 118px;
+        object-fit: cover;
+        border-radius: 8px;
+        background: #111;
+    }
+
+    .panel-image-open {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 8px;
+        background: #111;
+        cursor: zoom-in;
+    }
+
+        .panel-image-open:hover .panel-image {
+            filter: brightness(1.12);
+        }
+
+    .panel-gallery figcaption {
+        margin-top: 5px;
+        color: #d9d2c4;
+        font: 9px/1.4 Arial,sans-serif;
+    }
+
+        .panel-gallery figcaption a {
+            color: #eee7d7;
+            text-decoration: none;
+        }
+
+        .panel-gallery figcaption small {
+            display: block;
+            color: #aaa79e;
+            font-size: 8px;
+        }
+
+    .panel-region {
+        margin: 14px 0 4px;
+        color: #d5b574;
+        font: 9px Arial,sans-serif;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+    }
+
+    #heritage-panel h2 {
+        margin: 6px 0 8px;
+        font: 26px Georgia,serif;
+        color: #f3eee4;
+    }
+
+    #heritage-panel h4 {
+        margin: 0 0 12px;
+        font: 11px Arial,sans-serif;
+        color: #d9c394;
+        letter-spacing: .04em;
+    }
+
+    .panel-description {
+        color: #d0cfc8;
+        font: 13px/1.7 Arial,sans-serif;
+    }
+
+    .panel-source, .panel-source-needed {
+        display: block;
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255,255,255,.14);
+        color: #d5b574;
+        font: 9px/1.5 Arial,sans-serif;
+        text-decoration: none;
+    }
+
+    .panel-media {
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255,255,255,.14);
+    }
+
+    .media-heading {
+        margin: 0 0 10px;
+        color: #d5b574;
+        font: 8px Arial,sans-serif;
+        letter-spacing: .15em;
+    }
+
+    .media-grid, .video-grid {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 9px;
+    }
+
+    .open-media-card, .open-video-card {
+        min-width: 0;
+        color: #e9e4d8;
+        text-decoration: none;
+    }
+
+    .open-media-preview {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: zoom-in;
+    }
+
+        .open-media-preview img, .open-video-card video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            background: #090b09;
+            border-radius: 6px;
+        }
+
+        .open-media-preview span, .open-video-card > a {
+            display: block;
+            overflow: hidden;
+            margin-top: 5px;
+            color: #eee7d7;
+            font: 10px/1.4 Arial,sans-serif;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+    .open-media-card small, .open-video-card small {
+        display: block;
+        margin-top: 4px;
+        color: #aaa79e;
+        font: 8px/1.35 Arial,sans-serif;
+    }
+
+        .open-media-card small a {
+            color: #d5b574;
+            text-decoration: none;
+        }
+
+    .media-image-preview {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        padding: 24px;
+        background: rgba(0,0,0,.92);
+        cursor: zoom-out;
+    }
+
+        .media-image-preview img {
+            max-width: min(94vw,1400px);
+            max-height: 84vh;
+            object-fit: contain;
+            border-radius: 8px;
+            cursor: default;
+        }
+
+        .media-image-preview p {
+            max-width: 90vw;
+            margin: 0;
+            color: #f3eee4;
+            font: 13px/1.5 Arial,sans-serif;
+            text-align: center;
+        }
+
+    .media-image-preview-close {
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(255,255,255,.45);
+        border-radius: 50%;
+        background: rgba(0,0,0,.4);
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .video-grid {
+        margin-top: 10px;
+    }
+
+    .media-loading {
+        color: #b9b4a8;
+        font: 10px/1.5 Arial,sans-serif;
+    }
+
+    .media-note {
+        color: #b9b4a8;
+        font: 8px/1.45 Arial,sans-serif;
+        margin: 0 0 9px;
+    }
+
+    .media-search-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+        .media-search-links a {
+            color: #d5b574;
+            font: 9px Arial,sans-serif;
+            text-decoration: none;
+        }
+
+    .panel-source-needed {
+        color: #b9b4a8;
+    }
+
+    .panel-source:hover {
+        color: #fff0cc;
+    }
+
+    #heritage-panel {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        width: min(350px, calc(100vw - 32px));
+        background: rgba(0,0,0,.85);
+        color: white;
+        padding: 20px;
+        border-radius: 20px;
+        display: none;
+        z-index: 20;
+        box-shadow: 0 0 30px black;
+    }
+
+
+
+        #heritage-panel img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+    .map-culture-tools {
+        position: absolute;
+        z-index: 12;
+        top: 25px;
+        right: 25px;
+        display: grid;
+        gap: 9px;
+        max-width: min(570px,52vw);
+        justify-items: end
+    }
+
+    .map-story-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: end;
+        gap: 6px
+    }
+
+        .map-story-links a, .map-language-buttons button {
+            padding: 9px 11px;
+            color: #eee7d7;
+            text-decoration: none;
+            background: rgba(10,13,11,.78);
+            border: 1px solid rgba(213,181,116,.35);
+            backdrop-filter: blur(12px);
+            font: 9px Arial,sans-serif;
+            letter-spacing: .06em
+        }
+
+            .map-story-links a:hover, .map-language-buttons button:hover, .map-language-buttons button.selected {
+                color: #f5dfa8;
+                border-color: #d5b574;
+                background: rgba(33,32,25,.88)
+            }
+
+    .map-language-picker {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px;
+        background: linear-gradient(to bottom,#c82e2a 0 33.33%,#f4f0e5 33.33% 66.66%,#286a42 66.66%);
+        border: 1px solid #ffffff44
+    }
+
+    .map-flag {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: repeating-conic-gradient(#e8c248 0deg 5deg,transparent 5deg 17.14deg);
+        filter: drop-shadow(0 1px 4px #664d12)
+    }
+
+        .map-flag:after {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border-radius: 50%;
+            background: #e8c248
+        }
+
+    .map-language-buttons {
+        display: flex;
+        gap: 4px
+    }
+
+        .map-language-buttons button {
+            min-width: 36px;
+            padding: 6px 7px;
+            cursor: pointer
+        }
+
+            .map-language-buttons button:focus-visible {
+                outline: 2px solid #ead39f;
+                outline-offset: 2px
+            }
+
+    @@media(max-width:600px) {
+        .map-culture-tools {
+            top: auto;
+            bottom: 18px;
+            right: 12px;
+            left: 12px;
+            max-width: none;
+            justify-items: center
+        }
+
+        .map-story-links {
+            justify-content: center
+        }
+
+            .map-story-links a {
+                padding: 8px;
+                font-size: 8px
+            }
+
+        .map-title p {
+            font-size: 14px !important
+        }
+    }
+
+    .map-title {
+        top: 24px;
+        left: 30px;
+        padding: 14px 18px;
+        border: 1px solid rgba(213,181,116,.38);
+        background: rgba(10,13,11,.76);
+        backdrop-filter: blur(12px);
+    }
+
+        .map-title h1 {
+            font-size: 30px;
+        }
+
+        .map-title p {
+            margin: 6px 0 0;
+            font-size: 13px;
+        }
+
+    .map-culture-tools {
+        top: 24px;
+        right: 26px;
+        max-width: min(720px, 59vw);
+    }
+
+    .map-story-links {
+        gap: 7px;
+    }
+
+        .map-story-links a {
+            min-height: 34px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(145deg,rgba(214,184,121,.28),rgba(12,14,12,.92) 32%);
+            border: 1px solid rgba(214,184,121,.7);
+            clip-path: polygon(7% 0,93% 0,100% 16%,100% 84%,93% 100%,7% 100%,0 84%,0 16%);
+            color: #eee7d7;
+            font: 9px Arial,sans-serif;
+            letter-spacing: .04em;
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+        }
+
+            .map-story-links a:hover {
+                color: #fff0c8;
+                background: linear-gradient(145deg,rgba(214,184,121,.5),rgba(24,23,18,.95) 34%);
+            }
+
+    .map-language-picker {
+        gap: 5px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+    }
+
+    .map-flag {
+        display: none;
+    }
+
+    .map-flag {
+        width: 34px;
+        height: 34px;
+    }
+
+    .map-language-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+        .map-language-buttons button {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            padding: 5px;
+            border: 0;
+            border-radius: 50%;
+            background: repeating-conic-gradient(#d6b879 0deg 7deg,transparent 7deg 17deg);
+            color: #d9d1c1;
+            cursor: pointer;
+            filter: drop-shadow(0 1px 4px #0008);
+        }
+
+            .map-language-buttons button::first-line {
+            }
+
+        .map-language-buttons button {
+            font-size: 0;
+        }
+
+            .map-language-buttons button::after {
+                content: attr(data-short);
+                position: absolute;
+                inset: 6px;
+                display: grid;
+                place-items: center;
+                border: 1px solid #d6b87988;
+                border-radius: 50%;
+                background: #121510;
+                color: #eee2c8;
+                font: 7px Arial,sans-serif;
+            }
+
+            .map-language-buttons button.selected {
+                filter: drop-shadow(0 0 7px #d6b879);
+            }
+
+                .map-language-buttons button.selected::after {
+                    background: #d6b879;
+                    color: #171711;
+                }
+
+    .city-picker {
+        position: absolute;
+        z-index: 11;
+        top: 184px;
+        left: 26px;
+        width: min(330px,calc(100vw - 32px));
+        max-height: calc(100vh - 210px);
+        overflow: hidden;
+        border: 1px solid rgba(214,184,121,.55);
+        background: linear-gradient(rgba(8,10,9,.86),rgba(8,10,9,.94)),url('/images/heritage/sarwen%20zhn%20slemani.jpg') center 28%/cover;
+        color: #f1eee5;
+        backdrop-filter: blur(13px);
+        box-shadow: 0 14px 38px #0009;
+    }
+
+    .city-picker-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 14px 10px;
+        border-bottom: 1px solid rgba(214,184,121,.23);
+    }
+
+    .city-picker-kicker {
+        color: #d6b879;
+        font: 7px Arial,sans-serif;
+        letter-spacing: .18em;
+    }
+
+    .city-picker-heading h2 {
+        margin: 4px 0 0;
+        color: #f1e8d4;
+        font: 17px Georgia,serif;
+        font-weight: 400;
+    }
+
+    .city-count {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #d6b87988;
+        border-radius: 50%;
+        color: #f1d995;
+        font: 10px Arial,sans-serif;
+    }
+
+    .city-search-label {
+        display: block;
+        padding: 10px 14px 4px;
+        color: #c8bdab;
+        font: 8px Arial,sans-serif;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    .city-search {
+        width: calc(100% - 28px);
+        margin: 0 14px 9px;
+        padding: 9px 10px;
+        border: 1px solid rgba(214,184,121,.35);
+        background: rgba(10,12,10,.78);
+        color: #f1eee5;
+        font: 11px Arial,sans-serif;
+        outline: none;
+    }
+
+        .city-search:focus {
+            border-color: #d6b879;
+        }
+
+    .city-list {
+        max-height: calc(100vh - 315px);
+        min-height: 100px;
+        overflow: auto;
+        padding: 0 8px 10px;
+        scrollbar-color: #8e7544 #121510;
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 5px;
+        align-content: start;
+    }
+
+    .city-list-region {
+        grid-column: 1/-1;
+        margin: 10px 6px 4px;
+        color: #d6b879;
+        font: 7px Arial,sans-serif;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+    }
+
+    .city-list-button {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 5px;
+        border: 1px solid rgba(214,184,121,.18);
+        background: rgba(8,10,9,.4);
+        color: #e9e2d3;
+        text-align: left;
+        font: 11px/1.25 Arial,sans-serif;
+        cursor: pointer;
+    }
+
+    .city-list-photo {
+        display: block;
+        width: 100%;
+        height: 68px;
+        object-fit: cover;
+        border: 1px solid rgba(214,184,121,.22);
+    }
+
+    .city-list-name {
+        display: block;
+        min-height: 28px;
+        padding: 1px 3px;
+    }
+
+    .city-list-button::after {
+        content: "↗";
+        align-self: flex-end;
+        color: #d6b879;
+        font-size: 12px;
+    }
+
+    .city-list-button:hover, .city-list-button:focus-visible {
+        border-color: #d6b87988;
+        background: rgba(214,184,121,.12);
+        color: #fff0c8;
+        outline: none;
+    }
+
+        .city-list-button:hover .city-list-photo {
+            filter: brightness(1.12);
+        }
+
+    .city-list-empty {
+        padding: 12px 9px;
+        color: #bbb4a7;
+        font: 10px/1.5 Arial,sans-serif;
+    }
+
+    @@media(max-width:760px) {
+        .map-title {
+            top: 13px;
+            left: 12px;
+            max-width: 48vw;
+            padding: 9px 10px;
+        }
+
+            .map-title h1 {
+                font-size: 20px;
+            }
+
+            .map-title p {
+                display: none;
+            }
+
+        .region-legend {
+            display: none;
+        }
+
+        .map-culture-tools {
+            top: 12px;
+            right: 10px;
+            max-width: 48vw;
+        }
+
+        .map-story-links {
+            max-width: 46vw;
+            gap: 4px;
+        }
+
+            .map-story-links a {
+                min-height: 29px;
+                padding: 7px;
+                font-size: 7px;
+            }
+
+        .map-language-picker {
+            gap: 2px;
+        }
+
+        .map-flag, .map-language-buttons button {
+            width: 29px;
+            height: 29px;
+            min-width: 29px;
+        }
+
+            .map-language-buttons button::after {
+                inset: 5px;
+                font-size: 6px;
+            }
+
+        .city-picker {
+            top: auto;
+            bottom: 12px;
+            left: 10px;
+            width: min(270px,68vw);
+            max-height: 43vh;
+        }
+
+        .city-list {
+            max-height: calc(43vh - 112px);
+        }
+
+        .city-picker-heading h2 {
+            font-size: 17px;
+        }
+    }
+    /* Wikimedia-Commons-Medien im Info-Panel ausblenden (Fotos, Videos, Quellenlinks) */
+    #heritage-panel .panel-media, #heritage-panel #city-media-results {
+        display: none !important;
+    }
+</style>
+
+
+
+
+
+
+
+
+@code
+{
+
+    private bool loaded = false;
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if (firstRender && !loaded)
+        {
+
+            loaded = true;
+            try
+            {
+                var savedLanguage = await JS.InvokeAsync<string?>("siteLanguage.get");
+                if (SiteLanguageService.IsSupported(savedLanguage))
+                {
+                    Languages.SetLanguage(savedLanguage!);
+                    await JS.InvokeVoidAsync("siteLanguage.apply", savedLanguage);
+                }
+            }
+            catch (InvalidOperationException) { }
+
+
+            Console.WriteLine("BLAZOR CALLING CESIUM");
+
+
+            await JS.InvokeVoidAsync(
+                "initCesiumMap",
+                "cesium-container"
+            );
+
+
+            Console.WriteLine("CESIUM CALLED");
+
+
+        }
+
+    }
+
+
+    protected override void OnInitialized() => Languages.Changed += HandleLanguageChanged;
+    private void HandleLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => Languages.Changed -= HandleLanguageChanged;
+    private async Task ChangeLanguageAsync(string language)
+    {
+        Languages.SetLanguage(language);
+        try { await JS.InvokeVoidAsync("siteLanguage.apply", language); } catch (InvalidOperationException) { }
+    }
+}
+
+
+
+
+
+
+
+
+
+

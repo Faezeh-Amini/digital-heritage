@@ -1,0 +1,1264 @@
+@page "/music"
+
+@using System.Linq
+@using Digital_Heritage.Models
+@using Digital_Heritage.Data
+
+@inject MusicService MusicService
+@inject SiteLanguageService Languages
+@implements IDisposable
+
+<PageTitle>@Languages.Text("music.title") · Digital Heritage</PageTitle>
+
+<main class="music-page">
+
+    <header class="mu-hero">
+        <img class="mu-hero-img"
+             src="/images/heritage/Dengbej/dengbej.jfif"
+             alt="Kurdish musical heritage"
+             fetchpriority="high" />
+
+        <div class="mu-shade" aria-hidden="true"></div>
+
+        <div class="mu-hero-copy">
+            <div class="mu-eyebrow">
+                <span class="mu-eyebrow-line"></span>
+                @HeroKicker
+            </div>
+
+            <h1>@Languages.Text("music.title")</h1>
+
+            <p class="mu-hero-description">
+                @MusicOverviewIntro
+            </p>
+
+            <div class="mu-hero-meta">
+                <span class="mu-count">
+                    <span class="mu-count-dot"></span>
+                    @CountLine
+                </span>
+
+                <a href="/music#music-archive" class="mu-explore">
+                    @Pick("Archiv entdecken", "Explore the archive", "گەڕان لە ئەرشیف")
+                    <span aria-hidden="true">↓</span>
+                </a>
+            </div>
+        </div>
+
+        <span class="mu-hero-index" aria-hidden="true">01 / 01</span>
+    </header>
+
+    <nav class="mu-chips" aria-label="@Pick("Musikkategorien", "Music categories", "جۆرەکانی مۆسیقا")">
+        @foreach (var category in Categories)
+        {
+            if (ItemsForCategory(category.Id).Count > 0)
+            {
+                <a href="/music#category-@category.Id" class="mu-chip">
+                    <span class="mu-chip-number">♪</span>
+                    <span>@Pick(category.Titles)</span>
+                    <span class="mu-chip-arrow" aria-hidden="true">↗</span>
+                </a>
+            }
+        }
+
+        @if (UncategorizedItems.Count > 0)
+        {
+            <a href="/music#category-other" class="mu-chip">
+                <span class="mu-chip-number">♪</span>
+                <span>@Pick("Weitere Aufnahmen", "More recordings", "تۆماری زیاتر")</span>
+                <span class="mu-chip-arrow" aria-hidden="true">↗</span>
+            </a>
+        }
+    </nav>
+
+    <section id="music-archive"
+             class="mu-traditions"
+             aria-label="@Pick("Musikarchiv", "Music archive", "ئەرشیفی مۆسیقا")">
+
+        <div class="mu-heading">
+            <div>
+                <span class="mu-section-eyebrow">
+                    @Pick("DAS KULTURELLE ERBE", "THE CULTURAL HERITAGE", "میراتی کولتووری")
+                </span>
+
+                <h2>
+                    @Pick("Kurdische Musikwelten",
+                          "Worlds of Kurdish Music",
+                          "جیهانەکانی مۆسیقای کوردی")
+                </h2>
+
+                <p class="mu-heading-description">
+                    @Pick("Entdecke Musik nach Tradition, Region und kultureller Bedeutung.",
+                          "Explore music by tradition, region and cultural significance.",
+                          "مۆسیقا بەپێی نەریت، ناوچە و گرنگیی کولتووری بناسە.")
+                </p>
+            </div>
+
+            <span class="mu-heading-count">
+                @musicItems.Count.ToString("00")
+                <span>@Pick("Aufnahmen", "Recordings", "تۆمار")</span>
+            </span>
+        </div>
+
+        @foreach (var category in Categories)
+        {
+            var categoryItems = ItemsForCategory(category.Id);
+
+            if (categoryItems.Count > 0)
+            {
+                <section id="category-@category.Id"
+                         class="mu-category-section">
+
+                    <div class="mu-category-heading">
+                        <div>
+                            <span class="mu-section-eyebrow">
+                                @Pick("MUSIKKATEGORIE",
+                                      "MUSIC CATEGORY",
+                                      "جۆری مۆسیقا")
+                            </span>
+
+                            <h3>@Pick(category.Titles)</h3>
+
+                            <p class="mu-heading-description">
+                                @Pick(category.Descriptions)
+                            </p>
+                        </div>
+
+                        <span class="mu-category-count">
+                            @categoryItems.Count.ToString("00")
+                        </span>
+                    </div>
+
+                    <div class="mu-grid">
+                        @foreach (var item in categoryItems)
+                        {
+                            @ItemCard(item, category.Id)
+                        }
+                    </div>
+
+                </section>
+            }
+        }
+
+        @if (UncategorizedItems.Count > 0)
+        {
+            <section id="category-other" class="mu-category-section">
+
+                <div class="mu-category-heading">
+                    <div>
+                        <span class="mu-section-eyebrow">
+                            @Pick("MUSIKKATEGORIE",
+                                  "MUSIC CATEGORY",
+                                  "جۆری مۆسیقا")
+                        </span>
+
+                        <h3>@Pick("Weitere Aufnahmen", "More recordings", "تۆماری زیاتر")</h3>
+                    </div>
+
+                    <span class="mu-category-count">
+                        @UncategorizedItems.Count.ToString("00")
+                    </span>
+                </div>
+
+                <div class="mu-grid">
+                    @foreach (var item in UncategorizedItems)
+                    {
+                        @ItemCard(item, "other")
+                    }
+                </div>
+
+            </section>
+        }
+    </section>
+
+    <footer class="mu-outro">
+        <span class="mu-outro-symbol" aria-hidden="true">✳</span>
+
+        <span class="mu-section-eyebrow">
+            @Pick("KLANG · ERINNERUNG · IDENTITÄT",
+                  "SOUND · MEMORY · IDENTITY",
+                  "دەنگ · بیرەوەری · ناسنامە")
+        </span>
+
+        <p>@MusicOverviewOutro</p>
+    </footer>
+
+</main>
+
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    #music-archive {
+        overflow: visible;
+    }
+
+    .mu-section {
+        scroll-margin-top: 110px;
+    }
+
+    .music-page {
+        --mu-bg: #10140f;
+        --mu-panel: #171c15;
+        --mu-panel-soft: #1c2119;
+        --mu-gold: #d5b574;
+        --mu-gold-light: #f0dca7;
+        --mu-text: #eee9dc;
+        --mu-muted: #b8b7a9;
+        --mu-line: rgba(213, 181, 116, .19);
+        color: var(--mu-text);
+        background: var(--mu-bg);
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: clip;
+    }
+
+        .music-page *,
+        .music-page *::before,
+        .music-page *::after {
+            box-sizing: border-box;
+        }
+
+        .music-page a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+    .mu-hero {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        min-height: clamp(390px, 55vw, 590px);
+        overflow: hidden;
+        background: #10140f;
+        border-bottom: 1px solid var(--mu-line);
+    }
+
+    .mu-hero-img {
+        position: absolute;
+        z-index: -2;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 30%;
+        animation: mu-hero-reveal 1.1s ease-out both;
+    }
+
+    .mu-shade {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(9, 13, 9, .96) 0%, rgba(9, 13, 9, .83) 38%, rgba(9, 13, 9, .28) 100%), linear-gradient(0deg, rgba(9, 13, 9, .78), transparent 60%);
+    }
+
+    .mu-hero-copy {
+        width: 100%;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+    }
+
+    .mu-eyebrow,
+    .mu-section-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--mu-gold);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: .2em;
+        line-height: 1.7;
+        text-transform: uppercase;
+    }
+
+    .mu-eyebrow-line {
+        width: 30px;
+        height: 1px;
+        background: var(--mu-gold);
+    }
+
+    .mu-hero h1 {
+        max-width: 780px;
+        margin: 1.25rem 0 1.1rem;
+        color: var(--mu-gold-light);
+        font: 400 clamp(2.7rem, 6.5vw, 5.4rem)/1.04 Georgia, serif;
+        letter-spacing: -.035em;
+        text-wrap: balance;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, .4);
+    }
+
+    .mu-hero-description {
+        max-width: 670px;
+        margin: 0;
+        color: #e0dfd2;
+        font-size: 15px;
+        line-height: 1.95;
+    }
+
+    .mu-hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 24px;
+        margin-top: 2rem;
+    }
+
+    .mu-count {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 13px;
+        border: 1px solid rgba(213, 181, 116, .36);
+        background: rgba(15, 19, 14, .66);
+        color: var(--mu-gold-light);
+        font-size: 10px;
+        letter-spacing: .08em;
+        line-height: 1.6;
+    }
+
+    .mu-count-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
+        border-radius: 50%;
+        background: var(--mu-gold);
+    }
+
+    .mu-explore {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--mu-text);
+        font-size: 12px;
+        text-decoration: none;
+        transition: color .2s ease;
+    }
+
+        .mu-explore span {
+            color: var(--mu-gold);
+            font-size: 18px;
+            transition: transform .2s ease;
+        }
+
+        .mu-explore:hover {
+            color: var(--mu-gold-light);
+        }
+
+            .mu-explore:hover span {
+                transform: translateY(3px);
+            }
+
+    .mu-hero-index {
+        position: absolute;
+        right: max(2rem, calc((100vw - 1240px) / 2));
+        bottom: 2rem;
+        color: rgba(240, 220, 167, .65);
+        font: 12px Georgia, serif;
+        letter-spacing: .12em;
+    }
+
+    .mu-wrap {
+        width: min(100% - 48px, 1160px);
+        margin: 0 auto;
+        padding: 3.5rem 0 5rem;
+    }
+
+    .mu-navigation {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: 28px;
+        padding: 0 0 3rem;
+        border-bottom: 1px solid var(--mu-line);
+    }
+
+    .mu-navigation-heading {
+        padding-top: 5px;
+    }
+
+        .mu-navigation-heading p {
+            margin: .65rem 0 0;
+            color: var(--mu-text);
+            font: 400 19px/1.4 Georgia, serif;
+        }
+
+    .mu-chips {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: start;
+        gap: 9px;
+    }
+
+    .mu-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        min-height: 41px;
+        padding: 9px 12px;
+        border: 1px solid var(--mu-line);
+        background: rgba(255, 255, 255, .018);
+        color: #ddd9cc;
+        font-size: 12px;
+        text-decoration: none;
+        transition: border-color .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .mu-chip-number {
+        color: var(--mu-gold);
+        font-size: 10px;
+        letter-spacing: .08em;
+    }
+
+    .mu-chip-arrow {
+        color: #a99a72;
+        font-size: 12px;
+        opacity: .65;
+    }
+
+    .mu-chip:hover,
+    .mu-chip:focus-visible {
+        border-color: var(--mu-gold);
+        background: rgba(213, 181, 116, .09);
+        color: var(--mu-gold-light);
+    }
+
+    .mu-traditions,
+    .mu-more,
+    .mu-others {
+        margin-top: 4.5rem;
+    }
+
+    .mu-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 2rem;
+        padding-bottom: 1.35rem;
+        border-bottom: 1px solid var(--mu-line);
+    }
+
+        .mu-heading h2 {
+            margin: .7rem 0 0;
+            color: var(--mu-gold-light);
+            font: 400 clamp(1.8rem, 4vw, 2.65rem)/1.2 Georgia, serif;
+            letter-spacing: -.025em;
+            text-wrap: balance;
+        }
+
+    .mu-heading-count {
+        display: flex;
+        align-items: baseline;
+        gap: 9px;
+        color: var(--mu-gold);
+        font: 400 2rem Georgia, serif;
+        white-space: nowrap;
+    }
+
+        .mu-heading-count span {
+            color: var(--mu-muted);
+            font: 11px Arial, sans-serif;
+        }
+
+    .mu-heading-description {
+        max-width: 640px;
+        margin: .8rem 0 0;
+        color: var(--mu-muted);
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .mu-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid rgba(213, 181, 116, .17);
+        border-radius: 14px;
+        background: linear-gradient(145deg, #19211e, #101513);
+        transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+        .mu-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(213, 181, 116, .48);
+            box-shadow: 0 16px 38px rgba(0, 0, 0, .22);
+        }
+
+    .mu-cover {
+        position: relative;
+        overflow: hidden;
+        background: #20251d;
+        height: 230px;
+        aspect-ratio: auto;
+    }
+
+        .mu-cover img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 0;
+            transition: transform .5s ease;
+        }
+
+    .mu-card:hover .mu-cover img {
+        transform: scale(1.035);
+    }
+
+    .mu-cover-empty {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        min-height: 170px;
+        color: var(--mu-gold);
+        font: 400 3.6rem Georgia, serif;
+        background: radial-gradient(circle at center, rgba(213, 181, 116, .13), transparent 65%), var(--mu-panel-soft);
+    }
+
+    .mu-card-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 1.15rem;
+    }
+
+    .mu-style {
+        align-self: flex-start;
+        max-width: 100%;
+        padding: 5px 8px;
+        border: 1px solid rgba(213, 181, 116, .26);
+        background: rgba(213, 181, 116, .07);
+        color: var(--mu-gold-light);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: .09em;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+        text-transform: uppercase;
+    }
+
+    .mu-card h3 {
+        margin: 0;
+        color: var(--mu-gold-light);
+        font: 400 1.2rem/1.4 Georgia, serif;
+        overflow-wrap: anywhere;
+    }
+
+    .mu-card p {
+        margin: 0;
+        color: var(--mu-muted);
+        font-size: 12px;
+        line-height: 1.85;
+        overflow-wrap: anywhere;
+    }
+
+    .mu-card audio,
+    .mu-card video {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-top: auto;
+        padding-top: 10px;
+        color-scheme: dark;
+    }
+
+    .mu-card video {
+        height: auto;
+        border-radius: 3px;
+    }
+
+    .music-credit {
+        margin: 0 !important;
+        color: #929387 !important;
+        font-size: 10px !important;
+        line-height: 1.7 !important;
+        overflow-wrap: anywhere;
+    }
+
+        .music-credit a {
+            color: var(--mu-gold);
+            text-decoration-color: rgba(213, 181, 116, .4);
+            text-underline-offset: 3px;
+        }
+
+            .music-credit a:hover {
+                color: var(--mu-gold-light);
+            }
+
+    .mu-more-grid,
+    .mu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .mu-tcard {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 250px;
+        padding: 1.5rem;
+        border: 1px solid var(--mu-line);
+        background: linear-gradient(145deg, rgba(213, 181, 116, .045), transparent 60%), var(--mu-panel);
+        scroll-margin-top: 100px;
+        transition: border-color .2s ease, background .2s ease;
+    }
+
+        .mu-tcard:hover {
+            border-color: rgba(213, 181, 116, .45);
+            background-color: var(--mu-panel-soft);
+        }
+
+    .mu-tcard-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.2rem;
+    }
+
+    .mu-num.sm {
+        font-size: 2rem;
+    }
+
+    .mu-tcard-symbol {
+        color: rgba(213, 181, 116, .55);
+        font-size: 1.45rem;
+    }
+
+    .mu-tcard h3 {
+        margin: .6rem 0 .75rem;
+        color: var(--mu-gold-light);
+        font: 400 1.4rem/1.3 Georgia, serif;
+        overflow-wrap: anywhere;
+    }
+
+    .mu-tcard p {
+        margin: 0 0 1.3rem;
+        color: var(--mu-muted);
+        font-size: 12px;
+        line-height: 1.9;
+        overflow-wrap: anywhere;
+    }
+
+    .mu-tcard-note {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid var(--mu-line);
+        color: #9e9d8e;
+        font-size: 10px;
+        letter-spacing: .04em;
+    }
+
+    .mu-outro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 17px;
+        max-width: 800px;
+        margin: 5rem auto 0;
+        padding: 2.5rem 1rem 0;
+        border-top: 1px solid var(--mu-line);
+        text-align: center;
+    }
+
+    .mu-outro-symbol {
+        color: var(--mu-gold);
+        font-size: 1.5rem;
+    }
+
+    .mu-outro p {
+        margin: 0;
+        color: #cfcebf;
+        font: italic 16px/2 Georgia, serif;
+        text-wrap: pretty;
+    }
+
+    .music-page a:focus-visible {
+        outline: 2px solid var(--mu-gold-light);
+        outline-offset: 4px;
+    }
+
+    @@keyframes mu-hero-reveal {
+        from {
+            transform: scale(1.025);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @@media (min-width: 1500px) {
+        .mu-hero-copy {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+    }
+
+    @@media (max-width: 1000px) {
+        .mu-navigation {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .mu-section {
+            grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+            gap: 28px;
+        }
+
+        .mu-items {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .mu-more-grid,
+        .mu-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 650px) {
+        .mu-hero {
+            min-height: 450px;
+            align-items: flex-end;
+        }
+
+        .mu-hero-img {
+            object-position: 57% center;
+        }
+
+        .mu-shade {
+            background: linear-gradient(0deg, rgba(9, 13, 9, .98) 0%, rgba(9, 13, 9, .78) 52%, rgba(9, 13, 9, .18) 100%);
+        }
+
+        .mu-hero-copy {
+            padding: 3.5rem 1.25rem 3rem;
+        }
+
+        .mu-hero h1 {
+            margin-top: 1rem;
+            font-size: clamp(2.45rem, 10vw, 3.7rem);
+        }
+
+        .mu-hero-description {
+            font-size: 13px;
+            line-height: 1.85;
+        }
+
+        .mu-hero-meta {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 1.5rem;
+        }
+
+        .mu-hero-index {
+            top: 1.5rem;
+            right: 1.25rem;
+            bottom: auto;
+        }
+
+        .mu-wrap {
+            width: calc(100% - 32px);
+            padding-top: 2.5rem;
+            padding-bottom: 3.5rem;
+        }
+
+        .mu-navigation {
+            padding-bottom: 2rem;
+        }
+
+        .mu-chip {
+            flex: 1 1 calc(50% - 9px);
+            justify-content: flex-start;
+            min-width: 0;
+            padding: 10px;
+        }
+
+        .mu-chip-arrow {
+            margin-left: auto;
+        }
+
+        .mu-traditions,
+        .mu-more,
+        .mu-others {
+            margin-top: 3rem;
+        }
+
+        .mu-heading {
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+
+            .mu-heading h2 {
+                font-size: 1.9rem;
+            }
+
+        .mu-heading-count {
+            gap: 5px;
+            font-size: 1.45rem;
+        }
+
+            .mu-heading-count span {
+                display: none;
+            }
+
+        .mu-section {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .mu-section-reverse .mu-copy {
+            order: 0;
+        }
+
+        .mu-copy-top {
+            margin-bottom: 1rem;
+        }
+
+        .mu-num {
+            font-size: 2.8rem;
+        }
+
+        .mu-copy h3 {
+            font-size: 1.9rem;
+        }
+
+        .mu-tradition-description {
+            font-size: 13px;
+        }
+
+        .mu-items {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .mu-items-single {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .mu-card-body {
+            gap: 10px;
+            padding: .9rem;
+        }
+
+        .mu-card h3 {
+            font-size: 1.05rem;
+        }
+
+        .mu-card p {
+            font-size: 11px;
+        }
+
+        .mu-more-grid,
+        .mu-grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 12px;
+        }
+
+        .mu-tcard {
+            min-height: 0;
+            padding: 1.25rem;
+        }
+
+        .mu-outro {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+        }
+
+            .mu-outro p {
+                font-size: 14px;
+                line-height: 1.9;
+            }
+    }
+
+    @@media (max-width: 380px) {
+        .mu-items {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .mu-chip {
+            flex-basis: 100%;
+        }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .mu-hero-img {
+            animation: none;
+        }
+
+        .mu-card,
+        .mu-cover img,
+        .mu-chip,
+        .mu-explore span {
+            transition: none;
+        }
+    }
+
+    .mu-video {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        margin-top: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(213, 181, 116, .2);
+        border-radius: 4px;
+        background: #080b08;
+    }
+
+        .mu-video iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+    .mu-card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 4px;
+    }
+
+    .mu-media-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid rgba(213, 181, 116, .3);
+        background: rgba(213, 181, 116, .06);
+        color: #f0dca7;
+        font-size: 11px;
+        line-height: 1.6;
+        text-decoration: none;
+        transition: background .2s ease, border-color .2s ease;
+    }
+
+        .mu-media-link:hover {
+            border-color: #d5b574;
+            background: rgba(213, 181, 116, .14);
+            color: #fff0c8;
+        }
+
+    .mu-card audio,
+    .mu-card video {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 12px;
+    }
+
+    .mu-card iframe {
+        max-width: 100%;
+    }
+
+    /* Die neun Traditionen werden im Hauptbereich angezeigt. */
+    .mu-more {
+        display: none;
+    }
+
+    /* ---------- Kategorien ---------- */
+    .mu-category-section {
+        margin-top: 3.5rem;
+        scroll-margin-top: 100px;
+    }
+
+    .mu-category-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--mu-line);
+    }
+
+        .mu-category-heading h3 {
+            margin: .65rem 0 0;
+            color: var(--mu-gold-light);
+            font: 400 clamp(1.5rem, 3vw, 2rem)/1.3 Georgia, serif;
+        }
+
+    .mu-category-count {
+        color: var(--mu-gold);
+        font: 400 1.6rem Georgia, serif;
+    }
+
+    @@media (max-width: 650px) {
+        .mu-category-section {
+            margin-top: 2.5rem;
+        }
+
+        .mu-category-heading h3 {
+            font-size: 1.4rem;
+        }
+    }
+</style>
+
+<MusicImageArchive />
+
+
+@code {
+    protected override void OnInitialized()
+    {
+        Languages.Changed += HandleLanguageChanged;
+    }
+
+    private void HandleLanguageChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    private List<MusicItem> musicItems = new();
+
+    private sealed record MusicCategory(
+        string Id,
+        string[] Titles,
+        string[] Descriptions
+    );
+
+    private readonly List<MusicCategory> Categories = new()
+    {
+        new(
+            "dengbej",
+            new[] {
+                "Dengbêj – mündliche Erzähltradition",
+                "Dengbêj – Oral Storytelling",
+                "دەنگبێژ – گێڕانەوەی زارەکی"
+            },
+            new[] {
+                "Erzählgesang, historische Erinnerungen und überlieferte Geschichten.",
+                "Narrative singing, historical memories and inherited stories.",
+                "گۆرانیی چیرۆکی، بیرەوەریی مێژوویی و چیرۆکە گوازراوەکان."
+            }
+        ),
+        new(
+            "daf",
+            new[] {
+                "Daf – Rhythmus und Ritual",
+                "Daf – Rhythm and Ritual",
+                "دەف – ڕیتم و ڕێوڕەسم"
+            },
+            new[] {
+                "Die Daf und ihre Bedeutung in musikalischen und spirituellen Zusammenkünften.",
+                "The daf and its role in musical and spiritual gatherings.",
+                "دەف و ڕۆڵی لە کۆبوونەوە مۆسیقایی و ڕۆحییەکاندا."
+            }
+        ),
+        new(
+            "singers",
+            new[] {
+                "Bedeutende Sängerinnen und Sänger",
+                "Influential Singers",
+                "گۆرانیبێژە ناسراوەکان"
+            },
+            new[] {
+                "Aufnahmen bekannter kurdischer Stimmen und Künstler.",
+                "Recordings featuring notable Kurdish voices and artists.",
+                "تۆمارەکانی دەنگ و هونەرمەندە ناسراوە کوردییەکان."
+            }
+        ),
+        new(
+            "regional",
+            new[] {
+                "Regionale Musikstile",
+                "Regional Music Styles",
+                "شێوازە مۆسیقاییە ناوچەییەکان"
+            },
+            new[] {
+                "Musikalische Ausdrucksformen aus unterschiedlichen kurdischen Regionen.",
+                "Musical expressions from different Kurdish regions.",
+                "دەربڕینە مۆسیقاییەکانی ناوچە جیاوازەکانی کوردستان."
+            }
+        ),
+        new(
+            "dance",
+            new[] {
+                "Tanz und Gemeinschaft",
+                "Dance and Community",
+                "هەڵپەڕکێ و کۆمەڵگا"
+            },
+            new[] {
+                "Musik für Tanz, gemeinschaftliche Feste und kulturelle Begegnungen.",
+                "Music for dance, community celebrations and cultural gatherings.",
+                "مۆسیقا بۆ هەڵپەڕکێ، جەژن و کۆبوونەوە کولتوورییەکان."
+            }
+        ),
+        new(
+            "contemporary",
+            new[] {
+                "Zeitgenössische Musik und Identität",
+                "Contemporary Music and Identity",
+                "مۆسیقای هاوچەرخ و ناسنامە"
+            },
+            new[] {
+                "Moderne Werke, kulturelle Identität und aktuelle musikalische Ausdrucksformen.",
+                "Modern works, cultural identity and contemporary musical expression.",
+                "بەرهەمە نوێکان، ناسنامەی کولتووری و دەربڕینە مۆسیقاییە هاوچەرخەکان."
+            }
+        )
+    };
+
+    // Ein Titel kann in mehreren Kategorien erscheinen.
+    private List<MusicItem> ItemsForCategory(string categoryId)
+    {
+        return musicItems
+            .Where(item => item.CategoryIds.Contains(categoryId))
+            .ToList();
+    }
+
+    // Titel ohne gültige Kategorie gehen nicht verloren.
+    private List<MusicItem> UncategorizedItems =>
+        musicItems
+            .Where(item => !item.CategoryIds.Any(id => Categories.Any(c => c.Id == id)))
+            .ToList();
+
+    private string HeroKicker =>
+        Pick("MUSIKALISCHES ERBE",
+             "MUSICAL HERITAGE",
+             "میراتی مۆسیقایی");
+
+    private string MusicOverviewIntro =>
+    Pick(
+        "Entdecke die kurdische Musiktradition, ihre Erzählungen, Instrumente und regionalen Klänge.",
+        "Discover Kurdish musical traditions, storytelling, instruments and regional sounds.",
+        "نەریتی مۆسیقای کوردی، چیرۆکگێڕان، ئامێرە مۆسیقاییەکان و دەنگە ناوچەییەکان بناسە."
+    );
+
+    private string MusicOverviewOutro =>
+        Pick(
+            "Musik bewahrt Erinnerungen, erzählt Geschichten und verbindet Generationen der kurdischen Kultur.",
+            "Music preserves memories, tells stories and connects generations of Kurdish culture.",
+            "مۆسیقا بیرەوەری دەپارێزێت، چیرۆک دەگێڕێتەوە و نەوەکانی کولتووری کوردی پێکەوە دەبەستێتەوە."
+        );
+
+    private string CountLine =>
+        $"{musicItems.Count} {Pick(
+            "Aufnahmen im Archiv",
+            "recordings in the archive",
+            "تۆمار لە ئەرشیفدا"
+        )}";
+    protected override async Task OnInitializedAsync()
+    {
+        musicItems = await MusicService.GetMusicItemsAsync();
+    }
+
+    // Die Karten-ID enthält die Kategorie, damit sie bei Mehrfachzuordnung eindeutig bleibt.
+    private RenderFragment ItemCard(MusicItem item, string categoryId) => @<article id="@($"music-item-{categoryId}-{item.Id}")"
+                                                                                class="mu-card">
+
+        <div class="mu-cover">
+            @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
+            {
+                <img src="@item.ImageUrl"
+                     alt="@item.Title"
+                     loading="lazy" />
+            }
+            else
+            {
+                <div class="mu-cover-empty">♪</div>
+            }
+        </div>
+
+        <div class="mu-card-body">
+            @if (!string.IsNullOrWhiteSpace(item.ArtistOrStyle))
+            {
+                <span class="mu-style">@item.ArtistOrStyle</span>
+            }
+
+            <h3>@item.Title</h3>
+
+            <p>@item.Description</p>
+
+            @if (!string.IsNullOrWhiteSpace(item.AudioUrl))
+            {
+                <audio controls
+                       src="@item.AudioUrl"
+                       preload="none">
+                </audio>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(item.VideoUrl))
+            {
+                <div class="mu-video">
+                    <iframe src="@item.VideoUrl"
+                            title="@item.Title"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(item.AudioSourceUrl))
+            {
+                <p class="music-credit">
+                    <a href="@item.AudioSourceUrl"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        @Pick("Audioquelle", "Audio source", "سەرچاوەی دەنگ")
+                    </a>
+                    @if (!string.IsNullOrWhiteSpace(item.AudioCredit))
+                    {
+                        <span> · @item.AudioCredit</span>
+                    }
+                </p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(item.VideoSourceUrl))
+            {
+                <p class="music-credit">
+                    <a href="@item.VideoSourceUrl"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        @Pick("Originalvideo", "Original video", "ڤیدیۆی سەرەکی")
+                    </a>
+                    @if (!string.IsNullOrWhiteSpace(item.VideoCredit))
+                    {
+                        <span> · @item.VideoCredit</span>
+                    }
+                </p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(item.ImageSourceUrl))
+            {
+                <p class="music-credit">
+                    <a href="@item.ImageSourceUrl"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        @Pick("Bildquelle", "Image source", "سەرچاوەی وێنە")
+                    </a>
+                    @if (!string.IsNullOrWhiteSpace(item.ImageCredit))
+                    {
+                        <span> · @item.ImageCredit</span>
+                    }
+                </p>
+            }
+        </div>
+    </article>;
+
+    private string Pick(params string[] values)
+    {
+        var lang = Languages.CurrentLanguage;
+
+        return lang switch
+        {
+            "en" => values.Length > 1 ? values[1] : values[0],
+            "ku" => values.Length > 2 ? values[2] : values[0],
+            _ => values[0]
+        };
+    }
+
+    public void Dispose()
+    {
+        Languages.Changed -= HandleLanguageChanged;
+    }
+}

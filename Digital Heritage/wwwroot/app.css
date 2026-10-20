@@ -1,0 +1,310 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #050505;
+}
+
+
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+
+
+
+
+
+.map-page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+
+
+#cesium-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
+.map-title {
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    z-index: 10;
+    color: #e5c158;
+    font-family: Georgia,serif;
+    text-shadow: 0 3px 15px black;
+}
+
+
+
+    .map-title h1 {
+        margin: 0;
+        font-size: 42px;
+    }
+
+
+
+
+    .map-title p {
+        color: white;
+        font-size: 18px;
+    }
+
+
+
+
+
+
+
+#heritage-panel {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 360px;
+    max-height: 600px;
+    overflow: auto;
+    background: rgba(0,0,0,.85);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    display: none;
+    z-index: 20;
+    box-shadow: 0 0 30px black;
+}
+
+
+
+
+
+    #heritage-panel img {
+        width: 100%;
+        border-radius: 15px;
+    }
+
+
+
+
+
+.panel-card {
+    animation: fade .4s ease;
+}
+
+
+
+
+
+@keyframes fade {
+
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* تنظیمات پایه و قالب کلی سایت */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #121212;
+    color: #eeeeee;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    display: none !important;
+
+}
+
+main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-height: 100vh;
+    height: auto;
+    padding: 20px;
+}
+
+.content {
+    padding: 30px;
+}
+
+/* استایل منوی ناوبری */
+.nav-link {
+    color: #bbb !important;
+    padding: 12px;
+    display: block;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .nav-link:hover {
+        background: rgba(212, 175, 55, .15);
+        color: #d4af37 !important;
+    }
+
+    .nav-link.active {
+        background: rgba(212, 175, 55, .2);
+        color: #d4af37 !important;
+    }
+
+.navbar-brand {
+    color: #d4af37 !important;
+    font-family: Georgia, serif;
+}
+
+.text-warning {
+    color: #d4af37 !important;
+}
+
+.card {
+    background: #181818 !important;
+}
+
+.timeline-item {
+    border-left: 3px solid #d4af37;
+}
+
+#kurdistan-map {
+    border: 1px solid #444;
+}
+
+.museum-tooltip {
+    background: #181818 !important;
+    color: #d4af37 !important;
+    border: 1px solid #d4af37 !important;
+    font-weight: bold;
+}
+
+/* --- استایل اختصاصی دکمه‌های انتخاب زبان (فرم خورشیدی) --- */
+/* --- استایل اختصاصی کادر شناور دکمه‌های زبان و برند --- */
+.site-language-picker {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+    .site-language-picker.floating {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(18, 18, 18, 0.85); /* پس‌زمینه تیره شیک */
+        padding: 12px 14px;
+        border-radius: 16px;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(212, 175, 55, 0.3); /* کادر طلایی ملایم دور مجموعه */
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column !important; /* چینش کاملاً عمودی: دکمه‌ها بالا، متن پایین */
+        align-items: center;
+        gap: 10px;
+    }
+
+        /* ردیف دکمه‌های خورشیدی زبان */
+        .site-language-picker.floating .language-buttons-row,
+        .site-language-picker.floating {
+            display: flex;
+        }
+
+    .site-language-picker button {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: repeating-conic-gradient(#d4af37 0deg 8deg, transparent 8deg 18deg);
+        color: #fff;
+        font-weight: bold;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .site-language-picker button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        .site-language-picker button.selected {
+            background: #d4af37;
+            color: #1a1a1a;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.9);
+        }
+
+        .site-language-picker button span {
+            background: #1f1f1f;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .site-language-picker button.selected span {
+            background: #fff;
+            color: #1a1a1a;
+        }
+
+/* استایل لینک DIGITAL HERITAGE زیر دکمه‌ها داخل همان کادر */
+.floating-brand {
+    color: #d4af37 !important;
+    font-family: Georgia, serif;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 2px;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+    .floating-brand:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }

@@ -1,0 +1,281 @@
+@page "/culture/{Slug}"
+@inject Digital_Heritage.Data.SiteLanguageService Languages
+@implements IDisposable
+
+<PageTitle>@Title · Digital Heritage</PageTitle>
+
+<div class="culture-page">
+    <a class="culture-back" href="/map">← @Languages.Text("topic.back")</a>
+    <nav class="topic-navigation" aria-label="@Languages.Text("nav.stories")">
+        <a href="/gallery">@Languages.Text("nav.gallery")</a>
+        <a class="@(TopicKey == "newroz" ? "active" : "")" href="/culture/newroz">@Languages.Text("nav.newroz")</a>
+        <a class="@(TopicKey == "dengbej" ? "active" : "")" href="/culture/dengbej">@Languages.Text("nav.dengbej")</a>
+        <a class="@(TopicKey == "jin" ? "active" : "")" href="/culture/jin-jiyan-azadi">@Languages.Text("nav.jin")</a>
+        <a class="@(TopicKey == "sun" ? "active" : "")" href="/culture/kurdish-sun">@Languages.Text("nav.sun")</a>
+        <a class="@(TopicKey == "dance" ? "active" : "")" href="/culture/dance">@Languages.Text("nav.dance")</a>
+        <a class="@(TopicKey == "deq" ? "active" : "")" href="/culture/deq">@Languages.Text("nav.deq")</a>
+        <a href="/culture/clove-apple">@Languages.Text("nav.cloveApple")</a>
+        <a href="/traditions">@((Languages.CurrentLanguage == "de") ? "Kurdische Bräuche" : Languages.CurrentLanguage == "ku" ? "نەریتە کوردییەکان" : "Kurdish traditions")</a>
+        <a href="/culture/kobani">@((Languages.CurrentLanguage == "de") ? "Kobanê" : Languages.CurrentLanguage == "ku" ? "کۆبانی" : "Kobanî")</a>
+    </nav>
+    <section class="culture-hero">
+        <div class="culture-hero-media">
+            <img class="culture-hero-image" src="@HeroImage" alt="@Title" />
+            <span class="culture-image-index">01 / @Images.Count.ToString("00")</span>
+        </div>
+        <div class="culture-hero-copy">
+            <span class="culture-kicker">@Kicker</span>
+            <h1>@Title</h1>
+            <p>@Summary</p>
+            <a class="culture-action" href="#collection">@Languages.Text("topic.open") <span>↘</span></a>
+        </div>
+    </section>
+
+    @if (TopicKey is "jin" or "sun" or "deq" or "newroz")
+    {
+        <section class="culture-story" aria-label="@Title">
+            @if (TopicKey == "newroz")
+            {
+                <div class="story-heading"><span class="culture-kicker">@DetailEyebrow</span><h2>@NewrozTitle</h2><p>@NewrozIntro</p></div>
+                <div class="story-copy"><h3>@NewrozFireTitle</h3><p>@NewrozFire</p><p>@NewrozKawa</p><h3>@NewrozAkreTitle</h3><p>@NewrozAkre</p><p>@NewrozAkreMeaning</p></div>
+            }
+            else if (TopicKey == "jin")
+            {
+                <div class="story-heading"><span class="culture-kicker">@DetailEyebrow</span><h2>@Title</h2><p>@JinIntro</p></div>
+                <div class="meaning-grid">
+                    @foreach (var item in JinMeanings)
+                    {
+                        <article class="meaning-card"><span>@item.Word</span><h3>@item.Title</h3><p>@item.Description</p></article>
+                    }
+                </div>
+                <div class="story-copy"><h3>@DetailContextTitle</h3><p>@JinContext</p><p>@JinRecent</p></div>
+            }
+            else if (TopicKey == "sun")
+            {
+                <div class="story-heading"><span class="culture-kicker">@DetailEyebrow</span><h2>@SunTitle</h2><p>@SunIntro</p></div>
+                <div class="story-copy"><h3>@SunFlagTitle</h3><p>@SunFlag</p><h3>@DetailContextTitle</h3><p>@SunHistory</p><p class="source-note">@SunCaution</p></div>
+            }
+            else
+            {
+                <div class="story-heading"><span class="culture-kicker">@DetailEyebrow</span><h2>@DeqTitle</h2><p>@DeqIntro</p></div>
+                <div class="meaning-grid">
+                    @foreach (var item in DeqMeanings)
+                    {
+                        <article class="meaning-card"><span>@item.Word</span><h3>@item.Title</h3><p>@item.Description</p></article>
+                    }
+                </div>
+                <div class="story-copy"><h3>@DetailContextTitle</h3><p>@DeqContext</p><p class="source-note">@DeqCaution</p></div>
+            }
+        </section>
+    }
+
+    @if (TopicKey == "newroz")
+    {
+        <section class="culture-video-section" aria-labelledby="newroz-video-title">
+            <div class="collection-heading">
+                <span class="culture-kicker">YOUTUBE / NEWROZ</span>
+                <h2 id="newroz-video-title">@NewrozVideoTitle</h2>
+                <p>@NewrozVideoIntro</p>
+            </div>
+            <div class="culture-video-grid">
+                <article class="culture-video-card">
+                    <iframe src="https://www.youtube-nocookie.com/embed/Ejo7t9qExbM" title="@NewrozVideoCaption(1)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h3>@NewrozVideoCaption(1)</h3>
+                </article>
+                <article class="culture-video-card">
+                    <iframe src="https://www.youtube-nocookie.com/embed/ceC6MBcaWH8" title="@NewrozVideoCaption(2)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h3>@NewrozVideoCaption(2)</h3>
+                </article>
+                <article class="culture-video-card">
+                    <iframe src="https://www.youtube-nocookie.com/embed/59CUaHKu-60" title="@NewrozVideoCaption(3)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h3>@NewrozVideoCaption(3)</h3>
+                </article>
+                <article class="culture-video-card">
+                    <iframe src="https://www.youtube-nocookie.com/embed/S1HJfs0y-fU" title="@NewrozVideoCaption(4)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h3>@NewrozVideoCaption(4)</h3>
+                </article>
+            </div>
+        </section>
+    }
+
+    <section id="collection" class="culture-collection">
+        <div class="collection-heading">
+            <span class="culture-kicker">DIGITAL HERITAGE / @Kicker</span>
+            <h2>@Languages.Text("topic.images")</h2>
+            <p>@Languages.Text("topic.note")</p>
+        </div>
+        <div class="culture-grid">
+            @foreach (var image in Images)
+            {
+                <figure class="culture-image-card">
+                    <img src="@image.Path" alt="@image.Caption" loading="lazy" />
+                    <figcaption>@image.Caption</figcaption>
+                </figure>
+            }
+        </div>
+    </section>
+</div>
+
+<style>
+    .culture-page{max-width:1450px;margin:auto;padding:1rem clamp(1rem,3vw,2.8rem) 4rem;color:#f1eee5}
+    .culture-back{display:inline-block;margin:0 0 .9rem;color:#d5b574;text-decoration:none;font:11px Arial,sans-serif;letter-spacing:.05em}
+    .topic-navigation{display:flex;gap:8px;overflow-x:auto;padding:8px 0 18px;scrollbar-width:thin;scrollbar-color:#9b8050 transparent}
+    .topic-navigation a{flex:0 0 auto;padding:10px 13px;border:1px solid rgba(213,181,116,.28);background:#141814;color:#d8d4c9;text-decoration:none;font:10px Arial,sans-serif;white-space:nowrap}
+    .topic-navigation a:hover,.topic-navigation a.active{border-color:#d5b574;background:linear-gradient(130deg,rgba(213,181,116,.24),rgba(20,24,20,.96));color:#fff0c8}
+    .culture-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);min-height:360px;overflow:hidden;border:1px solid rgba(233,224,204,.16);background:#111713}
+    .culture-hero-media{position:relative;min-height:360px;background:#0c100d}
+    .culture-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+    .culture-hero-media:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.58));pointer-events:none}
+    .culture-image-index{position:absolute;z-index:1;left:16px;bottom:14px;color:#fff0c8;font:9px Arial,sans-serif;letter-spacing:.14em}
+    .culture-hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.5rem,4vw,3.8rem);background:radial-gradient(ellipse at 100% 0,rgba(213,181,116,.11),transparent 55%),#111713}
+    .culture-kicker{font:9px Arial,sans-serif;letter-spacing:.2em;color:#d5b574;text-transform:uppercase}
+    .culture-hero h1{font:400 clamp(2.1rem,4.6vw,4rem)/1.04 Georgia,serif;letter-spacing:-.035em;margin:1rem 0;color:#f3efe5}
+    .culture-hero p{max-width:620px;color:#d1cec4;font:14px/1.85 Arial,sans-serif;margin:0}
+    .culture-action{align-self:flex-start;margin-top:1.25rem;display:inline-flex;gap:24px;align-items:center;padding:12px 15px;background:#d5b574;color:#161812;text-decoration:none;font:11px Arial,sans-serif}
+    .culture-action span{font-size:17px}
+    .culture-collection{padding:2.4rem 0 0;scroll-margin-top:1rem}
+    .culture-video-section{padding:2.4rem 0 0;max-width:1000px;margin:auto}.culture-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.culture-video-card{margin:0;padding:12px;border:1px solid rgba(213,181,116,.25);background:linear-gradient(145deg,rgba(213,181,116,.08),#111713)}.culture-video-card iframe{display:block;width:100%;max-width:360px;aspect-ratio:9/16;margin:auto;border:0;background:#080a08}.culture-video-card h3{margin:11px 0 0;text-align:center;color:#e8d9b5;font:12px/1.5 Arial,sans-serif}
+    .culture-story{padding:clamp(2rem,5vw,4rem) 0 1rem;max-width:1100px;margin:auto}.story-heading{max-width:800px;margin:0 auto 1.5rem;text-align:center}.story-heading h2{font:400 clamp(1.8rem,3vw,2.7rem) Georgia,serif;margin:.65rem 0;color:#f3efe5}.story-heading>p,.story-copy p,.meaning-card p{color:#d1cec4;font:14px/1.9 Arial,sans-serif}.meaning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.meaning-card{border:1px solid rgba(213,181,116,.23);background:linear-gradient(145deg,rgba(213,181,116,.08),#111713);padding:1.2rem}.meaning-card>span{color:#d5b574;font:11px Arial,sans-serif;letter-spacing:.12em}.meaning-card h3,.story-copy h3{font:400 1.2rem Georgia,serif;color:#f3efe5;margin:.65rem 0}.meaning-card p{font-size:13px;margin:0}.story-copy{max-width:820px;margin:2rem auto 0;padding:1.4rem 1.6rem;border-left:2px solid #d5b574;background:rgba(255,255,255,.025)}.story-copy p{margin:.5rem 0 1rem}.story-copy h3:not(:first-child){margin-top:1.5rem}.source-note{color:#aaa99f!important;font-size:12px!important}
+    .collection-heading{margin-bottom:1.2rem}.collection-heading h2{font:400 clamp(1.7rem,3vw,2.5rem) Georgia,serif;margin:.5rem 0}.collection-heading p{color:#aaa99f;font:13px/1.65 Arial,sans-serif;margin:0}
+    .culture-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+    .culture-image-card{margin:0;position:relative;min-height:220px;overflow:hidden;background:#171b17;border:1px solid rgba(233,224,204,.13)}
+    .culture-image-card img{width:100%;height:100%;min-height:220px;max-height:390px;object-fit:cover;display:block;transition:transform .45s}
+    .culture-image-card:hover img{transform:scale(1.035)}
+    .culture-image-card figcaption{position:absolute;inset:auto 0 0;padding:2rem 1rem .8rem;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#f1eee5;font:11px/1.45 Arial,sans-serif}
+    @@media(max-width:800px){.culture-hero{grid-template-columns:1fr;min-height:0}.culture-hero-media{min-height:300px}.culture-hero-copy{padding:1.6rem}.culture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @@media(max-width:540px){.culture-grid{grid-template-columns:1fr}.culture-image-card,.culture-image-card img{min-height:260px}.culture-hero-media{min-height:250px}.culture-hero h1{font-size:2.4rem}.culture-video-grid{grid-template-columns:1fr}}
+    @@media(max-width:700px){.meaning-grid{grid-template-columns:1fr}.story-copy{padding:1rem}}
+    @@media(prefers-reduced-motion:reduce){.culture-image-card img{transition:none}}
+</style>
+
+@code {
+    [Parameter] public string Slug { get; set; } = "newroz";
+
+    private string NormalizedSlug => Slug.ToLowerInvariant();
+    private string TopicKey => NormalizedSlug switch { "dengbej" => "dengbej", "jin-jiyan-azadi" => "jin", "dance" => "dance", "deq" => "deq", "kurdish-sun" => "sun", _ => "newroz" };
+    private string Title => Languages.Text($"topic.{TopicKey}.title");
+    private string Summary => Languages.Text($"topic.{TopicKey}.summary");
+    private string Kicker => Languages.Text($"topic.{TopicKey}.kicker");
+    private string HeroImage => Images.FirstOrDefault()?.Path ?? "/images/heritage/kurdistan-landscape.jpg";
+    private string NewrozVideoTitle => Lang == "de" ? "Newroz in bewegten Bildern" : Lang == "ku" ? "نەورۆز بە ڤیدیۆ" : "Newroz on video";
+    private string NewrozVideoIntro => Lang == "de" ? "Zwei von dir ausgewählte YouTube-Shorts zum Newroz-Thema." : Lang == "ku" ? "دوو ڤیدیۆی کورت لە یوتیوب کە تۆ بۆ بابەتی نەورۆز هەڵتبژاردوون." : "Two YouTube Shorts you selected for the Newroz topic.";
+    private string NewrozVideoCaption(int number) => Lang == "de" ? $"Newroz-Short · {number}" : Lang == "ku" ? $"ڤیدیۆی کورت لەسەر نەورۆز · {number}" : $"Newroz short · {number}";
+
+    private IReadOnlyList<CultureImage> Images => TopicKey switch
+    {
+        "dengbej" => new[]
+        {
+            new CultureImage("/images/heritage/Dengbej/dengbej.jfif", "Dengbêj gathering"),
+            new CultureImage("/images/heritage/Dengbej/Dengbej.jpg", "Dengbêj performance"),
+            new CultureImage("/images/heritage/Dengbej/dengbej1.jfif", "Dengbêj storyteller"),
+            new CultureImage("/images/heritage/Dengbej/dengbej2.jfif", "Dengbêj oral tradition"),
+            new CultureImage("/images/heritage/Dengbej/dengbej3.jfif", "Dengbêj performance")
+        },
+        "deq" => new[]
+        {
+            new CultureImage("/images/heritage/Deq/deq%20tatto.jfif", "Deq tattoo tradition"),
+            new CultureImage("/images/heritage/Deq/deq%20tatto%201.jfif", "Traditional Deq patterns"),
+            new CultureImage("/images/heritage/Deq/deq%20tattoo%202.jfif", "Deq designs"),
+            new CultureImage("/images/heritage/Deq/Deq%20Tattoo.jfif", "Deq body art"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn1.jpg", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn%202.jpg", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn%203.jpg", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn%204.jpg", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn%205.png", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/Deq%20Zhn%206.jpg", "Deq patterns"),
+            new CultureImage("/images/heritage/Deq/deq.jfif", "Deq heritage"),
+            new CultureImage("/images/heritage/Deq/deq.jpg", "Deq heritage"),
+            new CultureImage("/images/heritage/Deq/Kurdish-Deq.jpg", "Kurdish Deq body art")
+        },
+        "dance" => new[]
+        {
+            new CultureImage("/images/heritage/Kurdish_Folk_dance.jpg", "Kurdish folk dance"),
+            new CultureImage("/images/heritage/Kurdische%20Tanzen.jpg", "Kurdish traditional dance"),
+            new CultureImage("/images/heritage/tanz.jpg", "Kurdish dance performance"),
+            new CultureImage("/images/heritage/halparke/3rd_Edition_of_Halparke_Festival_in_Baneh_2019-04-16_07.jpg", "Halparke festival in Baneh"),
+            new CultureImage("/images/heritage/halparke/3rd_Edition_of_Halparke_Festival_in_Baneh_2019-04-16_08.jpg", "Halparke dance")
+        },
+        "sun" => new[]
+        {
+            new CultureImage("/images/heritage/sun/kurdische%20sun.jfif", "Kurdish sun symbol"),
+            new CultureImage("/images/heritage/sun/kurdische%20sun%201.jfif", "Kurdish sun and heritage"),
+            new CultureImage("/images/heritage/sun/kurdische%20sun%202.jfif", "Kurdish sun symbol"),
+            new CultureImage("/images/heritage/sun/kurdische%20sun%203.jfif", "Kurdish sun motif"),
+            new CultureImage("/images/heritage/sun/Kurdish_symbols.png", "Kurdish cultural symbols")
+        },
+        "jin" => new[]
+        {
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jin%20jiyan%20azadi.png", "Jin, Jiyan, Azadî"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jin%20jiyan%20azadi%201.jfif", "Jin, Jiyan, Azadî"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jin%20jiyan%20azadi%202.png", "Jin, Jiyan, Azadî"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jin%20jiyan%20azadi%203.png", "Jin, Jiyan, Azadî"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jina%20amini.jfif", "Jina Amini"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jn%20jiyan%20azadi%202.jfif", "Jin, Jiyan, Azadî"),
+            new CultureImage("/images/heritage/jin%20jiyan%20azadi/jn%20jiyan%20azadii.jfif", "Jin, Jiyan, Azadî")
+        },
+        _ => new[]
+        {
+            new CultureImage("/images/heritage/Akre/akre-newroz-01.webp", "Newroz in Akre"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-02.webp", "Newroz celebration in Akre"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-03.webp", "Newroz torches in Akre"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-04.webp", "Newroz celebration"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-05.webp", "Newroz in the mountains"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-06.webp", "Newroz in Akre"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-07.webp", "Newroz celebration"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-08.webp", "Newroz torches"),
+            new CultureImage("/images/heritage/Akre/akre-newroz-09.webp", "Newroz festival"),
+            new CultureImage("/images/heritage/Newroz/akre%20newroz.jfif", "Akre Newroz"),
+            new CultureImage("/images/heritage/Newroz/akre%20newroz1.jfif", "Akre Newroz celebration"),
+            new CultureImage("/images/heritage/Newroz/akre%20newroz%202.jfif", "Akre Newroz"),
+            new CultureImage("/images/heritage/Newroz/Kurdish_Nowruz_ceremony.jpg", "Kurdish Newroz ceremony"),
+            new CultureImage("/images/heritage/Newroz/newroz.jfif", "Newroz in Kurdistan"),
+            new CultureImage("/images/heritage/Newroz/newroz%202.jfif", "Newroz celebration"),
+            new CultureImage("/images/heritage/Newroz/newroz%203.jfif", "Newroz gathering"),
+            new CultureImage("/images/heritage/Newroz/newroz%204.jfif", "Newroz celebration"),
+            new CultureImage("/images/heritage/Newroz/Newroz.kurdistan.jpg", "Newroz in Kurdistan"),
+            new CultureImage("/images/heritage/Newroz/Newroz.kurdistan.4.jpg", "Newroz in Kurdistan"),
+            new CultureImage("/images/heritage/Newroz/newruz.jfif", "Newroz tradition"),
+            new CultureImage("/images/heritage/Newroz/Nowruz%20in%20Kurdistan.png", "Nowruz in Kurdistan"),
+            new CultureImage("/images/heritage/Newroz/Nowruz_2017_in_Kurdistan,_Iran.jpg", "Nowruz in Kurdistan")
+        }
+    };
+    private void OnLanguageChanged() => _ = InvokeAsync(StateHasChanged);
+    private string Lang => Languages.CurrentLanguage;
+    private string DetailEyebrow => Lang == "de" ? "KULTURELLES GEDÄCHTNIS / EINORDNUNG" : Lang == "ku" ? "بیرەوەریی کولتووری / چوارچێوە" : "CULTURAL MEMORY / CONTEXT";
+    private string DetailContextTitle => Lang == "de" ? "Geschichte und Kontext" : Lang == "ku" ? "مێژوو و چوارچێوە" : "History and context";
+    private string NewrozTitle => Lang == "de" ? "Newroz und das Feuer" : Lang == "ku" ? "نەورۆز و ئاگر" : "Newroz and the fire";
+    private string NewrozIntro => Lang == "de" ? "Newroz hat einen besonderen Platz in der Kultur und kollektiven Erinnerung der Kurdinnen und Kurden. Das alte Fest ist mit dem Frühlingsbeginn, der Erneuerung der Natur und einem neuen Lebensabschnitt verbunden." : Lang == "ku" ? "نەورۆز لە کولتوور و بیرەوەریی کۆمەڵایەتیی کورداندا شوێنێکی تایبەتی هەیە. ئەم جەژنە کۆنە بە هاتنی بەهار، نوێبوونەوەی سروشت و دەستپێکی قۆناغێکی نوێی ژیانەوە پەیوەستە." : "Newroz holds a special place in Kurdish culture and collective memory. This ancient festival is associated with the arrival of spring, the renewal of nature and the beginning of a new season of life.";
+    private string NewrozFireTitle => Lang == "de" ? "Das Feuer als Symbol" : Lang == "ku" ? "ئاگر وەک هێما" : "Fire as a symbol";
+    private string NewrozFire => Lang == "de" ? "In der kurdischen Kultur wird Newroz oft mit Wiedergeburt, Hoffnung, Licht und dem Sieg des Lichts über die Dunkelheit verbunden. Das Feuer steht für Wärme, Licht, Lebenskraft und die Weitergabe kultureller Traditionen." : Lang == "ku" ? "لە کولتووری کوردیدا نەورۆز زۆرجار بە زیندووبوونەوە، هیوا، ڕووناکی و سەرکەوتنی ڕووناکی بەسەر تاریکیدا پەیوەست دەکرێت. ئاگر هێمای گەرمی، ڕووناکی، هێزی ژیان و گواستنەوەی نەریتە کولتوورییەکانە." : "In Kurdish culture, Newroz is often associated with renewal, hope, light and the triumph of light over darkness. Its fire represents warmth, illumination, the force of life and the continuation of cultural traditions.";
+    private string NewrozKawa => Lang == "de" ? "In Erzählungen und Traditionen wird das Newroz-Feuer mit der Geschichte des Schmieds Kawa und seinem Widerstand gegen Unterdrückung verbunden. In dieser Überlieferung kündet das Entzünden des Feuers von Freiheit und Befreiung." : Lang == "ku" ? "لە چیرۆک و نەریتەکاندا ئاگری نەورۆز بە چیرۆکی کاوەی ئاسنگەر و خەباتی ئەو دژ بە زوڵم پەیوەست دەکرێت. لەم گێڕانەوەیەدا، داگیرساندنی ئاگر نیشانەی دەستپێکی ئازادی و ڕزگارییە." : "In Kurdish stories and traditions, the Newroz fire is linked to the tale of Kawa the Blacksmith and his resistance to oppression. In this account, lighting the fire signals the beginning of freedom and liberation.";
+    private string NewrozAkreTitle => Lang == "de" ? "Newroz in Akrê" : Lang == "ku" ? "نەورۆز لە عەقرێ" : "Newroz in Akre";
+    private string NewrozAkre => Lang == "de" ? "Akrê in der Kurdistan-Region im Irak ist ein bekannter Ort für Newroz-Feiern. Die Stadt ist für Fackeln und große Feuer an den umliegenden Berghängen bekannt. Um den 21. März versammeln sich Menschen in traditioneller Kleidung, mit Gesang und gemeinsamen Feuern." : Lang == "ku" ? "عەقرێ لە هەرێمی کوردستانی عێراق یەکێکە لە شوێنە ناسراوەکانی جەژنی نەورۆز. شارەکە بە مەشخەڵ و ئاگرە گەورەکانی سەر گردەکانی دەوروبەری ناسراوە. لە ڕۆژانی نزیک ٢١ی ئازاردا، خەڵک بە جل‌وبەرگی نەریتی کۆدەبنەوە، گۆرانی دەڵێن و ئاگر هەڵدەکەن." : "Akre, in the Kurdistan Region of Iraq, is a well-known place for Newroz celebrations. The town is known for torches and large fires on the surrounding heights. Around March 21, people gather in traditional clothing, sing and light fires together.";
+    private string NewrozAkreMeaning => Lang == "de" ? "Für die lokale Gemeinschaft steht das Feuer für Frühling, Licht, Hoffnung und die lebendige Weitergabe von Traditionen. Newroz verbindet hier Landschaft, gemeinschaftliches Feiern und kulturelle Erinnerung." : Lang == "ku" ? "لە کولتووری ناوخۆیی عەقرێدا ئاگر هێمای هاتنی بەهار، ڕووناکی، هیوا و زیندووڕاگرتنی نەریتە کۆنەکانە. لێرەدا نەورۆز سروشت، ئاهەنگی کۆمەڵایەتی و بیرەوەریی کولتووری پێکەوە دەبەستێتەوە." : "In Akre's local culture, the fire symbolizes spring, light, hope and keeping inherited traditions alive. Newroz brings together the landscape, communal celebration and cultural memory.";
+    private string JinIntro => Lang == "de" ? "Jin, Jiyan, Azadî bedeutet Frau, Leben, Freiheit. Der kurdische Slogan verbindet diese Begriffe mit Frauenrechten, Gleichberechtigung und menschlicher Würde." : Lang == "ku" ? "ژن، ژیان، ئازادی واتای ژن، ژیان و ئازادییە. ئەم دروشمە کوردییە ئەم چەمکانە بە مافەکانی ژنان، یەکسانی و کەرامەتی مرۆڤەوە دەبەستێتەوە." : "Jin, Jiyan, Azadî means Woman, Life, Freedom. The Kurdish slogan connects these ideas with women's rights, equality and human dignity.";
+    private IReadOnlyList<Meaning> JinMeanings => Lang == "de" ? new[] { new Meaning("JIN", "Frau", "Betont die Bedeutung und Rechte von Frauen."), new Meaning("JIYAN", "Leben", "Steht für den Wert des Lebens, Selbstbestimmung und Würde."), new Meaning("AZADÎ", "Freiheit", "Verweist auf Freiheit von Diskriminierung und Einschränkungen.") } : Lang == "ku" ? new[] { new Meaning("JIN", "ژن", "گرنگی و مافەکانی ژنان دەخاتەڕوو."), new Meaning("JIYAN", "ژیان", "بەهای ژیان، هەڵبژاردنی ئازاد و کەرامەت دەگەیەنێت."), new Meaning("AZADÎ", "ئازادی", "ئاماژەیە بۆ ڕزگاربوون لە جیاکاری و سنووردارکردن.") } : new[] { new Meaning("JIN", "Woman", "Emphasizes the role and rights of women."), new Meaning("JIYAN", "Life", "Affirms the value of life, choice and human dignity."), new Meaning("AZADÎ", "Freedom", "Calls for freedom from discrimination and restrictions.") };
+    private string JinContext => Lang == "de" ? "Der Slogan verbreitete sich zunächst in der kurdischen Frauenbewegung und in kurdischen sozialen Bewegungen. Seine Geschichte ist eng mit dem politischen und kulturellen Kontext Kurdistans verbunden." : Lang == "ku" ? "ئەم دروشمە سەرەتا لە بزوتنەوەی ژنانی کورد و ناو بزوتنەوە کۆمەڵایەتییە کوردییەکاندا بڵاو بووەوە. مێژووی بە چوارچێوەی سیاسی و کولتووریی کوردستانەوە پەیوەستە." : "The slogan first circulated in the Kurdish women's movement and Kurdish social movements. Its history is closely tied to the political and cultural context of Kurdistan.";
+    private string JinRecent => Lang == "de" ? "Nach dem Tod von Jina Mahsa Amini im September 2022 wurde der Ruf zu einem zentralen Slogan der Proteste im Iran und weltweit bekannt. Viele verbinden ihn heute mit Frauenrechten und gesellschaftlicher Freiheit." : Lang == "ku" ? "دوای مردنی ژینا ئەمینی لە ئەیلوولی ٢٠٢٢، ئەم دروشمە بوو بە یەکێک لە دروشمە سەرەکییەکانی خۆپیشاندانەکان لە ئێران و لە ئاستی جیهاندا ناسرا. زۆر کەس ئەمڕۆ بە مافەکانی ژنان و ئازادیی کۆمەڵایەتییەوە دەیبەستنەوە." : "After Jina Mahsa Amini's death in September 2022, the slogan became central to protests in Iran and gained global recognition. Many now associate it with women's rights and social freedoms.";
+    private string SunTitle => Lang == "de" ? "Die kurdische Sonne" : Lang == "ku" ? "خۆری کوردی" : "The Kurdish Sun";
+    private string SunIntro => Lang == "de" ? "Die Sonne ist in vielen Kulturen ein altes Symbol für Licht, Leben, Kraft und Erneuerung. In kurdischen kulturellen Zusammenhängen wird sie häufig mit Hoffnung und Newroz verbunden." : Lang == "ku" ? "خۆر لە زۆر کولتووردا هێمایەکی کۆنە بۆ ڕووناکی، ژیان، هێز و نوێبوونەوە. لە چوارچێوەی کولتووریی کوردیدا زۆرجار بە هیوا و نەورۆزەوە پەیوەست دەکرێت." : "Across many cultures, the sun is an ancient symbol of light, life, strength and renewal. In Kurdish cultural contexts it is often associated with hope and Newroz.";
+    private string SunFlagTitle => Lang == "de" ? "Die Sonne auf der Flagge" : Lang == "ku" ? "خۆر لە ئاڵاکەدا" : "The sun on the flag";
+    private string SunFlag => Lang == "de" ? "Die Flagge der Autonomen Region Kurdistan im Irak zeigt eine gelbe Sonne mit 21 Strahlen. Offizielle kurdische Stellen verbinden die 21 Strahlen mit Newroz und dem 21. März, dem kurdischen Neujahr." : Lang == "ku" ? "لە ئاڵای هەرێمی کوردستانی عێراق خۆرێکی زەرد بە ٢١ تیشک هەیە. دامەزراوە فەرمییەکانی هەرێم ژمارەی ٢١ بە نەورۆز و ٢١ی ئازار، ساڵی نوێی کوردی، دەبەستنەوە." : "The flag of the Kurdistan Region of Iraq carries a yellow sun with 21 rays. Official regional sources connect the 21 rays with Newroz and March 21, the Kurdish New Year.";
+    private string SunHistory => Lang == "de" ? "Sonnenmotive finden sich in verschiedenen alten Kulturen der Zagros-Region. Solche Vergleiche bieten historischen Kontext, belegen aber für sich allein keine ununterbrochene direkte Verbindung zum heutigen Emblem." : Lang == "ku" ? "هێمای خۆر لە کولتوورە کۆنە جیاوازەکانی ناوچەی زاگڕۆسدا دەبینرێت. ئەم هاوشێوەییە مێژووییانە چوارچێوە دەدەن، بەڵام بە تەنها بەڵگەی پەیوەندییەکی ڕاستەوخۆ و بەردەوام بە هێمای ئەمڕۆ نین." : "Solar motifs appear in several ancient cultures of the Zagros region. These parallels provide historical context, but do not by themselves prove an unbroken, direct link to the modern emblem.";
+    private string SunCaution => Lang == "de" ? "Die Bedeutung von Symbolen kann je nach Zeit und Gemeinschaft variieren." : Lang == "ku" ? "واتای هێماکان لە سەردەم و کۆمەڵگەیەکەوە بۆ کۆمەڵگەیەکی تر دەگۆڕێت." : "The meaning of symbols can vary across periods and communities.";
+    private string DeqTitle => Lang == "de" ? "Deq: traditionelle Tätowierung" : Lang == "ku" ? "دێق: خالکێشانی نەریتی" : "Deq: traditional tattooing";
+    private string DeqIntro => Lang == "de" ? "Deq bezeichnet eine traditionelle Form dauerhafter Hautzeichnung, die in einigen kurdischen Gemeinschaften praktiziert wurde. Die Muster bewahren persönliche Erinnerungen und lokale Ästhetik." : Lang == "ku" ? "دێق ناوی شێوازێکی نەریتیی نیشانکردنی هەمیشەیی لەسەر پێستە کە لە هەندێک کۆمەڵگەی کوردیدا ئەنجام دراوە. نەخشەکان بیرەوەریی کەسی و جوانیناسیی ناوخۆیی دەگرنەخۆ." : "Deq is a traditional form of permanent skin marking practiced in some Kurdish communities. Its designs carry personal memory and local aesthetics.";
+    private IReadOnlyList<Meaning> DeqMeanings => Lang == "de" ? new[] { new Meaning("☀", "Sonne", "Wird oft mit Licht, Leben und Hoffnung verbunden."), new Meaning("✦", "Naturmotive", "Mond-, Stern- und Pflanzenmotive können Schutz, Wachstum oder andere lokale Bedeutungen tragen."), new Meaning("◇", "Geometrische Muster", "Können je nach Ort, Familie und Person unterschiedliche Bedeutungen haben.") } : Lang == "ku" ? new[] { new Meaning("☀", "خۆر", "زۆرجار بە ڕووناکی، ژیان و هیواوە پەیوەست دەکرێت."), new Meaning("✦", "هێما سروشتییەکان", "مانگ، ئەستێرە و ڕووەک دەتوانن واتای پاراستن، گەشە یان واتای ناوخۆیی هەبێت."), new Meaning("◇", "نەخشە ئەندازەییەکان", "بەپێی شوێن، خێزان و کەس واتای جیاوازیان هەیە.") } : new[] { new Meaning("☀", "Sun", "Often associated with light, life and hope."), new Meaning("✦", "Nature motifs", "Moon, star and plant designs may carry ideas of protection, growth or other local meanings."), new Meaning("◇", "Geometric patterns", "Meanings can differ by place, family and individual.") };
+    private string DeqContext => Lang == "de" ? "Historische Berichte dokumentieren Deq besonders bei Frauen in Teilen Kurdistans; Praktiken und Platzierung unterschieden sich regional. Traditionelle Pigmente konnten aus lokal verfügbaren Materialien hergestellt werden." : Lang == "ku" ? "بەڵگە مێژووییەکان دێقیان بە تایبەتی لە لای ژنان لە هەندێک ناوچەی کوردستان تۆمار کردووە؛ شێواز و شوێنی نەخشەکان بە پێی ناوچە جیاواز بوون. ڕەنگی نەریتی دەتوانرا لە ماددەی بەردەستی ناوخۆیی دروست بکرێت." : "Historical accounts document Deq especially among women in parts of Kurdistan; practices and placement varied regionally. Traditional pigments could be made from locally available materials.";
+    private string DeqCaution => Lang == "de" ? "Symbolbedeutungen sind nicht überall gleich. Einzelne Motive sollten nicht ohne Beleg einer festen Bedeutung oder Lebensphase zugeordnet werden." : Lang == "ku" ? "واتای هێماکان لە هەموو شوێنێکدا یەکسان نییە. نابێت بێ بەڵگە واتایەکی دیاریکراو یان قۆناغێکی ژیان بە نەخشێک بدرێت." : "Symbol meanings are not universal. Individual motifs should not be assigned a fixed meaning or life stage without evidence.";
+    protected override void OnInitialized() => Languages.Changed += OnLanguageChanged;
+    public void Dispose() => Languages.Changed -= OnLanguageChanged;
+    private sealed record CultureImage(string Path, string Caption);
+    private sealed record Meaning(string Word, string Title, string Description);
+}
+
+
+
+
+
+
+
+

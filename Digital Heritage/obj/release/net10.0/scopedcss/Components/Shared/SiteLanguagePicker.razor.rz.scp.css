@@ -1,0 +1,11 @@
+.site-language-picker[b-uq74o30e2z]{display:flex;align-items:center;gap:6px;z-index:1000}
+.site-language-picker button[b-uq74o30e2z]{position:relative;display:grid;place-items:center;width:36px;height:36px;min-width:36px;padding:0;border:0;border-radius:50%;background:repeating-conic-gradient(from -7deg,#d6b879 0deg 7deg,transparent 7deg 17deg);color:#eee2c8;cursor:pointer;filter:drop-shadow(0 1px 4px #0008);transition:transform .18s,filter .18s}
+.site-language-picker button span[b-uq74o30e2z]{display:grid;place-items:center;width:25px;height:25px;border:1px solid #d6b87988;border-radius:50%;background:#121510;color:#eee2c8;font:7px Arial,sans-serif;letter-spacing:.03em}
+.site-language-picker button:hover[b-uq74o30e2z],.site-language-picker button.selected[b-uq74o30e2z]{transform:scale(1.08);filter:drop-shadow(0 0 7px #d6b879)}
+.site-language-picker button.selected span[b-uq74o30e2z]{background:#d6b879;color:#171711}
+.site-language-picker button:focus-visible[b-uq74o30e2z]{outline:2px solid #fff0c8;outline-offset:3px}
+.site-language-picker.floating[b-uq74o30e2z]{position:fixed;top:18px;right:24px}
+.site-language-picker.home[b-uq74o30e2z]{gap:5px}
+.site-language-picker.home button[b-uq74o30e2z]{width:34px;height:34px;min-width:34px}
+.site-language-picker.home button span[b-uq74o30e2z]{width:24px;height:24px}
+@media(max-width:760px){.site-language-picker.floating[b-uq74o30e2z]{top:10px;right:12px}.site-language-picker.floating button[b-uq74o30e2z]{width:31px;height:31px;min-width:31px}.site-language-picker.floating button span[b-uq74o30e2z]{width:22px;height:22px;font-size:6px}}
