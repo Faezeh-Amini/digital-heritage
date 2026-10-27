@@ -1,9 +1,5 @@
-**/bin/
-**/obj/
-.vs/
-.git/
-.gitignore
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
+.git
+.vs
+**/bin
+**/obj
+**/.vs
