@@ -38,10 +38,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseForwardedHeaders();
 
-// 🟢 استاندارد سرو کردن فایل‌های استاتیک و بلزور بدون بلاک شدن
-app.UseStaticFiles();
-
 app.UseAntiforgery();
+
+app.MapStaticAssets();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

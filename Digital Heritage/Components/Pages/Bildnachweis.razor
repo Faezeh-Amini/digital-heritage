@@ -1,0 +1,530 @@
+﻿@page "/bildnachweis"
+@using Digital_Heritage.Data
+@using CsvHelper
+@using System.Globalization
+@using System.IO
+@inject SiteLanguageService Languages
+@inject IWebHostEnvironment Environment
+@implements IDisposable
+
+<style>
+    .audit-page {
+        max-width: 1350px;
+        margin: 0 auto;
+        padding: 55px 24px 90px;
+        color: #eee6d8;
+    }
+
+    .audit-header {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto 42px;
+    }
+
+    .audit-kicker {
+        color: #d6b879;
+        letter-spacing: .2em;
+        font-size: 12px;
+    }
+
+    .audit-header h1 {
+        color: #f6e3b7;
+        font: normal clamp(36px, 5vw, 62px) Georgia, serif;
+        margin: 18px 0;
+    }
+
+    .audit-header p,
+    .audit-note p {
+        color: #cbd2d0;
+        line-height: 1.85;
+    }
+
+    .audit-note {
+        background: #13232c;
+        border: 1px solid #d6b87955;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+    }
+
+        .audit-note h2 {
+            color: #f4dbac;
+            font: normal 25px Georgia, serif;
+        }
+
+    .audit-controls {
+        display: flex;
+        gap: 15px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+    }
+
+    .audit-input,
+    .audit-select {
+        background: #0d1b24;
+        border: 1px solid #d6b87966;
+        color: #eee6d8;
+        padding: 12px 15px;
+        border-radius: 8px;
+        min-height: 45px;
+    }
+
+    .audit-input {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .audit-select {
+        min-width: 200px;
+    }
+
+    .audit-count {
+        margin-bottom: 18px;
+        color: #d6b879;
+    }
+
+    .audit-table-wrap {
+        overflow-x: auto;
+        border: 1px solid #d6b87944;
+        border-radius: 12px;
+        background: #0d1b24;
+    }
+
+    .audit-table {
+        width: 100%;
+        min-width: 930px;
+        border-collapse: collapse;
+    }
+
+        .audit-table th,
+        .audit-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ffffff16;
+            text-align: left;
+            vertical-align: top;
+            overflow-wrap: anywhere;
+            font-size: 13px;
+        }
+
+        .audit-table th {
+            color: #e8c98a;
+            background: #172730;
+            font-weight: 700;
+        }
+
+        .audit-table td {
+            color: #cbd2d0;
+        }
+
+        .audit-table a {
+            color: #e8c98a;
+            text-decoration: underline;
+        }
+
+    .audit-status {
+        display: inline-block;
+        padding: 6px 10px;
+        border: 1px solid #b99c62;
+        border-radius: 6px;
+        color: #f2d79d;
+        font-size: 12px;
+    }
+
+    .audit-empty,
+    .audit-error {
+        padding: 24px;
+        color: #eed7a7;
+    }
+
+    .audit-back {
+        display: inline-block;
+        margin-top: 30px;
+        color: #e8c98a;
+        text-decoration: none;
+    }
+
+    @@media (max-width: 700px) {
+        .audit-controls {
+            flex-direction: column;
+        }
+
+        .audit-input,
+        .audit-select {
+            width: 100%;
+        }
+    }
+</style>
+
+<main class="audit-page">
+
+    <header class="audit-header">
+        <span class="audit-kicker">
+            DIGITAL HERITAGE · KURDISTAN
+        </span>
+
+        <h1>
+            @Label(
+                "Image Credits & Licences",
+                "Bildnachweis & Lizenzen",
+                "سەرچاوەی وێنەکان و مۆڵەتەکان")
+        </h1>
+
+        <p>
+            @Label(
+                "Documentation of image sources, copyright indications and licence review status.",
+
+                "Dokumentation von Bildquellen, Hinweisen zum Urheberrecht und dem aktuellen Stand der Lizenzprüfung.",
+
+                "تۆمارکردنی سەرچاوەی وێنەکان، زانیاریی مافی خاوەن ئەسەر و دۆخی پشکنینی مۆڵەتەکان.")
+        </p>
+    </header>
+
+    <section class="audit-note">
+        <h2>
+            @Label(
+                "Important copyright notice",
+                "Wichtiger Hinweis zum Urheberrecht",
+                "ئاگادارییەکی گرنگ دەربارەی مافی خاوەن ئەسەر")
+        </h2>
+
+        <p>
+            @Label(
+                "This inventory is a preliminary image source audit. Source names and licence notes are not independently verified. A possible Wikimedia Commons origin does not automatically grant permission to use an image.",
+
+                "Diese Übersicht ist eine vorläufige Prüfung der Bildquellen. Quellenangaben und Lizenzhinweise sind noch nicht unabhängig verifiziert. Eine mögliche Herkunft von Wikimedia Commons bedeutet nicht automatisch, dass ein Bild ohne weitere Prüfung genutzt werden darf.",
+
+                "ئەم لیستە پشکنینێکی سەرەتایی سەرچاوەی وێنەکانە. زانیاریی سەرچاوە و مۆڵەتەکان هێشتا بە سەربەخۆیی پشتڕاست نەکراونەتەوە. هاتنی وێنەیەک لە Wikimedia Commons بە تەنها مۆڵەتی بەکارهێنان نییە.")
+        </p>
+    </section>
+
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+        <div class="audit-error" role="alert">
+            @ErrorMessage
+        </div>
+    }
+    else
+    {
+        <div class="audit-controls">
+
+            <input class="audit-input"
+                   type="search"
+                   @bind="SearchTerm"
+                   @bind:event="oninput"
+                   placeholder="@Label(
+                       "Search filenames or sources...",
+                       "Dateinamen oder Quellen suchen...",
+                       "گەڕان بۆ ناوی فایل یان سەرچاوە...")"
+                   aria-label="@Label(
+                       "Search images",
+                       "Bilder suchen",
+                       "گەڕان بۆ وێنە")" />
+
+            <select class="audit-select"
+                    @bind="SelectedStatus"
+                    aria-label="@Label(
+                        "Filter by status",
+                        "Nach Status filtern",
+                        "پاڵاوتن بەپێی دۆخ")">
+
+                <option value="all">
+                    @Label("All images", "Alle Bilder", "هەموو وێنەکان")
+                </option>
+
+                <option value="permission">
+                    @Label("Permission required", "Genehmigung erforderlich", "پێویستی بە مۆڵەتە")
+                </option>
+
+                <option value="commons">
+                    @Label("Commons review", "Commons prüfen", "پشکنینی Commons")
+                </option>
+
+                <option value="unknown">
+                    @Label("Unknown source", "Quelle ungeklärt", "سەرچاوە نادیارە")
+                </option>
+
+                <option value="other">
+                    @Label("Other review", "Weitere Prüfung", "پشکنینی زیاتر")
+                </option>
+
+            </select>
+
+        </div>
+
+        <p class="audit-count">
+            @FilteredRows.Count /
+            @Rows.Count
+            @Label("images", "Bilder", "وێنە")
+        </p>
+
+        <div class="audit-table-wrap">
+
+            <table class="audit-table">
+
+                <thead>
+                    <tr>
+                        <th>@Label("File", "Datei", "فایل")</th>
+                        <th>@Label("Possible source", "Mögliche Quelle", "سەرچاوەی ئەگەری")</th>
+                        <th>@Label("Evidence", "Hinweis", "بەڵگە")</th>
+                        <th>@Label("Licence note", "Lizenzhinweis", "تێبینیی مۆڵەت")</th>
+                        <th>@Label("Review status", "Prüfstatus", "دۆخی پشکنین")</th>
+                        <th>@Label("Duplicate", "Duplikat", "دووبارە")</th>
+                        <th>@Label("Research", "Recherche", "گەڕان")</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in FilteredRows)
+                    {
+                        <tr>
+
+                            <td>@item.File</td>
+
+                            <td>@item.SourceGuess</td>
+
+                            <td>@item.Evidence</td>
+
+                            <td>@item.LicenseNote</td>
+
+                            <td>
+                                <span class="audit-status">
+                                    @StatusLabel(item.Status)
+                                </span>
+                            </td>
+
+                            <td>
+                                @if (string.IsNullOrWhiteSpace(item.Duplicate))
+                                {
+                                    <span>—</span>
+                                }
+                                else
+                                {
+                                    @item.Duplicate
+                                }
+                            </td>
+
+                            <td>
+                                @if (SafeHttpUrl(item.CommonsSearchUrl) is string url)
+                                {
+                                    <a href="@url"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        @Label(
+                                            "Search Commons",
+                                            "Commons durchsuchen",
+                                            "گەڕان لە Commons")
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>—</span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        @if (FilteredRows.Count == 0)
+        {
+            <div class="audit-empty">
+                @Label(
+                    "No matching records found.",
+                    "Keine passenden Einträge gefunden.",
+                    "هیچ تۆمارێکی گونجاو نەدۆزرایەوە.")
+            </div>
+        }
+    }
+
+    <a class="audit-back" href="/about">
+        @Label(
+            "Back to About Me",
+            "Zurück zu Über mich",
+            "گەڕانەوە بۆ دەربارەی من")
+    </a>
+
+</main>
+
+@code {
+
+    private List<ImageAudit> Rows = new();
+
+    private string SearchTerm = "";
+    private string SelectedStatus = "all";
+    private string? ErrorMessage;
+
+    private List<ImageAudit> FilteredRows =>
+        Rows.Where(x =>
+            (SelectedStatus == "all" || x.Status == SelectedStatus)
+            &&
+            (string.IsNullOrWhiteSpace(SearchTerm)
+             || x.File.Contains(
+                 SearchTerm,
+                 StringComparison.OrdinalIgnoreCase)
+             || x.SourceGuess.Contains(
+                 SearchTerm,
+                 StringComparison.OrdinalIgnoreCase)
+             || x.Evidence.Contains(
+                 SearchTerm,
+                 StringComparison.OrdinalIgnoreCase)))
+        .ToList();
+
+    protected override void OnInitialized()
+    {
+        Languages.Changed += HandleLanguageChanged;
+        LoadCsv();
+    }
+
+    private void LoadCsv()
+    {
+        try
+        {
+            var path = Path.Combine(
+                Environment.WebRootPath,
+                "data",
+                "image_sources.csv");
+
+            if (!File.Exists(path))
+            {
+                ErrorMessage =
+                    "CSV file not found: wwwroot/data/image_sources.csv";
+                return;
+            }
+
+            using var reader = new StreamReader(path);
+            using var csv = new CsvReader(
+                reader,
+                CultureInfo.InvariantCulture);
+
+            csv.Read();
+            csv.ReadHeader();
+
+            while (csv.Read())
+            {
+                var item = new ImageAudit
+                {
+                    File = csv.GetField("file") ?? "",
+                    SourceGuess = csv.GetField("source_guess") ?? "",
+                    Evidence = csv.GetField("evidence") ?? "",
+                    LicenseNote = csv.GetField("license_note") ?? "",
+                    Exif = csv.GetField("exif") ?? "",
+                    Duplicate = csv.GetField("duplicate") ?? "",
+                    ReplacementSuggestion =
+                        csv.GetField("replacement_suggestion") ?? "",
+                    CommonsSearchUrl =
+                        csv.GetField("commons_search_url") ?? ""
+                };
+
+                item.Status = DetermineStatus(item);
+
+                Rows.Add(item);
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage =
+                "Unable to load image sources: " + ex.Message;
+        }
+    }
+
+    private static string DetermineStatus(ImageAudit item)
+    {
+        var note = item.LicenseNote.ToLowerInvariant();
+        var source = item.SourceGuess.ToLowerInvariant();
+
+        if (note.Contains("do not use without permission")
+            || note.Contains("no free license"))
+        {
+            return "permission";
+        }
+
+        if (source.Contains("wikimedia commons"))
+        {
+            return "commons";
+        }
+
+        if (source.Contains("unknown"))
+        {
+            return "unknown";
+        }
+
+        return "other";
+    }
+
+    private string StatusLabel(string status) =>
+        status switch
+        {
+            "permission" => Label(
+                "Permission required",
+                "Genehmigung erforderlich",
+                "پێویستی بە مۆڵەتە"),
+
+            "commons" => Label(
+                "Verify on Commons",
+                "Auf Commons prüfen",
+                "پشکنین لە Commons"),
+
+            "unknown" => Label(
+                "Source unknown",
+                "Quelle ungeklärt",
+                "سەرچاوە نادیارە"),
+
+            _ => Label(
+                "Review required",
+                "Prüfung erforderlich",
+                "پێویستی بە پشکنینە")
+        };
+
+    private static string? SafeHttpUrl(string? value)
+    {
+        if (Uri.TryCreate(
+                value,
+                UriKind.Absolute,
+                out var uri)
+            && (uri.Scheme == Uri.UriSchemeHttps
+                || uri.Scheme == Uri.UriSchemeHttp))
+        {
+            return uri.ToString();
+        }
+
+        return null;
+    }
+
+    private string Label(string en, string de, string ku) =>
+        Languages.CurrentLanguage switch
+        {
+            "de" => de,
+            "ku" => ku,
+            _ => en
+        };
+
+    private void HandleLanguageChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Languages.Changed -= HandleLanguageChanged;
+    }
+
+    private sealed class ImageAudit
+    {
+        public string File { get; set; } = "";
+        public string SourceGuess { get; set; } = "";
+        public string Evidence { get; set; } = "";
+        public string LicenseNote { get; set; } = "";
+        public string Exif { get; set; } = "";
+        public string Duplicate { get; set; } = "";
+        public string ReplacementSuggestion { get; set; } = "";
+        public string CommonsSearchUrl { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+}

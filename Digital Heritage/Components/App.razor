@@ -4,43 +4,24 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <base href="/" />
 
+    <ImportMap />
 
     <link href="lib/cesium/Widgets/widgets.css" rel="stylesheet" />
-
-    <link href="app.css" rel="stylesheet" />
-    <!-- Force correct path and avoid stale cache during development -->
-    <link rel="stylesheet" href="/Css/food.css?v=2" />
-
-
-
+    <link href="@Assets["app.css"]" rel="stylesheet" />
+    <link href="@Assets["css/food.css"]" rel="stylesheet" />
 </head>
 
-
-
 <body>
-
-
     <Routes @rendermode="new InteractiveServerRenderMode()" />
 
-
     <script src="lib/cesium/Cesium.js"></script>
-
-
     <script src="js/cesium-map.js"></script>
-
-
     <script src="js/site-language.js"></script>
-    <script src="_framework/blazor.web.js"></script>
-
-
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
-
 
 </html>
